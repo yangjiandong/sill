@@ -34,16 +34,12 @@ Sill - rails3
    vendor/plugins/restful_authentication
    initializers/site_keys.rb
 
-   5. rails应用中本地时间 
-Ruby代码 
-class ApplicationController < ActionController::Base  
-  
-  before_filter :set_timezone  
-  
-  def set_timezone  
-    # current_user.time_zone #=> 'London'  
-    Time.zone = current_user.time_zone  
-  end  
-end  
+   5. 显示本地时间
+   rake time:zones:local
+   
+   数据库:
+config.active_record.default_timezone = :local  
+config.active_record.time_zone_aware_attributes = false  
+config.time_zone = nil  
 
    --END
