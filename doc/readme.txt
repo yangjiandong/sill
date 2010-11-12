@@ -28,5 +28,22 @@ Sill - rails3
 
    提交时，需将ssh-key 加到 github
 
+   4. 参考 sonar 采用
+
+   https://github.com/technoweenie/restful-authentication
+   vendor/plugins/restful_authentication
+   initializers/site_keys.rb
+
+   5. rails应用中本地时间 
+Ruby代码 
+class ApplicationController < ActionController::Base  
+  
+  before_filter :set_timezone  
+  
+  def set_timezone  
+    # current_user.time_zone #=> 'London'  
+    Time.zone = current_user.time_zone  
+  end  
+end  
 
    --END

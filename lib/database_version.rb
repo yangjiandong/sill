@@ -7,7 +7,7 @@ require 'java'
 class DatabaseVersion
 
   class DeprecatedSchemaInfo < ActiveRecord::Base
-    set_table_name 'schema_info'
+    set_table_name 'schema_migrations'
   end
 
   def self.current_version
