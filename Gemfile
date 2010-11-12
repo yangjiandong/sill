@@ -26,7 +26,7 @@ gem 'rails3-generators', :group => :development
 gem 'yaml_db'
 gem 'uuidtools'
 
-gem 'dalli'
+# gem 'dalli'
 
 # Use unicorn as the web server
 # gem 'unicorn'
