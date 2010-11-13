@@ -13,7 +13,7 @@ if defined?(JRUBY_VERSION)
     gem 'activerecord-jdbcmssql-adapter'
     gem 'jruby-openssl'
     gem 'jruby-rack'
-    gem 'warbler'
+    #gem 'warbler'
 else
     gem 'sqlite3-ruby', :require => 'sqlite3'
 end
@@ -21,7 +21,11 @@ end
 #gem 'devise'
 #gem 'cancan'
 gem 'haml'
-gem 'rails3-generators', :group => :development
+
+group :development do
+   gem 'rails3-generators'
+   gem 'warbler'
+end
 
 gem 'yaml_db'
 gem 'uuidtools'
