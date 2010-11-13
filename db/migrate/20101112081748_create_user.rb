@@ -4,12 +4,12 @@ class CreateUser < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table 'users'
+    drop_table 't_users'
   end
 
   private
   def self.create_users
-    create_table 'users' do |t|
+    create_table 't_users' do |t|
       t.column :login, :string, :limit => 40
       t.column :name,  :string, :limit => 100, :null=> true
       t.column :email, :string, :limit => 100, :null=> true

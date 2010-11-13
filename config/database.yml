@@ -1,6 +1,16 @@
 # SQLite version 3.x
 #   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
+  adapter: jdbcmssql
+  database: sill
+  driver: net.sourceforge.jtds.jdbc.Driver
+  url: jdbc:jtds:sqlserver://192.168.1.148:1433/sill
+  username: sa
+  password: 123
+  hostname: 192.168.1.148
+  port: 1433
+
+developmentmysql:
   adapter: jdbcsqlite3
   database: db/development.sqlite3
   pool: 5

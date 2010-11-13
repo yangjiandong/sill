@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  set_table_name 't_users'
 
   include Authentication
   include Authentication::ByPassword
