@@ -4,7 +4,7 @@ Sill - rails3
 2010.11.14
 -----------
 
-   1. 参考fat_crm,增加awesome_print
+   1. 格式化输出信息,ap,参考fat_crm,增加awesome_print
    https://github.com/michaeldv/awesome_print
 
 2010.11.12
@@ -36,16 +36,17 @@ Sill - rails3
 
    4. 参考 sonar 采用
 
-   https://github.com/technoweenie/restful-authentication
+   https://github.com/Satish/restful-authentication
+   (https://github.com/technoweenie/restful-authentication)
    vendor/plugins/restful_authentication
    initializers/site_keys.rb
 
    5. 显示本地时间
    rake time:zones:local
-   
+
    数据库:
-config.active_record.default_timezone = :local  
-config.active_record.time_zone_aware_attributes = false  
-config.time_zone = nil  
+config.active_record.default_timezone = :local
+config.active_record.time_zone_aware_attributes = false
+config.time_zone = nil
 
    --END
