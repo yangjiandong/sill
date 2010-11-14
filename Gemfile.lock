@@ -38,12 +38,15 @@ GEM
       activemodel (= 3.0.1)
       activesupport (= 3.0.1)
     activesupport (3.0.1)
+    annotate (2.4.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
+    awesome_print (0.3.1)
     bouncy-castle-java (1.5.0145.2)
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    ffaker (1.0.0)
     haml (3.0.23)
     i18n (0.4.2)
     jdbc-jtds (1.2.5-java)
@@ -91,6 +94,7 @@ GEM
       jruby-rack (>= 1.0.0)
       rake (>= 0.8.7)
       rubyzip (>= 0.9.4)
+    will_paginate (3.0.pre2)
     yaml_db (0.2.0)
 
 PLATFORMS
@@ -101,6 +105,9 @@ DEPENDENCIES
   activerecord-jdbcmssql-adapter
   activerecord-jdbcmysql-adapter
   activerecord-jdbcsqlite3-adapter
+  annotate (>= 2.4.0)
+  awesome_print (>= 0.2.1)
+  ffaker (>= 0.4.0)
   haml
   jruby-openssl
   jruby-rack
@@ -108,4 +115,5 @@ DEPENDENCIES
   rails3-generators
   uuidtools
   warbler
+  will_paginate (>= 3.0.pre2)
   yaml_db

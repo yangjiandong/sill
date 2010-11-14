@@ -21,8 +21,14 @@ end
 #gem 'devise'
 #gem 'cancan'
 gem 'haml'
+gem 'will_paginate',        '>= 3.0.pre2'
+
+# format log
+gem 'awesome_print',      '>= 0.2.1'
 
 group :development do
+   gem 'annotate',           '>= 2.4.0'
+   gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
    gem 'rails3-generators'
    gem 'warbler'
 end

@@ -1,6 +1,12 @@
 Sill - rails3
 =============
 
+2010.11.14
+-----------
+
+   1. 参考fat_crm,增加awesome_print
+   https://github.com/michaeldv/awesome_print
+
 2010.11.12
 -----------
 
