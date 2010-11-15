@@ -1,12 +1,13 @@
 #about{ hidden }
   %h3
-    #{t :about_ffc_version}
+    版本信息?
     %span.cool== v#{Sill::Version}
     == (#{ActiveRecord::Base.connection.adapter_name.downcase})
   %p
-    #{t :about_thank_you}
+    Thank you E:-)
 
-  #{t :about_ffc_resources}:
+  /#{t :about_ffc_resources}:
+  联系信息 :
   %ul{:style => "margin: 0px 0px 0px 15px"}
     %li== &raquo; #{link_to t(:about_home_page), "http://www.fatfreecrm.com", :"data-popup" => true}
     %li== &raquo; #{link_to t(:about_project_page), "http://github.com/michaeldv/fat_free_crm/tree/master", :"data-popup" => true}

@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
   # include NeedAuthorization::ForUser
-  # include NeedAuthentication::ForUser
+  include NeedAuthentication::ForUser
 
   validates_length_of :name, :maximum => 100, :allow_blank => true, :allow_nil => true
 
@@ -77,5 +77,5 @@ class User < ActiveRecord::Base
       properties.delete(prop)
     end
   end
-  
+
 end

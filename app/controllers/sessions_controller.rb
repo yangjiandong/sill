@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
     @user = User.new
     return unless request.post?
 
-    self.current_user = User.authenticate(params[:login], params[:password])
+    logger.ap '登录验证。。。'
+    self.current_user = User.authenticate(params[:user][:login], params[:user][:password])
     if logged_in?
+       logger.ap '登录成功!'
       if params[:remember_me] == '1'
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
@@ -18,6 +20,7 @@ class SessionsController < ApplicationController
       flash[:notice] = 'Logged in.'
       redirect_to(home_path)
     else
+      logger.ap '登录失败!'
       flash.now[:loginerror] = 'Authentication failed.'
     end
   end

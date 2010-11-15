@@ -3,8 +3,8 @@
 class ApplicationController < ActionController::Base
 
   # TODO
-  #include AuthenticatedSystem
-  #include NeedAuthorization::Helper
+  include AuthenticatedSystem
+  include NeedAuthorization::Helper
 
   before_filter :check_database_version, :check_authentication
 

@@ -12,4 +12,17 @@ module Sill
       self.to_a.join(".")
     end
   end
+
+  class Development
+    def self.to_s
+      'J2ee development Ltd.'
+    end
+  end
+
+  class Info
+    def self.to_s
+      'JROR SILL000'
+    end
+  end
+
 end

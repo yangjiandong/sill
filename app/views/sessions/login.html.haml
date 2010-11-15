@@ -14,7 +14,7 @@
 .standalone#standalone
   -# The following form gets submitted to #create when @authentication is nil,
   -# or to #update when @authentication is not nil (ex. suspended).
-  = form_for @user, :url => user_path, :html => one_submit_only(:user) do |f|
+  = form_for @user, :url => login_path, :html => one_submit_only(:user) do |f|
     .title= '::登录'
     .section
       .label= '登录名:'
