@@ -15,7 +15,7 @@
   -# The following form gets submitted to #create when @authentication is nil,
   -# or to #update when @authentication is not nil (ex. suspended).
   = form_for @user, :url => user_path, :html => one_submit_only(:user) do |f|
-    .title= '登录'
+    .title= '::登录'
     .section
       .label= '登录名:'
       = f.text_field :login
@@ -25,4 +25,4 @@
     %div(style="margin-left:12px") #{f.check_box(:remember_me)} #{'记忆密码'}
     %br
     .buttonbar
-      = f.submit '登录'
+      = f.submit ' 登录'

@@ -22,7 +22,7 @@
     - if tabless_layout?
       = render :partial => "layouts/tabless"
     - else
-      /= render :partial => "layouts/tabbed"
+      = render :partial => "layouts/tabbed"
       = render :partial => "layouts/footer"
 
     /- unless tabless_layout? || I18n.locale == "en-US"
