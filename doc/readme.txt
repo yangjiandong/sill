@@ -7,6 +7,38 @@ Sill - rails3
    1. sqlite3 -line db/development.sqlite3
    会以比较优雅的格式显示查询
 
+   2. haml form example
+#login_format
+  - form_tag session_path do
+    %p= label_tag 'login'
+    %br
+    = text_field_tag 'login', @login
+    %p= label_tag 'password'
+    %br/
+    = password_field_tag 'password', nil
+    %p= label_tag 'remember_me', 'Remember me'
+    = check_box_tag 'remember_me', '1', @remember_me
+    %p= submit_tag 'Log in'
+
+- form_tag('/') do
+  - [1, 2, 3].each do |i|
+    = check_box_tag "accept#{i}"
+  = submit_tag
+
+-- login
+  %form{:controller =>'sessions',:action => 'login', :method =>"post", :html => "onsubmit$('commit').disabled = true"}
+    .title= '::登录'
+    .section
+      .label= '登录名:'
+      = text_field_tag :login
+      .label= '密码:'
+      = password_field_tag :password
+
+    %div(style="margin-left:12px") #{check_box_tag(:remember_me)} #{'记忆密码'}
+    %br
+    .buttonbar
+      = submit_tag ' 登录'
+
 2010.11.14
 -----------
 
