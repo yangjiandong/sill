@@ -1,6 +1,11 @@
 Sill - rails3
 =============
 
+2010.11.20
+-----------
+   
+   1. haml 掌握有难度,暂时用erb,参考images,javascripts,stylesheets
+
 2010.11.15
 -----------
 
