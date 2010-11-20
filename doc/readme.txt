@@ -49,6 +49,7 @@ Sill - rails3
 -----------
 
    1. rails new sill -T
+   --跳过测试
 
    2. 产生第一个后台表
    rails generate migration create_user
