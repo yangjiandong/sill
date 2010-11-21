@@ -35,9 +35,10 @@
 }
 html, body {
   height: 100%;
+  background: #e5e5e5;
 }
 body {
-  background-color: #FFF;
+  /* background-color: #FFF;*/
   color: #444;
   font-family: Arial, Helvetica, sans-serif;
   text-align: left;
@@ -224,10 +225,10 @@ a {
   FOOTER
 */
 #ftlinks {
-  background: #fff;
+  /* background: #fff; */
   color: #262626;
   text-align: center;
-  border-top: 1px solid #fff;
+  /* border-top: 1px solid #fff; */
   font-size: 85%;
   padding: 4px 0;
   margin-top: 10px;
