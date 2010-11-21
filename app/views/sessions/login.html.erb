@@ -1,34 +1,36 @@
-<table class="spaced">
-  <tr>
-    <td align="center">
+      <div class='tabless'>
+
       <div id="login_form">
-        <form action="<%= url_for :controller => 'sessions', :action => 'login' -%>" method="post">
+        <form action="<%= url_for :controller => 'sessions', :action => 'login' -%>" method="post" onsubmit="login_submit.disabled = true" >
+        <div class="title">
+        Login...
+        </div>
+
+        <div class="section">
         <% if flash[:notice] %>
           <div class="notice"><%= flash[:notice] %></div>
         <% end %>
 
-          <h3><%= label_tag '登录名' %></h3>
-          <p>
-            <%= text_field_tag 'login', '', {:maxlength => 40, :size => 30, :disabled => false} %>        
-          </p>
-          <h3><%= label_tag '密码' %></h3>
-          <p>
+          <div class="label"><%= label_tag '登录名' %></div>
+            <%= text_field_tag 'login', '', {:maxlength => 40, :size => 30, :disabled => false} %>
+          <div class="label"><%= label_tag '密码' %></div>
             <%= password_field_tag 'password', nil, :size => 30 %>
-          </p>
-          <p>
-            <%= check_box_tag 'remember_me', '1', @remember_me %> <%= label_tag 'remember_me', 'Remember me on this computer' %>
-          </p>
-          <p>
-          <%= submit_tag ' 确定' %>
-          </p>
+          <div style='margin-left:12px'>
+            <%= check_box_tag 'remember_me', '1', @remember_me %> 记忆登录信息
+          </div>
+        </div>
+
+        <div class="buttonbar">
+        <%= submit_tag '确定', :name => 'login_submit' %>
+        </div>
+
         </form>
         <% if flash[:loginerror] %>
           <div class="error" style=""> <%= flash[:loginerror]  %></div>
         <% end %>
       </div>
-    </td>
-  </tr>
-</table>
+
+      </div>
 <script type="text/javascript">
 //<![CDATA[
     $('login').activate();
