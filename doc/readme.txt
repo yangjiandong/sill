@@ -1,6 +1,13 @@
 Sill - rails3
 =============
 
+2010.11.22
+-----------
+
+   1. rails3 route
+   match "/about" => "info#about", :as => :about  
+   没有:as参数，这个路由就是单纯的转向"/about", 加了:as 之后，在我们的应用里面可以使用about_path或者about_url
+
 2010.11.20
 -----------
    

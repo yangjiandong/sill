@@ -3,7 +3,12 @@
   <div id="hd">
     <%= render :partial => 'layouts/breadcrumb' %>
     <ol id="nav">
-      <li><input type="text" autocomplete="off" size="15" name="search" id="projectSearch" onFocus="this.size=30;this.value='';autocompleteProjects('<%= ApplicationController.root_context -%>/api/resources?scopes=<%= Project::SCOPE_SET -%>&qualifiers=<%= Project::QUALIFIER_VIEW-%>,<%= Project::QUALIFIER_SUBVIEW-%>,<%= Project::QUALIFIER_PROJECT-%>', '<%= ApplicationController.root_context -%>/project/index/', this, $('projectResults'));return true;" onBlur="javacript:this.size=15" value="Search"/><div id="projectResults" style="display:none"></div></li>
+      <li>
+      <input type="text" autocomplete="off" size="15" name="search" id="projectSearch"
+          onBlur="javacript:this.size=15" value="查找..."/>
+          <div id="projectResults" style="display:none"></div>
+      </li>
+
       <li>
         <a href="javascript:window.print()"><img src="<%= ApplicationController.root_context -%>/images/print.gif" alt="Print" title="Print" /></a>
         <% if @project %><a href="<%= url_for :overwrite_params => {:id => @project.key}-%>" id="permalink"><img src="<%= ApplicationController.root_context -%>/images/permalink.gif" alt="Permalink" title="Permalink" /></a><% end %>
@@ -55,14 +60,11 @@
         <% elsif selected_section==Navigation::SECTION_CONFIGURATION %>
 
           <li class="<%= 'selected' if request.request_uri.include?('/profiles') || request.request_uri.include?('/rules_configuration') -%>"><a href="<%= ApplicationController.root_context -%>/profiles">Quality profiles</a></li>
-            <% if is_admin? %>
+
               <li class="<%= 'selected' if controller.controller_path=='event_categories' -%>"><a href="<%= ApplicationController.root_context -%>/event_categories/index">Event categories</a></li>
               <li class="<%= 'selected' if controller.controller_path=='metrics' -%>"><a href="<%= ApplicationController.root_context -%>/metrics/index">Manual metrics</a></li>
               <li class="<%= 'selected' if controller.controller_path=='admin_filters' -%>"><a href="<%= ApplicationController.root_context -%>/admin_filters/index">Default filters</a></li>
               <li class="<%= 'selected' if controller.controller_path=='account' -%>"><a href="<%= ApplicationController.root_context -%>/account/index">My profile</a></li>
-              <% controller.java_facade.getPages(Navigation::SECTION_CONFIGURATION, nil,nil, nil).each do |page| %>
-                <li class="<%= 'selected' if request.request_uri.include?("plugins/configuration/#{page.getId()}") -%>"><a href="<%= ApplicationController.root_context -%>/plugins/configuration/<%= page.getId() -%>"><%= page.getTitle() %></a></li>
-              <% end %>
 
               <li class="h2">Security</li>
               <li class="<%= 'selected' if request.request_uri.include?('/users') -%>"><a href="<%= ApplicationController.root_context -%>/users">Users</a></li>
@@ -74,7 +76,7 @@
               <li class="<%= 'selected' if request.request_uri.include?('/settings') -%>"><a href="<%= ApplicationController.root_context -%>/settings/index">Settings</a></li>
               <li class="<%= 'selected' if controller.controller_path=='backup' -%>"><a href="<%= ApplicationController.root_context -%>/backup">Backup</a></li>
               <li class="<%= 'selected' if controller.controller_path=='system' -%>"><a href="<%= ApplicationController.root_context -%>/system">System info</a></li>
-            <% end %>
+
 
         <% end %>
         </ul>
@@ -93,12 +95,5 @@
      </div>
   </div>
 </div>
+<%= render :partial => 'layouts/info' %>
 
-<% unless params[:hd]=='false' %>
-<div id="ft">
-<% controller.java_facade.getWebFooters().each do |footer| %>
-<% if footer.getHtml() %><div><%= footer.getHtml().to_s %></div><% end %>
-<% end %>
-<div id="ftlinks">Powered by <a href="http://www.sonarsource.com" target="SonarSource" class="external">SonarSource</a> - Open Source <a href="http://www.sonarsource.org/documentation/license/" target="license" class="external">LGPL</a> - v.<%= sonar_version -%> - <a href="http://sonar-plugins.codehaus.org" class="external" target="plugins">Plugins</a> - <a href="http://sonar.codehaus.org/documentation" class="external" target="sonar_doc" class="external">Documentation</a> - <a href="http://sonar.codehaus.org/support/" target="support" class="external">Ask a question</a> - <a href="http://jira.codehaus.org/browse/SONAR" target="issuetracker" class="external">Bug/feature request</a></div>
-</div>
-<% end %>

@@ -35,6 +35,7 @@ end
 
 gem 'yaml_db'
 gem 'uuidtools'
+gem 'fastercsv'
 
 # gem 'dalli'
 
