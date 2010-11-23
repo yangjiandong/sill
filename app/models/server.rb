@@ -18,7 +18,7 @@ class Server
     add_property(system_info, 'Java Version') {java_property('java.runtime.version') }
     add_property(system_info, 'Java Home') {java_property('java.home')}
     add_property(system_info, 'JIT Compiler') {java_property('java.compiler')}
-    add_property(system_info, 'Application Server Container') {$servlet_context.getServerInfo()  }
+    #add_property(system_info, 'Application Server Container') {$servlet_context.getServerInfo()  }
     add_property(system_info, 'User Name') {java_property('user.name')}
     add_property(system_info, 'User TimeZone') {java_property('user.timezone')}
     add_property(system_info, 'OS') {"#{java_property('os.name')} / #{java_property('os.arch')} / #{java_property('os.version')}"}

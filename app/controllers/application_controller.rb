@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   before_filter :check_database_version, :check_authentication
 
   def self.root_context
-    ActionController::Base.relative_url_root || ''
+    #ActionController::Base.relative_url_root || ''
+    ''
   end
 
   def java_facade
