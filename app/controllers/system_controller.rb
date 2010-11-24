@@ -11,7 +11,7 @@ class SystemController < ApplicationController
     respond_to do |format|
       format.html
       format.csv  {
-        send_data(to_csv, :type => 'text/csv; charset=utf-8', :disposition => 'attachment; filename=sonar_system_info.csv')
+        send_data(to_csv, :type => 'text/csv; charset=utf-8', :disposition => 'attachment; filename=sill_system_info.csv')
       }
     end
   end

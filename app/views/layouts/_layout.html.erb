@@ -10,13 +10,13 @@
       </li>
 
       <li>
-        <a href="javascript:window.print()"><img src="<%= ApplicationController.root_context -%>/images/print.gif" alt="Print" title="Print" /></a>
+      <a href="javascript:window.print()"><img src="<%= image_path 'print.gif' %>" alt="Print" title="Print" /></a>
         <% if @project %><a href="<%= url_for :overwrite_params => {:id => @project.key}-%>" id="permalink"><img src="<%= ApplicationController.root_context -%>/images/permalink.gif" alt="Permalink" title="Permalink" /></a><% end %>
       </li>
       <% if logged_in? %>
       <li>
-      <img src="<%= ApplicationController.root_context -%>/images/user.gif"/><a href="<%= ApplicationController.root_context -%>/account/index"><%= current_user.name(true) -%></a>
-      &raquo; <a href="<%= ApplicationController.root_context -%>/sessions/logout">Log out</a>
+      <img src="<%= image_path 'user.gif' %>"/><a href="<%= ApplicationController.root_context -%>/account/index"><%= current_user.name(true) -%></a>
+      &raquo; <a href="<%= ApplicationController.root_context -%>/sessions/logout">退出</a>
       </li>
       <% else %>
       <li><a href="<%= ApplicationController.root_context -%>/sessions/new">Log in</a></li>
