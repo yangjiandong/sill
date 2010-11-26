@@ -14,6 +14,8 @@ if defined?(JRUBY_VERSION)
     gem 'jruby-openssl'
     gem 'jruby-rack'
     #gem 'warbler'
+
+    gem 'jruby-memcache-client'
 else
     gem 'sqlite3-ruby', :require => 'sqlite3'
 end

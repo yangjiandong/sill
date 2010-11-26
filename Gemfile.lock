@@ -54,6 +54,7 @@ GEM
     jdbc-mysql (5.0.4)
     jdbc-sqlite3 (3.6.14.2.056-java)
     jruby-jars (1.5.5)
+    jruby-memcache-client (1.7.0)
     jruby-openssl (0.7.2)
       bouncy-castle-java
     jruby-rack (1.0.3)
@@ -111,6 +112,7 @@ DEPENDENCIES
   fastercsv
   ffaker (>= 0.4.0)
   haml
+  jruby-memcache-client
   jruby-openssl
   jruby-rack
   rails (= 3.0.1)
