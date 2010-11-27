@@ -8,6 +8,8 @@ class SystemController < ApplicationController
   def index
     @server=Server.new()
 
+    @login_cache_value = data_cache('app_login_info'){'新建值'}
+
     respond_to do |format|
       format.html
       format.csv  {

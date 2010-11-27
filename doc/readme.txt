@@ -1,6 +1,11 @@
 Sill - rails3
 =============
 
+2010.11.27
+-----------
+ 
+   1. jruby-memcache-client change to dalli
+
 2010.11.22
 -----------
 

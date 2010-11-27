@@ -26,6 +26,11 @@ Sill::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
+  # dalli
+  config.cache_store = :dalli_store, '127.0.0.1:11211',
+    { :namespace => NAME_OF_RAILS_APP, :expires_in => 1.day, :compress => true, :compress_threshold => 64*1024 }
+  
+
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this

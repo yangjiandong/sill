@@ -15,7 +15,7 @@ if defined?(JRUBY_VERSION)
     gem 'jruby-rack'
     #gem 'warbler'
 
-    gem 'jruby-memcache-client'
+    # gem 'jruby-memcache-client'
 else
     gem 'sqlite3-ruby', :require => 'sqlite3'
 end
@@ -39,7 +39,7 @@ gem 'yaml_db'
 gem 'uuidtools'
 gem 'fastercsv'
 
-# gem 'dalli'
+gem 'dalli'
 
 # Use unicorn as the web server
 # gem 'unicorn'

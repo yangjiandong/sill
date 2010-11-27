@@ -72,9 +72,9 @@ class ApplicationController < ActionController::Base
   # memcached
   # http://www.ridingtheclutch.com/2009/01/08/cache-anything-easily-with-rails-and-memcached.html
   def data_cache(key)
-    unless output = CACHE.get(key)
+    unless output = APP_CACHE.get(key)
       output = yield
-      CACHE.set(key, output, 1.hour)
+      APP_CACHE.set(key, output, 1.hour)
     end
     return output
   end

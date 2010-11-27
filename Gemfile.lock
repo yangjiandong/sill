@@ -44,6 +44,7 @@ GEM
     awesome_print (0.3.1)
     bouncy-castle-java (1.5.0145.2)
     builder (2.1.2)
+    dalli (0.11.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     fastercsv (1.5.3)
@@ -54,7 +55,6 @@ GEM
     jdbc-mysql (5.0.4)
     jdbc-sqlite3 (3.6.14.2.056-java)
     jruby-jars (1.5.5)
-    jruby-memcache-client (1.7.0)
     jruby-openssl (0.7.2)
       bouncy-castle-java
     jruby-rack (1.0.3)
@@ -109,10 +109,10 @@ DEPENDENCIES
   activerecord-jdbcsqlite3-adapter
   annotate (>= 2.4.0)
   awesome_print (>= 0.2.1)
+  dalli
   fastercsv
   ffaker (>= 0.4.0)
   haml
-  jruby-memcache-client
   jruby-openssl
   jruby-rack
   rails (= 3.0.1)
