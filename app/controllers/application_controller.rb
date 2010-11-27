@@ -66,4 +66,22 @@ class ApplicationController < ActionController::Base
       return access_denied
     end
   end
+
+  private
+
+  # memcached
+  # http://www.ridingtheclutch.com/2009/01/08/cache-anything-easily-with-rails-and-memcached.html
+  def data_cache(key)
+    unless output = CACHE.get(key)
+      output = yield
+      CACHE.set(key, output, 1.hour)
+    end
+    return output
+  end
+
+  # example
+  # result = data_cache('foo') {'Hello,wolrd!'}
+  # md5 = Digest::MD5.hexdigest(request.request_uri)
+  # output = data_cache(md5) { SEARCH.search(keywords, options) }
+
 end

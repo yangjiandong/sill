@@ -14,7 +14,11 @@ require 'memcache'
   :pool_name => 'async',
  }
  memcache_servers = ['127.0.0.1:11211']
- CACHE = MemCache.new  memcache_servers, memcache_options
+begin
+  CACHE = MemCache.new  memcache_servers, memcache_options
+rescue Exception => e
+  puts 'no memecached server'
+end
 # CACHE = MemCache.new :namespace => 'tze'
 # CACHE.servers = '127.0.0.1:11211'
 
