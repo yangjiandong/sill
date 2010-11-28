@@ -1,6 +1,19 @@
 Sill - rails3
 =============
 
+2010.11.28
+-----------
+
+   1. peepcode-code-review.pdf
+   session in db
+   # (create the session table with "rake db:sessions:create")
+   Sill::Application.config.session_store :active_record_store
+
+   自定义lib/tasks/sessions.rake
+   两个任务,
+   rake sessions:count
+   rake sessions:prune RAILS_ENV=production
+
 2010.11.27
 -----------
  
