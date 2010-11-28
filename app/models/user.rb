@@ -3,6 +3,18 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   set_table_name 't_users'
 
+  has_and_belongs_to_many :groups, :class_name => "Group", :join_table => "t_groups_users"
+  #, :foreign_key =>"user_id", :association_foreign_key =>"group_id"
+
+# :class_name 用于指定与本Class关联的类的名称
+# :join_table 用于指定保存对应关系统的中间表的名称
+# :foreign_key 用于指定中间表中用于记录本类的主键的字段的名称。
+# :association_foreign_key 用于指定中间表中记录关系类的主键的字段的名称
+# 另外还有一些有用的键值如：
+# :order 指定关系类的排序方式。
+# :offset 指定从第几个记录开始提取
+# :limit 指定提取多少条记录等等.....
+
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
@@ -38,6 +50,18 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  def available_groups
+    Group.all - self.groups
+  end
+
+  def set_groups(new_groups=[])
+    self.groups.clear
+
+    new_groups=(new_groups || []).compact.uniq
+    self.groups = Group.find(new_groups)
+    save
+  end
+  
   def <=>(other)
     login<=>other.login
   end

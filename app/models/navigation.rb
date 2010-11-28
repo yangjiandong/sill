@@ -1,4 +1,4 @@
-
+# 常量
 class Navigation
 
   SECTION_HOME = 'home'

@@ -14,9 +14,12 @@ Sill - rails3
    rake sessions:count
    rake sessions:prune RAILS_ENV=production
 
-   2. acts_as_tree
+   2. add plugin :acts_as_tree
 
    https://github.com/parndt/acts_as_tree
+
+   3. add group model
+   rails generate migration create_group
 
 2010.11.27
 -----------

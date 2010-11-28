@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101128111457) do
+ActiveRecord::Schema.define(:version => 20101128123131) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(:version => 20101128111457) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "t_groups", :force => true do |t|
+    t.string   "name",        :limit => 40
+    t.string   "description", :limit => 200
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "t_groups_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
+  add_index "t_groups_users", ["group_id"], :name => "index_t_groups_users_on_group_id"
+  add_index "t_groups_users", ["user_id"], :name => "index_t_groups_users_on_user_id"
 
   create_table "t_users", :force => true do |t|
     t.string   "login",                     :limit => 40
