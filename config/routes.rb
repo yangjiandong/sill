@@ -1,9 +1,6 @@
 Sill::Application.routes.draw do
 
-  root :to => 'sessions#login'
-
   match 'home' => 'system#index', :as => :home
-
   match 'login' => 'sessions#login', :as => :login
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'signup' => 'users#new', :as => :signup
@@ -66,4 +63,8 @@ Sill::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id(.:format)))'
+
+  root :to => 'sessions#login'
+
+  match '/about', :to => 'static#about', :as => :about
 end
