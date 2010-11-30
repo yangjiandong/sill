@@ -78,7 +78,13 @@ class ApplicationController < ActionController::Base
         output = yield
         APP_CACHE.set(key, output, 1.hour)
       end
-    rescue Exception => e
+
+    rescue
+      unless output = Rails.cache.read(key)
+        output = yield
+        Rails.cache.write(key,output, 1.hour)
+      end
+
       return output
     end
 

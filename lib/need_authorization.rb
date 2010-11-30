@@ -1,10 +1,10 @@
-#
+# 授权
 class AuthorizerFactory
   @@authorizer = nil
 
   def self.authorizer
     if (@@authorizer.nil?)
-      filename = Java::OrgSonarServerUi::JRubyFacade.new.getConfigurationValue('sonar.authorizer') || 'default_authorizer'
+      filename = 'default_authorizer'
       require File.dirname(__FILE__) + "/authorization/#{filename}"
       @@authorizer ||= SonarAuthorizer.new
     end
