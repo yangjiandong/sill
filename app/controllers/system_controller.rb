@@ -3,7 +3,6 @@ require 'fastercsv'
 class SystemController < ApplicationController
 
   SECTION=Navigation::SECTION_CONFIGURATION
-  #before_filter :admin_required
 
   def index
     @server=Server.new()

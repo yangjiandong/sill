@@ -8,6 +8,12 @@ Sill - rails3
    rake db:data dump
    rake db:data load
 
+   2. 新增表 t_properties
+   rails generate migration create_properties_table
+   rake db:migrate
+   --新增字段resource_id,重新做
+   --rake db:migrate version=20101128123131
+
 2010.11.28
 -----------
 
@@ -30,19 +36,19 @@ Sill - rails3
 
 2010.11.27
 -----------
- 
+
    1. jruby-memcache-client change to dalli
 
 2010.11.22
 -----------
 
    1. rails3 route
-   match "/about" => "info#about", :as => :about  
+   match "/about" => "info#about", :as => :about
    没有:as参数，这个路由就是单纯的转向"/about", 加了:as 之后，在我们的应用里面可以使用about_path或者about_url
 
 2010.11.20
 -----------
-   
+
    1. haml 掌握有难度,暂时用erb,参考images,javascripts,stylesheets
 
 2010.11.15

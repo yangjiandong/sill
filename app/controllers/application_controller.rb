@@ -2,12 +2,14 @@
 
 class ApplicationController < ActionController::Base
 
-  # TODO
   include AuthenticatedSystem
   include NeedAuthorization::Helper
 
-  before_filter :check_database_version, :check_authentication
+  before_filter :check_authentication
+  # 不需要每次去验证
+  # ,:check_database_version
 
+  # TODO 需删除
   def self.root_context
     #ActionController::Base.relative_url_root || ''
     ''
@@ -61,8 +63,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_authentication
-    if current_user.nil?
-      #&& Property.value('sonar.forceAuthentication')=='true'
+    if current_user.nil? && Property.value('sill.forceAuthentication')=='true'
       return access_denied
     end
   end
@@ -72,10 +73,15 @@ class ApplicationController < ActionController::Base
   # memcached
   # http://www.ridingtheclutch.com/2009/01/08/cache-anything-easily-with-rails-and-memcached.html
   def data_cache(key)
-    unless output = APP_CACHE.get(key)
-      output = yield
-      APP_CACHE.set(key, output, 1.hour)
+    begin
+      unless output = APP_CACHE.get(key)
+        output = yield
+        APP_CACHE.set(key, output, 1.hour)
+      end
+    rescue Exception => e
+      return output
     end
+
     return output
   end
 
