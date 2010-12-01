@@ -1,0 +1,22 @@
+用户权限
+=========
+
+1. 用户
+
+   t_users
+
+   注意,采用restful_authentication,登录页面login, new 必须保持一致
+
+2. 用户组
+
+   t_groups
+
+   t_groups_users
+
+
+3. 用户组对应可操作对象
+
+   t_groups_resources
+
+
+   --END

@@ -6,7 +6,8 @@ class Server
   end
 
   def info
-    system_info + sonar_info + system_statistics + database_statistics + sonar_plugins + system_properties
+    system_info + sonar_info + system_statistics + database_statistics + system_properties
+    # + sonar_plugins 
   end
 
   def system_info

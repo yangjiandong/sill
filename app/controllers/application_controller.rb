@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
     rescue
       unless output = Rails.cache.read(key)
         output = yield
-        Rails.cache.write(key,output, 1.hour)
+        Rails.cache.write(key,output)
       end
 
       return output

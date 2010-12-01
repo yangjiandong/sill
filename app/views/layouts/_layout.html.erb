@@ -16,10 +16,10 @@
       <% if logged_in? %>
       <li>
       <img src="<%= image_path 'user.gif' %>"/><a href="<%= ApplicationController.root_context -%>/account/index"><%= current_user.name(true) -%></a>
-      &raquo; <a href="<%= ApplicationController.root_context -%>/sessions/logout">退出</a>
+      &raquo; <a href="/sessions/logout">退出</a>
       </li>
       <% else %>
-      <li><a href="<%= ApplicationController.root_context -%>/sessions/new">Log in</a></li>
+      <li><a href="/sessions/new">登录</a></li>
       <% end %>
       <li><a href="<%= ApplicationController.root_context -%>/profiles">Configuration</a></li>
     </ol>

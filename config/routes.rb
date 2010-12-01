@@ -1,8 +1,9 @@
 Sill::Application.routes.draw do
 
   match 'home' => 'system#index', :as => :home
-  match 'login' => 'sessions#login', :as => :login
-  match 'logout' => 'sessions#logout', :as => :logout
+
+  match 'login' => 'sessions#new', :as => :login
+  match 'logout' => 'sessions#destory', :as => :logout
   match 'signup' => 'users#new', :as => :signup
 
   resource :user
