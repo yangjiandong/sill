@@ -2,11 +2,12 @@ Sill::Application.routes.draw do
 
   match 'home' => 'system#index', :as => :home
 
-  match 'login' => 'sessions#new', :as => :login
-  match 'logout' => 'sessions#destory', :as => :logout
-  match 'signup' => 'users#new', :as => :signup
+  #match 'login' => 'sessions#new', :as => :login
+  #match 'logout' => 'sessions#destory', :as => :logout
+  #match 'signup' => 'users#new', :as => :signup
 
   resource :user
+  resource :session
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
