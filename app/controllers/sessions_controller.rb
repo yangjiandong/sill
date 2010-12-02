@@ -16,8 +16,8 @@ class SessionsController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      flash[:notice] = '登录成功!'
-      data_cache('app_login_info'){'about,app_login_info,ok...'}
+      flash[:notice] = self.current_user.name + '登录成功!'
+      data_cache('app_login_info'){self.current_user.name}
       redirect_to(home_path)
     else
       flash.now[:loginerror] = '验证失败 :-('

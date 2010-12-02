@@ -37,5 +37,8 @@ end
 # Initialize the rails application
 Sill::Application.initialize!
 
+# clear rails cache,if use filecache,it dele tmp/cache/**
+Rails.cache.clear
+
 require File.dirname(__FILE__) + '/../lib/database_version.rb'
 DatabaseVersion.automatic_setup
