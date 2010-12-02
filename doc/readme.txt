@@ -1,6 +1,13 @@
 Sill - rails3
 =============
 
+2010.12.02
+-----------
+
+   1. haml
+   ren _info.html.erb to _info.html.haml
+   -- 参考 html2haml _info.html.erb
+
 2010.11.30
 -----------
 

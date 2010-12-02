@@ -16,6 +16,8 @@
 
 3. 用户组对应可操作对象
 
+   t_resources
+
    t_groups_resources
 
 
