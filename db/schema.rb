@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130124321) do
+ActiveRecord::Schema.define(:version => 20101202074207) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id",               :null => false
@@ -29,6 +29,11 @@ ActiveRecord::Schema.define(:version => 20101130124321) do
     t.datetime "updated_at",  :limit => 23
   end
 
+  create_table "t_groups_resources", :id => false, :force => true do |t|
+    t.integer "resource_id", :limit => 10
+    t.integer "group_id",    :limit => 10
+  end
+
   create_table "t_groups_users", :id => false, :force => true do |t|
     t.integer "user_id",  :limit => 10
     t.integer "group_id", :limit => 10
@@ -42,6 +47,14 @@ ActiveRecord::Schema.define(:version => 20101130124321) do
     t.string  "prop_value",  :limit => 4000
     t.integer "resource_id", :limit => 10
     t.integer "user_id",     :limit => 10
+  end
+
+  create_table "t_resources", :force => true do |t|
+    t.string   "resname",     :limit => 100
+    t.string   "resurl",      :limit => 400
+    t.string   "description", :limit => 200
+    t.datetime "created_at",  :limit => 23
+    t.datetime "updated_at",  :limit => 23
   end
 
   create_table "t_users", :force => true do |t|

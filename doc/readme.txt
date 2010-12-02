@@ -8,6 +8,18 @@ Sill - rails3
    ren _info.html.erb to _info.html.haml
    -- 参考 html2haml _info.html.erb
 
+   2. multi database
+   model:
+   establish_connection "oracle_#{RAILS_ENV}"
+   establish_connection :oracle_development
+
+   3. ruby map(&:id)
+   --http://stackoverflow.com/questions/1217088/what-does-mapname-mean-in-ruby
+/* tags.map(&:name).join(' ') */
+/* def tag_names */
+/* @tag_names || tags.map { |tag| tag.name }.join(' ') */
+/* end */
+
 2010.11.30
 -----------
 

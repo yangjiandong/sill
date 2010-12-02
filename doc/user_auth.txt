@@ -17,6 +17,9 @@
 3. 用户组对应可操作对象
 
    t_resources
+   --rails generate model ModelName [field:type, field:type] 
+   rails g model resource resname:string,resurl:string,description:string
+   --rails generate migration create_resources_table
 
    t_groups_resources
 

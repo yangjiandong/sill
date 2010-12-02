@@ -4,7 +4,11 @@
 class SonarAuthorizer
 
   def has_role?(user, role)
+    Rails.logger.info role
+
     global_roles(user).include?(role)
+    # 暂时认为用户组即为角色
+
   end
 
   def has_role_for_resources?(user, role, resource_ids)

@@ -6,6 +6,7 @@ class Group < ActiveRecord::Base
 
   has_and_belongs_to_many :users, :class_name => "User", :join_table => "t_groups_users"
   #has_many :group_roles, :dependent => :delete_all
+  has_and_belongs_to_many :resources, :class_name => "Resource", :join_table => "t_groups_resources"
 
   validates_presence_of     :name
   validates_length_of       :name,    :within => 1..40
