@@ -66,7 +66,9 @@ module AuthenticatedSystem
         format.html do
           store_location
           if logged_in?
-            flash[:loginerror]='You are not authorized to access this page. Please log in with more privileges and try again.'
+            flash[:loginerror]='对不起,你没有授权操作.请尝试用其他身份登录.'
+
+            # flash[:loginerror]='You are not authorized to access this page. Please log in with more privileges and try again.'
           end
           redirect_to new_session_path
         end

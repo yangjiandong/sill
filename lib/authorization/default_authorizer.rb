@@ -4,11 +4,11 @@
 class SonarAuthorizer
 
   def has_role?(user, role)
-    Rails.logger.info role
+    # Rails.logger.info role
+    gs = global_roles(user)
 
-    global_roles(user).include?(role)
-    # 暂时认为用户组即为角色
-
+    # Rails.logger.info gs
+    gs.include?(role)
   end
 
   def has_role_for_resources?(user, role, resource_ids)
@@ -62,18 +62,25 @@ class SonarAuthorizer
 
   private
 
+  # 取出用户角色,group.name 转换成symbol
   def global_roles(user)
     group_ids=user.groups.map(&:id)
-    if group_ids.empty?
-      # Derby bug: does not support empty IN
-      global_group_roles=GroupRole.find(:all, :select => 'role', :conditions => ["resource_id is null and group_id is null"]).map{|gr| gr.role.to_sym}
-    else
-      global_group_roles=GroupRole.find(:all, :select => 'role', :conditions => ["resource_id is null and (group_id is null or group_id in(?))", group_ids]).map{|gr| gr.role.to_sym}
-    end
-    global_user_roles=user.user_roles.select{|ur| ur.resource_id.nil?}.map{|ur| ur.role.to_sym}
 
-    global_roles=(global_group_roles.concat(global_user_roles))
-    global_roles
+    global_groups=Group.find(:all, 
+                             :select => 'name', 
+                             :conditions => ["id in(?)", group_ids]).map{|gr| gr.name.to_sym}
+    # Rails.logger.info global_groups
+    global_groups
+    # if group_ids.empty?
+      # # Derby bug: does not support empty IN
+      # global_group_roles=GroupRole.find(:all, :select => 'role', :conditions => ["resource_id is null and group_id is null"]).map{|gr| gr.role.to_sym}
+    # else
+      # global_group_roles=GroupRole.find(:all, :select => 'role', :conditions => ["resource_id is null and (group_id is null or group_id in(?))", group_ids]).map{|gr| gr.role.to_sym}
+    # end
+    # global_user_roles=user.user_roles.select{|ur| ur.resource_id.nil?}.map{|ur| ur.role.to_sym}
+
+    # global_roles=(global_group_roles.concat(global_user_roles))
+    # global_roles
   end
   
 end

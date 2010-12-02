@@ -166,8 +166,11 @@ module NeedAuthorization
     #
     #   skip_before_filter :admin_required
     #
+    # 系统admin 为 administrator, 
+    # use sill-administrator ,show error:
+    # NameError (undefined local variable or method `administrator' 
     def admin_required
-      has_role?(:admin) || access_denied
+      has_role?(:administrator) || access_denied
     end
 
     # Inclusion hook to make the methods in this Helper available as ActionView helper methods.

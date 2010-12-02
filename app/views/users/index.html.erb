@@ -5,10 +5,10 @@
       <table class="data width100 sortable" id="users">
         <thead>
           <tr>
-            <th class="left">Login</th>
-            <th class="left">Name</th>
-            <th class="left nosort">Groups</th>
-            <th class="left nosort" nowrap>Operations</th>
+            <th class="left">登录名</th>
+            <th class="left">用户名</th>
+            <th class="left nosort">用户组</th>
+            <th class="left nosort" nowrap>操作</th>
           </tr>
         </thead>
         <tbody >
@@ -18,11 +18,15 @@
               <td class="left" valign="top"><%=user.login %></td>
               <td class="left" valign="top"><%=user.name %></td>
               <td class="left" valign="top">
-                <%= user.groups.sort.map(&:name).join(', ') %> (<%= link_to "select", {:action => 'select_group', :id => user.id}, :id => "select-#{u user.login}" %>)
-              </td>
+                <%= user.groups.sort.map(&:description).join(', ') %> 
+                (<%= link_to "选择", 
+                 {:action => 'select_group', :id => user.id}, 
+                 :id => "select-#{u user.login}" %>)
+ 
+               </td>
               <td class="left" valign="top">
-                <%= link_to "edit", { :id => user.id, :action => 'edit'}, :id => "edit-#{u user.login}" %> |
-                <%= link_to "delete", {:action => 'destroy', :id => user.id}, {:confirm => "Warning : are you sure to delete this user ?", :method => 'delete', :id => "delete-#{u user.login}"} %>
+                <%= link_to "修改", { :id => user.id, :action => 'edit'}, :id => "edit-#{u user.login}" %> |
+                <%= link_to "删除", {:action => 'destroy', :id => user.id}, {:confirm => "提示 : 是否要删除该用户 ?", :method => 'delete', :id => "delete-#{u user.login}"} %>
               </td>
             </tr>
           <% end %>
@@ -37,7 +41,7 @@
         title='新增用户'
         if @user.id
           action_name = 'update'
-          title='Edit user'
+          title='修改用户'
         end
          %>
     <% form_for :user, @user, :url => { :id => @user.id, :action => action_name}, :html => { :method => @user.id.nil?? :post : :put } do |f| %>

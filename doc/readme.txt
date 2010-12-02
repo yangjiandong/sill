@@ -20,6 +20,10 @@ Sill - rails3
 /* @tag_names || tags.map { |tag| tag.name }.join(' ') */
 /* end */
 
+   4. symbol 操作
+   include? 是否包含指定的symbol
+   contact  连接指定的symbol
+
 2010.11.30
 -----------
 

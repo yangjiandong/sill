@@ -23,5 +23,12 @@
 
    t_groups_resources
 
+4. 判断角色
+   
+   UsersController, before_filter 
+   :admin_required --> need_authorization
+   has_role?(:administrator) --> default_authorizer.has_role?(role, objects=nil)
+
+
 
    --END

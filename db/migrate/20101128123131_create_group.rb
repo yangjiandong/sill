@@ -14,14 +14,14 @@ class CreateGroup < ActiveRecord::Migration
     add_index "t_groups_users", "user_id"
     add_index "t_groups_users", "group_id"
 
-    administrators = Group.create(:name => 'sill-administrator', :description => '系统管理员')
+    administrators = Group.create(:name => 'administrator', :description => '系统管理员')
     # GroupRole.create(:group_id => administrators.id, :role => 'admin')
 
     admin = User.find_by_login('admin')
     admin.groups<<administrators
     admin.save!
 
-    usergroups = Group.create(:name => 'sill-users', :description => '一般用户')
+    usergroups = Group.create(:name => 'users', :description => '一般用户')
     admin = User.find_by_login('admin')
     admin.groups<<usergroups
     admin.save!

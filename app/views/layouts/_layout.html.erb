@@ -33,11 +33,6 @@
           <li class="<%= 'selected' if controller.controller_path=='filters' -%>"><a href="<%= ApplicationController.root_context -%>/filters/index">Filters</a></li>
           <li class="<%= 'selected' if controller.controller_path=='dependencies' -%>"><a href="<%= ApplicationController.root_context -%>/dependencies/index">Dependencies</a></li>
 
-          <% controller.java_facade.getPages(Navigation::SECTION_HOME, nil, nil, nil).each do |page|
-               selected=request.fullpath.include?("/plugins/home/#{page.getId()}") %>
-          <li class="<%= 'selected' if selected -%>"><a href="<%= ApplicationController.root_context -%>/plugins/home/<%= page.getId() -%>"><%= page.getTitle()-%></a></li>
-          <% end %>
-
         <% elsif (selected_section==Navigation::SECTION_RESOURCE) %>
 
           <li class="<%= 'selected' if request.fullpath.include?('/project/index')  || request.request_uri.include?('/drilldown/measures') -%>"><a href="<%= ApplicationController.root_context -%>/project/index/<%= @project.id -%>">Dashboard</a></li>
@@ -59,28 +54,31 @@
 
         <% elsif selected_section==Navigation::SECTION_CONFIGURATION %>
 
-          <li class="<%= 'selected' if request.fullpath.include?('/profiles') || request.fullpath.include?('/rules_configuration') -%>"><a href="<%= ApplicationController.root_context -%>/profiles">Quality profiles</a></li>
+          <li class="<%= 'selected' if request.fullpath.include?('/profiles') || request.fullpath.include?('/rules_configuration') -%>">
+          <a href="/profiles">Quality profiles</a>
+          </li>
 
-              <li class="<%= 'selected' if controller.controller_path=='event_categories' -%>"><a href="<%= ApplicationController.root_context -%>/event_categories/index">Event categories</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='event_categories' -%>">
+          <a href="/event_categories/index">Event categories</a></li>
               <li class="<%= 'selected' if controller.controller_path=='metrics' -%>"><a href="<%= ApplicationController.root_context -%>/metrics/index">Manual metrics</a></li>
               <li class="<%= 'selected' if controller.controller_path=='admin_filters' -%>"><a href="<%= ApplicationController.root_context -%>/admin_filters/index">Default filters</a></li>
               <li class="<%= 'selected' if controller.controller_path=='account' -%>"><a href="<%= ApplicationController.root_context -%>/account/index">My profile</a></li>
 
-              <li class="h2">Security</li>
-              <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><a href="<%= ApplicationController.root_context -%>/users">Users</a></li>
-              <li class="<%= 'selected' if request.fullpath.include?('/groups') -%>"><a href="<%= ApplicationController.root_context -%>/groups/index">Groups</a></li>
+              <li class="h2">系统安全</li>
+              <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><a href="users">用户</a></li>
+              <li class="<%= 'selected' if request.fullpath.include?('/groups') -%>"><a href="groups/index">用户组</a></li>
               <li class="<%= 'selected' if request.fullpath.include?('/roles/global') -%>"><a href="<%= ApplicationController.root_context -%>/roles/global">Global roles</a></li>
               <li class="<%= 'selected' if request.fullpath.include?('/roles/projects') -%>"><a href="<%= ApplicationController.root_context -%>/roles/projects">Project roles</a></li>
 
               <li class="h2">System</li>
               <li class="<%= 'selected' if request.fullpath.include?('/settings') -%>"><a href="<%= ApplicationController.root_context -%>/settings/index">Settings</a></li>
               <li class="<%= 'selected' if controller.controller_path=='backup' -%>"><a href="<%= ApplicationController.root_context -%>/backup">Backup</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='system' -%>"><a href="<%= ApplicationController.root_context -%>/system">System info</a></li>
+              <li class="<%= 'selected' if controller.controller_path=='system' -%>"><a href="/system">系统信息</a></li>
 
 
         <% end %>
         </ul>
-        <div id="logo"><center><a href="http://www.sonarsource.org/"><%= image_tag('sonar.png', :alt => 'Embrace Quality', :class => 'png') -%></a></center></div>
+        <div id="logo"><center><a href="http://www.rordevelop.org/"><%= image_tag('sonar.png', :alt => 'Embrace Quality', :class => 'png') -%></a></center></div>
         </div>
 
       <% if @sidebar %><div id="sidebarconf"><%= render :partial => @sidebar %></div><% else %><div id="sidebarconf" class="hidden"> </div><% end %>

@@ -14,25 +14,6 @@ class DefaultAuthenticator
   end
 end
 
-
-#
-# Use an external system to authenticate users, for example LDAP. See the Java extension point org.sonar.api.security.LoginPasswordAuthenticator.
-#
-class PluginAuthenticator
-  def initialize(java_authenticator)
-    @java_authenticator=java_authenticator
-  end
-
-  def authenticate?(login, password)
-    login.present? && password.present? && @java_authenticator.authenticate(login, password)
-  end
-
-  def editable_password?
-    false
-  end
-end
-
-
 #
 # Load the authentication system to use. The server must be restarted when configuration is changed.
 #
