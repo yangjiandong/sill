@@ -65,9 +65,9 @@
               <li class="<%= 'selected' if controller.controller_path=='account' -%>"><a href="<%= ApplicationController.root_context -%>/account/index">My profile</a></li>
 
               <li class="h2">系统安全</li>
-              <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><a href="users">用户</a></li>
+              <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><%= link_to '用户',users_path %></li>
               <li class="<%= 'selected' if request.fullpath.include?('/groups') -%>"><a href="groups/index">用户组</a></li>
-              <li class="<%= 'selected' if request.fullpath.include?('/roles/global') -%>"><a href="<%= ApplicationController.root_context -%>/roles/global">Global roles</a></li>
+              <li class="<%= 'selected' if request.fullpath.include?('/roles/global') -%>"><a href="roles/global">Global roles</a></li>
               <li class="<%= 'selected' if request.fullpath.include?('/roles/projects') -%>"><a href="<%= ApplicationController.root_context -%>/roles/projects">Project roles</a></li>
 
               <li class="h2">System</li>

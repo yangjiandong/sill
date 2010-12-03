@@ -6,8 +6,11 @@ Sill::Application.routes.draw do
   #match 'logout' => 'sessions#destory', :as => :logout
   #match 'signup' => 'users#new', :as => :signup
 
-  resource :user
+  scope '(:locale)' do
+  resource :users
   resource :session
+  root :to => 'sessions#login'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -64,9 +67,9 @@ Sill::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id(.:format)))'
 
-  root :to => 'sessions#login'
+
 
   match '/about', :to => 'static#about', :as => :about
 end

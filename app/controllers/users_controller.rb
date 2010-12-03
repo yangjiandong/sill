@@ -34,6 +34,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+  end
+
   def index
     @users = User.find(:all, :include => 'groups', :order => 'name')
     if params[:id]
@@ -106,7 +109,8 @@ class UsersController < ApplicationController
 
   def prepare_user
     user = User.new(params[:user])
-    default_group_name=java_facade.getConfigurationValue('sonar.defaultGroup') || 'sonar-users';
+    # default_group_name=java_facade.getConfigurationValue('sonar.defaultGroup') || 'sonar-users';
+    default_group_name = 'users';
     default_group=Group.find_by_name(default_group_name)
     user.groups<<default_group if default_group
     user
