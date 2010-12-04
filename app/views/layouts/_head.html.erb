@@ -10,7 +10,7 @@
   end
 %>
 <title><%= title %></title>
-<% if ENV['RAILS_ENV'] == 'production'
+<% if ENV['RAILS_ENV'] == 'production.old'
 %><%= stylesheet_link_tag 'sonar', :media => 'all' %><%= javascript_include_tag 'sonar'
 %><% else %>
 <%= stylesheet_link_tag 'yui-2.6.0.css', :media => 'all' %>
@@ -26,7 +26,7 @@
 <%= javascript_include_tag 'prototip' %>
 <% end %>
 <!--[if lte IE 6]>
-<link href="<%= ApplicationController.root_context -%>/ie6/index" media="all" rel="stylesheet" type="text/css" />
+<link href="ie6/index" media="all" rel="stylesheet" type="text/css" />
 <![endif]-->
 <link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
 </head><body>

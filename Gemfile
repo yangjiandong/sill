@@ -13,7 +13,7 @@ if defined?(JRUBY_VERSION)
     gem 'activerecord-jdbcmssql-adapter'
     gem 'jruby-openssl'
     gem 'jruby-rack'
-    #gem 'warbler'
+    gem 'warbler'
 
     # gem 'jruby-memcache-client'
 else

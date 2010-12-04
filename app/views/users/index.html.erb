@@ -25,9 +25,8 @@
  
                </td>
               <td class="left" valign="top">
-                <%= link_to "edit", edit_user_path(user) %> |
-                <%= link_to "delete", { :id => user.id, :action => 'delete', 
-                  :confirm => "提示 : 是否要删除该用户 ?", :id => "delete-#{u user.login}"} %>
+                <%= link_to "修改", edit_user_path(user) %> |
+                <%= link_to "删除", user, :confirm => "提示 : 是否要删除该用户 ?", :method => :delete %>
               </td>
             </tr>
           <% end %>

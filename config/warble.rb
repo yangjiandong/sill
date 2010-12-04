@@ -7,7 +7,6 @@ Warbler::Config.new do |config|
   # Currently the following features are supported:
   # - gemjar: package the gem repository in a jar file in WEB-INF/lib
   # config.features = %w(gemjar)
-  config.features = %w(compiled executable)
 
   # Application directories to be included in the webapp.
   config.dirs = %w(app config lib log vendor tmp)
@@ -59,7 +58,7 @@ Warbler::Config.new do |config|
   # file.
   # The Rails gems are included by default unless the vendor/rails
   # directory is present.
-  # config.gems += ["activerecord-jdbcmysql-adapter", "jruby-openssl"]
+  # config.gems += ["activerecord-jdbc-adapter", "activerecord-jdbcsqlite3-adapter","activerecord-jdbcmysql-adapter", "activerecord-jdbcmssql-adapter", "jruby-openssl"]
   # config.gems << "tzinfo"
 
   # Uncomment this if you don't want to package rails gem.
@@ -67,7 +66,7 @@ Warbler::Config.new do |config|
 
   # The most recent versions of gems are used.
   # You can specify versions of gems by using a hash assignment:
-  # config.gems["rails"] = "2.0.2"
+  # config.gems["rails"] = "3.0.1"
 
   # You can also use regexps or Gem::Dependency objects for flexibility or
   # fine-grained control.
@@ -104,7 +103,7 @@ Warbler::Config.new do |config|
   # When using the 'compiled' feature and specified, only these Ruby
   # files will be compiled. Default is to compile all \.rb files in
   # the application.
-  config.compiled_ruby_files = FileList['app/**/*.rb']
+  # config.compiled_ruby_files = FileList['app/**/*.rb']
 
   # Value of RAILS_ENV for the webapp -- default as shown below
   # config.webxml.rails.env = ENV['RAILS_ENV'] || 'production'

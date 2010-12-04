@@ -8,3 +8,7 @@
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 # end
+# 设置转换,如单数与复数
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'tax', 'taxes'
+end

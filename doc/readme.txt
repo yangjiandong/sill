@@ -1,6 +1,32 @@
 Sill - rails3
 =============
 
+2010.12.04
+----------
+
+   1. 教训,rails3中route采用restful,必须用
+   resources :users
+   以前参考sonar,用了resource :users,rake routes时,不显示index,并且edit路径为edit_users
+
+   2. warble
+
+   bundle unlock
+   bundle install
+   bundle update
+   bundle lock
+
+   warble config
+   warble
+   --运行报错时,查看下tomcat/log
+
+   运行时会对调用的rb进行编译,所以对代码质量要求比较高,现报以下错:
+   org.jruby.rack.RackInitializationException: private method `scan' called for nil:NilClass
+  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/lib/database_version.rb:42:in `uptodate?'
+  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/lib/database_version.rb:64:in `automatic_setup'
+  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/config/environment.rb:44
+  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/config/environment.rb:239:in `require'
+    ...
+
 2010.12.02
 -----------
 
