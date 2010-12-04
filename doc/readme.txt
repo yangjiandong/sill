@@ -27,6 +27,9 @@ Sill - rails3
   from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/config/environment.rb:239:in `require'
     ...
 
+  找到原因了,werble生成war时,没有把db目录带过去
+
+
 2010.12.02
 -----------
 
