@@ -107,6 +107,7 @@ class UsersController < ApplicationController
     redirect_back_or_default(:controller => 'project')
   end
 
+  # 默认用户
   def prepare_user
     user = User.new(params[:user])
     user.password='123456'
