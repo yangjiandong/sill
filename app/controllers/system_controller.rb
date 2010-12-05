@@ -1,6 +1,7 @@
 
 require 'fastercsv'
 class SystemController < ApplicationController
+  caches_page :index
 
   SECTION=Navigation::SECTION_CONFIGURATION
 

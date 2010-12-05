@@ -9,6 +9,10 @@ Sill::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # ActionController::Base.cache_store = :file_store, RAILS_ROOT+"/tmp/cache/"
+  # config.action_controller.cache_store = :file_store, RAILS_ROOT+"/tmp/cache/"
+  # config.action_controller.page_cache_directory = RAILS_ROOT+"/public/cache/"
+
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
@@ -27,14 +31,15 @@ Sill::Application.configure do
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
   # dalli
-  config.cache_store = :dalli_store, '127.0.0.1:11211',
-    { :namespace => "NAME_OF_RAILS_APP", :expires_in => 1.day, :compress => true, :compress_threshold => 64*1024 }
 
+#  config.cache_store = :dalli_store, '127.0.0.1:11211',
+#    { :namespace => "NAME_OF_RAILS_APP", :expires_in => 1.day, :compress => true, :compress_threshold => 64*1024 }
 
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets = false
+  # 最好关掉,production 中会报找不到静态文件  ,如:No route matches "/javascripts/prototip.js"
+  #config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

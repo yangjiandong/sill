@@ -1,6 +1,24 @@
 Sill - rails3
 =============
 
+2010.12.05
+----------
+
+   1. cache
+   production.rb文件中添加下面的代码：
+
+config.action_controller.perform_caching = true
+config.action_controller.cache_store = :file_store, RAILS_ROOT+"/tmp/cache/"
+config.action_controller.page_cache_directory = RAILS_ROOT+"/public/cache/"
+
+   然后在控制器中定义你要缓存的页面
+
+caches_page :index, :help, :home, :faq
+   这样就可以了， 下一次你不用请求rails服务器就能访问到这些页面了
+
+   这只是一个基本用法， 更多信息请移步：
+http://guides.rubyonrails.org/caching_with_rails.html
+
 2010.12.04
 ----------
 
@@ -17,18 +35,8 @@ Sill - rails3
 
    warble config
    warble
-   --运行报错时,查看下tomcat/log
-
-   运行时会对调用的rb进行编译,所以对代码质量要求比较高,现报以下错:
-   org.jruby.rack.RackInitializationException: private method `scan' called for nil:NilClass
-  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/lib/database_version.rb:42:in `uptodate?'
-  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/lib/database_version.rb:64:in `automatic_setup'
-  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/config/environment.rb:44
-  from D:/apache-tomcat-6.0.18/apache-tomcat-6.0.18/webapps/sill/WEB-INF/config/environment.rb:239:in `require'
-    ...
-
-  找到原因了,werble生成war时,没有把db目录带过去
-
+   
+   注意,bundle一般bundle install即可,Gemfile改动后才bundle update
 
 2010.12.02
 -----------
