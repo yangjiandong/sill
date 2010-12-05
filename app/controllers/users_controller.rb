@@ -109,6 +109,9 @@ class UsersController < ApplicationController
 
   def prepare_user
     user = User.new(params[:user])
+    user.password='123456'
+    user.password_confirmation='123456'
+
     # default_group_name=java_facade.getConfigurationValue('sonar.defaultGroup') || 'sonar-users';
     default_group_name = 'users';
     default_group=Group.find_by_name(default_group_name)

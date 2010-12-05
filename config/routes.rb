@@ -11,7 +11,11 @@ Sill::Application.routes.draw do
 
   resources :users
   # resources :sessions
+
+  match 'groups/select_user', :controller => 'groups', :action => 'select_user'
+  match 'groups/set_users', :controller => 'groups', :action => 'set_users'
   resources :groups
+
   root :to => 'sessions#login'
   
   match '/about', :to => 'static#about', :as => :about 

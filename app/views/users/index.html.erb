@@ -1,7 +1,7 @@
 <table width="100%">
   <tr>
     <td valign="top">
-      <h1 class="marginbottom10">Users</h1>
+      <h1 class="marginbottom10">用户</h1>
       <table class="data width100 sortable" id="users">
         <thead>
           <tr>
@@ -50,7 +50,7 @@
             <td class="left" valign="top"><h1><%= title %></h1></td>
           </tr>
         <tr>
-          <td class="left" valign="top">登录:
+          <td class="left" valign="top">登录*:
             <% if @user.id %>
               <%= @user.login %>
               <%= f.hidden_field :login %>
@@ -64,12 +64,6 @@
         <tr>
           <td class="left" valign="top">用户名:<br/><%= f.text_field :name, :size => 30, :maxLength => 200 %></td>
         </tr>
-        <tr>
-          <td class="left" valign="top">密码<br/><%= f.password_field :password, :size => 30, :maxLength => 50 %></td>
-        </tr>
-        <tr>
-          <td class="left" valign="top">Confirm password:<br/><%= f.password_field :password_confirmation, :size => 30, :maxLength => 50 %></td>
-          </tr>
         <tr>
           <td class="left"  nowrap="nowrap" valign="top" colspan="2">
             <%= submit_tag @user.id.nil?? '新建':'修改' %>

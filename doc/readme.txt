@@ -27,6 +27,9 @@ config.action_controller.page_cache_directory = RAILS_ROOT+"/public/cache/"
    --总结,程序对关键数据少用cache,自定义APP_CACHE,通过程序来读写,另一类是rails设置的cache,
    通过development,production环境中设置,建议只对静态文件设置cache
 
+   2. Users Delete 连接,页面必须增加
+   <%= csrf_meta_tag %>,
+   并且增加rails3其他js类库
 
 2010.12.04
 ----------
