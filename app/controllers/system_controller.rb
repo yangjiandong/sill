@@ -1,14 +1,15 @@
 
 require 'fastercsv'
 class SystemController < ApplicationController
-  caches_page :index
+#  caches_page :index
 
   SECTION=Navigation::SECTION_CONFIGURATION
 
   def index
     @server=Server.new()
 
-    @login_cache_value = data_cache('app_login_info'){'新建值'}
+    @login_cache_value = Rails.cache.read("last_login")
+#     data_cache('app_login_info'){'新建值'}
 
     respond_to do |format|
       format.html

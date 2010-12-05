@@ -19,6 +19,15 @@ caches_page :index, :help, :home, :faq
    这只是一个基本用法， 更多信息请移步：
 http://guides.rubyonrails.org/caching_with_rails.html
 
+   --经试验
+config.action_controller.cache_store = :file_store, RAILS_ROOT+"/tmp/cache/"
+config.action_controller.page_cache_directory = RAILS_ROOT+"/public/cache/"
+没效果,产生的文件一直放在public/下
+
+   --总结,程序对关键数据少用cache,自定义APP_CACHE,通过程序来读写,另一类是rails设置的cache,
+   通过development,production环境中设置,建议只对静态文件设置cache
+
+
 2010.12.04
 ----------
 
@@ -35,7 +44,7 @@ http://guides.rubyonrails.org/caching_with_rails.html
 
    warble config
    warble
-   
+
    注意,bundle一般bundle install即可,Gemfile改动后才bundle update
 
 2010.12.02
