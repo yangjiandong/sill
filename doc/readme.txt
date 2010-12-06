@@ -13,6 +13,21 @@ Sill - rails3
    https://github.com/nicksieger/jruby-rack
    For multi-threaded Rails with a single runtime, set min/max both to 1  
 
+   2. NeedAuthentication::ForUser
+
+    def self.included(recipient)
+      recipient.extend(ModelClassMethods)
+    end
+
+    扩展类方法(class method),这样User可直接用authenticate(login,password), editable_password? 方法
+    --具体参考 http://www.javaeye.com/topic/470421 
+    
+    sessions_controller.login
+    ..
+      User.authenticate(login, password)
+    ..
+
+
 2010.12.05
 ----------
 

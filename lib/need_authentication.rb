@@ -35,6 +35,8 @@ module NeedAuthentication
   module ForUser
 
     # Stuff directives into including module
+    # http://www.javaeye.com/topic/470421 
+    # 扩展类方法
     def self.included(recipient)
       recipient.extend(ModelClassMethods)
     end
@@ -60,7 +62,8 @@ module NeedAuthentication
           user=User.new(:login => login, :name => login, :email => '', :password => password, :password_confirmation => password)
           user.save!
 
-          default_group_name = java_facade.getConfigurationValue('sonar.defaultGroup') || 'sonar-users';
+          # default_group_name = java_facade.getConfigurationValue('sonar.defaultGroup') || 'sonar-users';
+          default_group_name = 'users'
           default_group=Group.find_by_name(default_group_name)
           if default_group
             user.groups<<default_group

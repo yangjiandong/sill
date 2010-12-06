@@ -7,6 +7,24 @@
 
    注意,采用restful_authentication,登录页面login, new 必须保持一致
 
+   model - User
+
+    include NeedAuthentication::ForUser
+
+    def self.included(recipient)
+      recipient.extend(ModelClassMethods)
+    end
+
+    扩展类方法(class method),这样User可直接用authenticate(login,password), editable_password? 方法
+    --具体参考 http://www.javaeye.com/topic/470421 
+    
+    这样扩展后,在控制器:
+    sessions_controller.login
+    ..
+      User.authenticate(login, password)
+    ..
+    可直接用这个类方法
+   
 2. 用户组
 
    t_groups
