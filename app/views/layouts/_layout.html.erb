@@ -11,7 +11,11 @@
 
       <li>
       <a href="javascript:window.print()"><img src="<%= image_path 'print.gif' %>" alt="Print" title="Print" /></a>
-        <% if @project %><a href="<%= url_for :overwrite_params => {:id => @project.key}-%>" id="permalink"><img src="<%= ApplicationController.root_context -%>/images/permalink.gif" alt="Permalink" title="Permalink" /></a><% end %>
+      <% if @project %>
+        <a href="<%= url_for :overwrite_params => {:id => @project.key}-%>" id="permalink">
+        <img src="<%= image_path 'permalink.gif' %>" alt="Permalink" title="Permalink" />
+        </a>
+      <% end %>
       </li>
       <% if logged_in? %>
       <li>
@@ -58,23 +62,21 @@
           <a href="/profiles">Quality profiles</a>
           </li>
 
-          <li class="<%= 'selected' if controller.controller_path=='event_categories' -%>">
-          <a href="/event_categories/index">Event categories</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='metrics' -%>"><a href="<%= ApplicationController.root_context -%>/metrics/index">Manual metrics</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='admin_filters' -%>"><a href="<%= ApplicationController.root_context -%>/admin_filters/index">Default filters</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='account' -%>"><a href="<%= ApplicationController.root_context -%>/account/index">My profile</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='event_categories' -%>"><a href="/event_categories/index">Event categories</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='metrics' -%>"><a href="<%= ApplicationController.root_context -%>/metrics/index">Manual metrics</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='admin_filters' -%>"><a href="<%= ApplicationController.root_context -%>/admin_filters/index">Default filters</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='account' -%>"><a href="<%= ApplicationController.root_context -%>/account/index">My profile</a></li>
 
-              <li class="h2">系统安全</li>
-              <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><%= link_to '用户',users_path %></li>
-              <li class="<%= 'selected' if request.fullpath.include?('/groups') -%>"><a href="groups">用户组</a></li>
-              <li class="<%= 'selected' if request.fullpath.include?('/roles/global') -%>"><a href="roles/global">Global roles</a></li>
-              <li class="<%= 'selected' if request.fullpath.include?('/roles/projects') -%>"><a href="<%= ApplicationController.root_context -%>/roles/projects">Project roles</a></li>
+          <li class="h2">系统安全</li>
+          <li class="<%= 'selected' if request.fullpath.include?('/users') -%>"><%= link_to '用户',users_path %></li>
+          <li class="<%= 'selected' if request.fullpath.include?('/groups') -%>"><a href="groups">用户组</a></li>
+          <li class="<%= 'selected' if request.fullpath.include?('/roles/global') -%>"><a href="roles/global">Global roles</a></li>
+          <li class="<%= 'selected' if request.fullpath.include?('/roles/projects') -%>"><a href="<%= ApplicationController.root_context -%>/roles/projects">Project roles</a></li>
 
-              <li class="h2">System</li>
-              <li class="<%= 'selected' if request.fullpath.include?('/settings') -%>"><a href="<%= ApplicationController.root_context -%>/settings/index">Settings</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='backup' -%>"><a href="<%= ApplicationController.root_context -%>/backup">Backup</a></li>
-              <li class="<%= 'selected' if controller.controller_path=='system' -%>"><a href="/system">系统信息</a></li>
-
+          <li class="h2">System</li>
+          <li class="<%= 'selected' if request.fullpath.include?('/settings') -%>"><a href="<%= ApplicationController.root_context -%>/settings/index">Settings</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='backup' -%>"><a href="<%= ApplicationController.root_context -%>/backup">Backup</a></li>
+          <li class="<%= 'selected' if controller.controller_path=='system' -%>"><a href="/system">系统信息</a></li>
 
         <% end %>
         </ul>
