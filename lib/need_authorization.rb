@@ -30,6 +30,7 @@ module NeedAuthorization
     # has_role?(:admin, 30) checks if the user is administrator of the project 30. It returns a boolean.
     # has_role?(:admin, [30,45,7]) checks if the user is administrator of the projects 30, 40 and 7. It returns an array of 3 booleans.
     #
+    # role 换成 group概念
     def has_role?(role, objects=nil)
       if objects.nil?
         AuthorizerFactory.authorizer.has_role?(self, role.to_sym)
