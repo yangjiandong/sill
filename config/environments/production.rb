@@ -6,8 +6,8 @@ Sill::Application.configure do
   config.cache_classes = true
 
   # dalli
-  config.cache_store = :dalli_store, '127.0.0.1:11211',
-      { :namespace => "NAME_OF_RAILS_APP", :expires_in => 1.day, :compress => true, :compress_threshold => 64*1024 }
+  # config.cache_store = :dalli_store, '127.0.0.1:11211',
+      # { :namespace => "NAME_OF_RAILS_APP", :expires_in => 1.day, :compress => true, :compress_threshold => 64*1024 }
   #config.cache_store = :file_store
   #, ::Rails.root.to_s + "/public/cache/"
 

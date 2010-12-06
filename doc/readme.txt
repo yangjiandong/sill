@@ -1,6 +1,18 @@
 Sill - rails3
 =============
 
+2010.12.06
+----------
+
+   1. 性能
+
+   d:\xampp1.6.8\apache\bin\ab -n 10 -c 5 http://127.0.0.1:8080/sill/login
+   --5 个并发,10个请求
+   --与jruby.min.runtimes 设置有关,min,max全为1时,时间最短,max 10 ,时间很慢
+   --2,4 也还行.但还找不到规律,时快时慢,最后能稳定到300多
+   https://github.com/nicksieger/jruby-rack
+   For multi-threaded Rails with a single runtime, set min/max both to 1  
+
 2010.12.05
 ----------
 

@@ -5,6 +5,11 @@
     version="2.4">
 
     <display-name>JROR Application</display-name>
+    
+    <context-param>
+        <param-name>rails.env</param-name>
+        <param-value>production</param-value>
+    </context-param>
 
     <context-param>
         <param-name>public.root</param-name>
@@ -18,7 +23,7 @@
 
     <context-param>
         <param-name>jruby.max.runtimes</param-name>
-        <param-value>10</param-value>
+        <param-value>1</param-value>
     </context-param>
 
     <!--
