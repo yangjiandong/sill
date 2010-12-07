@@ -29,6 +29,12 @@ Sill - rails3
       User.authenticate(login, password)
     ..
 
+   3. simple-navigation
+   gem "simple-navigation"
+   and run
+   bundle install
+
+   rails generate navigation_config
 
 2010.12.05
 ----------

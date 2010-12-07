@@ -25,6 +25,8 @@ end
 gem 'haml'
 gem 'will_paginate',        '>= 3.0.pre2'
 
+gem "simple-navigation"
+
 # format log
 gem 'awesome_print',      '>= 0.2.1'
 

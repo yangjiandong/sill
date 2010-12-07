@@ -26,6 +26,7 @@ class DatabaseVersion
     result
   end
 
+  # 列出升级文件,取出最大标示
   def self.target_version
     files = Dir["#{migrations_path}/[0-9]*_*.rb"].sort
     files.last.scan(/([0-9]+)_[_a-z0-9]*.rb/).first[0].to_i
