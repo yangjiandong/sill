@@ -13,7 +13,9 @@ Sill - rails3
    https://github.com/nicksieger/jruby-rack
    For multi-threaded Rails with a single runtime, set min/max both to 1  
 
-   2. NeedAuthentication::ForUser
+   2. User
+
+    include NeedAuthentication::ForUser
 
     def self.included(recipient)
       recipient.extend(ModelClassMethods)
