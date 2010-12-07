@@ -13,7 +13,7 @@
       <a href="javascript:window.print()"><img src="<%= image_path 'print.gif' %>" alt="Print" title="Print" /></a>
       <% if @project %>
         <a href="<%= url_for :overwrite_params => {:id => @project.key}-%>" id="permalink">
-        <img src="<%= image_path 'permalink.gif' %>" alt="Permalink" title="Permalink" />
+         <img src="<%= image_path 'permalink.gif' %>" alt="Permalink" title="Permalink" />
         </a>
       <% end %>
       </li>
@@ -95,5 +95,10 @@
      </div>
   </div>
 </div>
+
+<%# <% if (@my_menu_items) %> 
+  <%# <%= render_navigation :items => @my_menu_items %> 
+<%# <% end%> 
+ 
 <%= render :partial => 'layouts/info' %>
 

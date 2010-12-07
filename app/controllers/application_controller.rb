@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_filter :check_authentication
   # 不需要每次去验证
   # ,:check_database_version
+  
+  before_filter :getmenus
 
   # TODO 需删除
   def self.root_context
@@ -66,6 +68,16 @@ class ApplicationController < ActionController::Base
     if current_user.nil? && Property.value('sill.forceAuthentication')=='true'
       return access_denied
     end
+  end
+
+  def getmenus
+    @my_menu_items =[
+      {:key => :main, :name => 'Main', :url => '/', :items => [
+        {:key => :sub1, :name => 'User', :url => 'usrs'},
+        {:key => :sub2, :name => 'Group', :url => 'Groups'}
+    ]}
+    ]
+    
   end
 
   private

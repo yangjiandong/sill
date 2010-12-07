@@ -13,7 +13,7 @@ if defined?(JRUBY_VERSION)
     gem 'activerecord-jdbcmssql-adapter'
     gem 'jruby-openssl'
     gem 'jruby-rack'
-    gem 'warbler'
+    # gem 'warbler'
 
     # gem 'jruby-memcache-client'
 else
@@ -25,7 +25,7 @@ end
 gem 'haml'
 gem 'will_paginate',        '>= 3.0.pre2'
 
-gem "simple-navigation"
+# gem "simple-navigation"
 
 # format log
 gem 'awesome_print',      '>= 0.2.1'
