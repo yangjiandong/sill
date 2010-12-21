@@ -11,6 +11,17 @@ Sill::Application.configure do
   #config.cache_store = :file_store
   #, ::Rails.root.to_s + "/public/cache/"
 
+  
+  # http://blog.wpeterson.org/2010/11/23/cache-segmentation-for-rails-apps/
+  # revision_file = Rails.root.join('REVISION')
+  # Cache Segmentation for Rails Apps 
+  # if File.exist?(revision_file)
+    # revision = File.read(revision_file).match /[a-f,0-9]{6}$/
+  # end
+  # config.cache_store = :mem_cache_store, memcache_host, { :namespace => "volatile-#{ revision ? revision[0] : '0' }" }
+  # config.action_controller.cache_store = :mem_cache_store, memcache_host, { :namespace => 'stable' }
+  # end
+ 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -49,7 +60,7 @@ Sill::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
-  # config.threadsafe!
+  config.threadsafe!
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
@@ -57,4 +68,14 @@ Sill::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+# 参考sonar
+#config.autoload_paths += %W( #{RAILS_ROOT} + "/lib" )
+# config.load_paths += %W( #{RAILS_ROOT}/lib )
+
+require File.dirname(__FILE__) + '/../../lib/slf4j_logger.rb'
+
+config.logger = Slf4jLogger.new
+ActiveRecord::Base.logger = config.logger
+
 end

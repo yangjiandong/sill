@@ -1,11 +1,3 @@
-/***
- * Excerpted from "Agile Web Development with Rails, 4rd Ed.",
- * published by The Pragmatic Bookshelf.
- * Copyrights apply to this code. It may not be used to create training material, 
- * courses, books, articles, and the like. Contact us if you are in doubt.
- * We make no guarantees that this code is fit for any purpose. 
- * Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
-***/
 // script.aculo.us effects.js v1.8.3, Thu Oct 08 11:23:33 +0200 2009
 
 // Copyright (c) 2005-2009 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)

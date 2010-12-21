@@ -1,4 +1,4 @@
-require 'ap'
+#require 'ap'
 
 Sill::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
@@ -19,10 +19,32 @@ Sill::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+# Optionally load 'awesome_print' gem for debugging in development mode.
+begin
+  require 'ap'
+rescue LoadError
+end
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # bullet
+  # https://github.com/flyerhzm/bullet
+config.after_initialize do
+  Bullet.enable = true
+  Bullet.alert = true
+  Bullet.bullet_logger = true
+  Bullet.console = true
+  #Bullet.growl = true
+#  Bullet.xmpp = { :account => 'bullets_account@jabber.org',
+#                  :password => 'bullets_password_for_jabber',
+#                  :receiver => 'your_account@jabber.org',
+#                  :show_online_status => true }
+  Bullet.rails_logger = true
+  Bullet.disable_browser_cache = true
+end
 end
 

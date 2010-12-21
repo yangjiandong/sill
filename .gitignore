@@ -6,3 +6,4 @@ config/database.yml
 *.war
 *.class
 db/data.yml
+gitrm.bat
