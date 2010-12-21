@@ -2,6 +2,15 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# Define application specific global constants
+$FLASHDIV = 'flashnotice'
+$ADMINMODE = true     # Active Acl check is suspended for techusers with admin flag if this is true
+$TIMEOUT = 10000      # Timeout for server requests
+$GRIDHEIGHT = 600
+$MENUTREEFILE = "config/menutree.xml"
+$MYSQLTEXTSIZE = 65535
+$DEFAULTLOGOIMAGE = "#{Rails.root}/public/images/homepage/ev-manager_logo.png"
+
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
@@ -11,7 +20,7 @@ module Sill
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-  
+
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     #
@@ -28,16 +37,16 @@ module Sill
 
     # Have migrations with numeric prefix instead of UTC timestamp.
     # config.active_record.timestamped_migrations = false
-    
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
     config.time_zone = 'Beijing'#'UTC'#'Beijing'
     config.i18n.default_locale = 'en'#'zh_CN'
-    
-    config.active_record.default_timezone = :local  
-    config.active_record.time_zone_aware_attributes = false  
-    # config.time_zone = nil  
+
+    config.active_record.default_timezone = :local
+    config.active_record.time_zone_aware_attributes = false
+    # config.time_zone = nil
 
 #    config.generators do |g|
 #      g.template_engine :haml

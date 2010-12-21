@@ -17,9 +17,14 @@ Sill::Application.routes.draw do
   match 'groups/set_users', :controller => 'groups', :action => 'set_users'
   resources :groups
 
+  # category_tree use extjs
+  resources :categories #:only => [:index]
+  match 'category/category_tree', :controller => 'categories', :action => 'category_tree'
+  match 'category/json', :controller => 'categories', :action => 'index_json'
+
   root :to => 'sessions#login'
-  
-  match '/about', :to => 'static#about', :as => :about 
+
+  match '/about', :to => 'static#about', :as => :about
   # match ':controller(/:action(/:id(.:format)))'
 
   # The priority is based upon order of creation:

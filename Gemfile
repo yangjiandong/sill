@@ -35,6 +35,7 @@ group :development do
    gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
    gem 'rails3-generators'
    gem 'warbler'
+   gem 'bullet'
 end
 
 gem 'yaml_db'
@@ -42,6 +43,8 @@ gem 'uuidtools'
 gem 'fastercsv'
 
 gem 'dalli'
+#background job
+gem 'delayed_job'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -57,6 +60,10 @@ gem 'dalli'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+
+group :test do
+  gem 'rspec-rails', '>= 2.0.1'
+end
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

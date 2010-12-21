@@ -1,6 +1,246 @@
 Sill - rails3
 =============
 
+2010.12.21
+----------
+
+   1.  建立branch use.prototype.js
+   git branch use.prototype.js
+   git push origin use.prototype.js
+
+   master 采用extjs
+
+2010.12.20
+----------
+
+   1. 另一个高并发项目 ,采用了akka
+    https://github.com/danielribeiro/RubyOnAkka
+    -- 没成功
+
+   2. 项目:https://github.com/flyerhzm/rails-bestpractices.com
+    -- 环境为linux,
+
+   3. bullet
+    开发过程中收集query,提供改进信息
+    https://github.com/flyerhzm/bullet
+    -- mvn 环境下不能正常运行,jruby on rails下能运行.
+
+   4. 采用jruby1.5.6 + jruby rack 1.0.4
+
+   5.  Can restful authentication work with Cookies Disabled?
+   http://stackoverflow.com/questions/1514774/can-restful-authentication-work-with-cookies-disabled
+
+   add to lib\authenticate_system.rb
+   --好像多余,已实现
+
+2010.12.18
+----------
+
+   1. 另一种debug 方法
+
+   lib/debug_log, sill.rb增加设置:
+   ActionController::Base.send(:include, DebugLog)
+   ActiveRecord::Base.send(:include, DebugLog)
+
+   Based on the code above, made the plugin debug_logger.
+   How to use:
+   in model or controller
+   debug_log("anything")
+
+   log文件存放在log/debug.log
+   tail debug.log 可跟踪显示.
+
+   2. rspec
+
+   save/rspec.txt
+
+   3. 后台任务
+   https://github.com/ncr/background-fu
+   采用plugin 方式,
+   save\background.txt
+
+   rails plugin install git://github.com/ncr/background-fu.git
+   rails g background
+   --需修改下background-fu/rails/init.rb
+   --jruby script/background start 不成功
+
+   另一个方案
+   http://github.com/collectiveidea/delayed_job
+   gem 'delayed_job'
+
+   jruby script/rails generate delayed_job
+   rake db:migrate
+   --run
+   rake jobs:work
+
+   相关信息:
+   http://asciicasts.com/episodes/171-delayed-job
+   http://blog.plataformatec.com.br/2010/02/monitoring-delayed-job-with-bluepill-and-capistrano/
+
+   4. 如何格式化"12345"为"12,345"
+javascript:
+Js代码
+string.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, function(s){return s+","})
+
+ruby:
+Ruby代码
+string.gsub(/(\d)(?=(\d\d\d)+(?!\d))/) { |match| match + ',' }
+
+
+2010.12.17
+----------
+
+   1. production log 采用 log4j
+
+   production.rb:
+
+   require File.dirname(__FILE__) + '/../../lib/slf4j_logger.rb'
+   config.logger = Slf4jLogger.new
+   ActiveRecord::Base.logger = config.logger
+
+   logback.xml:
+  <!-- JRuby on Rails. Uncomment in order to log HTTP and SQL requests -->
+  <logger name="rails">
+    <level value="ERROR"/>
+  </logger>
+
+2010.12.16
+----------
+
+   1. chart - highcharts
+   https://github.com/stonegao/lazy_high_charts
+
+2010.12.15
+----------
+
+   1. extjs/direct
+   https://github.com/extjs/direct-rails.git
+   or
+   https://github.com/stonegao/active-direct
+
+   2. acts_as_nested_set
+   http://www.javaeye.com/topic/76860
+   改用: rails plugin install git://github.com/galetahub/awesome_nested_set.git
+   save/ Awesome Nested Set Cheat Sheet.txt
+
+   cd src\main\webapp\WEB-INF
+   rails generate migration create_categories
+   rake db:migrate
+
+2010.12.14
+----------
+
+   1. 采用页面缓存时,由于jetty运行配置中设置了webpath 为 dev,所以统一放到webapp/dev下
+
+2010.12.13
+----------
+
+   1. 感觉还是要用extjs,倒底它提供了全套的界面解决方案,不像jquery,prototype,只是个框架,并且应用起来还要考虑插件所依靠的版本问题.
+
+   2. 建立branch use.prototype.js
+   git branch use.prototype.js
+   git push origin use.prototype.js
+
+   3. 引入ext3.3.0
+   public/javascripts/ext
+
+   4. name shrek
+   http://www.google.com/images?hl=en&q=shrek&um=1&ie=UTF-8&source=univ&ei=gQIGTZGWBYOsrAezhPmQDw&sa=X&oi=image_result_group&ct=title&resnum=8&ved=0CHsQsAQwBw&biw=1239&bih=754
+
+   5. 参考 extrails,
+   http://sourceforge.net/projects/extrails/
+
+2010.12.12
+----------
+
+   1. jetty 运行时,html,js文件不能编辑
+http://www.assembla.com/wiki/show/liftweb/Fix_file_locking_problem_with_jettyrun
+Files are locked on Windows and can't be replaced
+old:http://docs.codehaus.org/display/JETTY/Files+locked+on+Windows
+
+   <servlet>
+    <servlet-name>default</servlet-name>
+    <init-param>
+      <param-name>useFileMappedBuffer</param-name>
+      <param-value>false</param-value>
+    </init-param>
+  </servlet>
+
+  或采用webdefault.xml,pom.xml设置
+  <webDefaultXml>${basedir}/src/dev/webdefault.xml</webDefaultXml>
+  --没效果,在sshapp项目上用时起作用
+
+   2. prototip 1.0.2 在 rails3 自带prototype 1.7.2 的环境中不能运行
+
+   prototip最新版2.2.2在ie8,chrome下不能正常显示
+   暂时用1.3.5
+   http://www.nickstakenburg.com/projects/prototip/
+   --也有问题,显示不完整
+
+   3. 简单 tooltip
+   http://rafael.adm.br/p/simple-tooltip-helper-for-ruby-on-rails/
+
+   4. How to enable multi-threading in rails
+To enable thread-safe (multi-threaded) mode in Rails when running with a warbler-generated WAR file:
+
+set min/max runtimes in warble.rb to 1/1 respectively
+in config/environment.rb put the line config.threadsafe!
+When running with the GlassFish gem, threadsafe mode will be detected automatically and GlassFish will use only a single JRuby instance. As a result only step 2 above is necessary.
+
+   http://kenai.com/projects/jruby/pages/RailsMulti-ThreadingBestPractices/revisions/2
+
+2010.12.10
+----------
+
+   1. 在ChartsServlet中硬编码charts
+
+2010.12.09
+----------
+
+   1. 加入sonar项目中platform概念
+
+   pom.xml
+   replace commons-logging by jcl-over-slf4j
+
+2010.12.08
+----------
+
+   1. 怪异现象,用mvn jetty:run 报:
+   org.jruby.rack.RackInitializationException: No such file or directory - D:/workspace/jruby/config/database.yml|...
+
+   打包生成war,放到tomcat,运行正常.
+   将整个项目移到其它地方d:\a\sill.mvn,配置下config/database.yml development数据源,就能正常.
+   原来目录为 d:\workspace\jruby\workspace\sill.mvn\
+
+2010.12.07
+----------
+
+   1.  采用mvn.
+      cd parent
+      mvn install
+      cd ..
+      mv eclipse:eclipse
+
+      jruby-rack 暂时用1.0.1, 1.0.3 有bug,jetty下不能显示,首页为浏览目录.
+      --可采用index.html解决
+      --现采用jruby 1.5.6, jruby-rack 1.3.0
+
+   2. webapp/WEB-INF/gems 不加入版本
+
+   3、手工建立eclipse项目
+
+   a、建立m2_home变量
+     mvn -Declipse.workspace=<path-to-eclipse-workspace> eclipse:add-maven-repo
+   b、生成eclipse项目
+     mvn eclipse:eclipse
+     bin/eclipse.bat
+
+   4. 生成演示数据
+   --yaml_db 在rails2.3 中有点问题,具体看jrails/doc/readme.txt
+
+   拷贝yaml_db到lib下
+   rake db:dump --> db/data.yml
+
 2010.12.06
 ----------
 
@@ -11,7 +251,7 @@ Sill - rails3
    --与jruby.min.runtimes 设置有关,min,max全为1时,时间最短,max 10 ,时间很慢
    --2,4 也还行.但还找不到规律,时快时慢,最后能稳定到300多
    https://github.com/nicksieger/jruby-rack
-   For multi-threaded Rails with a single runtime, set min/max both to 1  
+   For multi-threaded Rails with a single runtime, set min/max both to 1
 
    2. User
 
@@ -22,8 +262,8 @@ Sill - rails3
     end
 
     扩展类方法(class method),这样User可直接用authenticate(login,password), editable_password? 方法
-    --具体参考 http://www.javaeye.com/topic/470421 
-    
+    --具体参考 http://www.javaeye.com/topic/470421
+
     sessions_controller.login
     ..
       User.authenticate(login, password)
