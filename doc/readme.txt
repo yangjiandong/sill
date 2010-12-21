@@ -10,6 +10,10 @@ Sill - rails3
 
    master 采用extjs
 
+   2. 采用mongrel,
+   另一个server,>gem install eventmachine-0.12.10-java.gem 
+   高并发时有得一拼：http://www.rubyinside.com/thin-a-ruby-http-daemon-thats-faster-than-mongrel-688.html 
+
 2010.12.20
 ----------
 
