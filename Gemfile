@@ -36,6 +36,8 @@ group :development do
    gem 'rails3-generators'
    gem 'warbler'
    gem 'bullet'
+   gem 'mongrel'
+
 end
 
 gem 'yaml_db'
