@@ -106,6 +106,15 @@ ok    9. jrubyc
     var up = divo.utils.base64.encode(username + "," + password)
     Ext.Ajax.defaultHeaders.Authorization = up
 
+    or:
+
+    http://www.sencha.com/forum/archive/index.php/t-73821.html
+    this.clientId = Ext.util.MD5(Math.random());
+    this.authorizationRealm = 
+      Ext.util.base64.encode(this.clientId + '-' + this.username + ':' + this.password);
+
+    Ext.Ajax.defaultHeaders = {'Authorization' : 'Basic ' + this.authorizationRealm};      
+
    14. 后台任务
    git://github.com/ncr/background-fu.git
 
