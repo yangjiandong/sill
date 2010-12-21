@@ -42,6 +42,7 @@ gem 'uuidtools'
 gem 'fastercsv'
 
 gem 'dalli'
+gem 'delayed_job'
 
 # Use unicorn as the web server
 # gem 'unicorn'
