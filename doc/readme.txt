@@ -1,6 +1,18 @@
 Sill - rails3
 =============
 
+2010.12.22
+----------
+
+   1. use jquery
+   http://ihower.tw/rails3/restful.html
+   save\jquery.rails.js
+   首先，我們必須更換 public/javascript/rails.js 的內容為 jQuery 版本，
+   這個檔案是 Rails 的 JavaScript driver。
+   請下載 http://github.com/rails/jquery-ujs/blob/master/src/rails.js 覆蓋至 /public/javascript/rails.js
+   接著，我們需要 jQuery。請 下載 jQuery 至 /public/javascript/jquery.js，然後修改 config/application.rb 將以下註解移除
+   config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+   
 2010.12.21
 ----------
 
