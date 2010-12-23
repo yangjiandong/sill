@@ -65,6 +65,9 @@ gem 'delayed_job'
 
 group :test do
   gem 'rspec-rails', '>= 2.0.1'
+  gem 'autotest'
+  gem 'webrat'
+  gem 'capybara'
 end
 
 # Bundle gems for the local environment. Make sure to
