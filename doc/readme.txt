@@ -6,6 +6,18 @@ Sill - rails3
 
    1. rspec 
 
+2010.12.22
+----------
+
+   1. use jquery
+   http://ihower.tw/rails3/restful.html
+   save\jquery.rails.js
+   首先，我們必須更換 public/javascript/rails.js 的內容為 jQuery 版本，
+   這個檔案是 Rails 的 JavaScript driver。
+   請下載 http://github.com/rails/jquery-ujs/blob/master/src/rails.js 覆蓋至 /public/javascript/rails.js
+   接著，我們需要 jQuery。請 下載 jQuery 至 /public/javascript/jquery.js，然後修改 config/application.rb 將以下註解移除
+   config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
+
 2010.12.21
 ----------
 
@@ -44,7 +56,35 @@ Sill - rails3
 	样式表 (1 文件)	96 KB (136 KB 解压的)
 	http://localhost:3000/javascripts/ext/resources/css/ext-all.css?1292636297	96 KB (136 KB 解压的)
 	总计	118 KB (
+
+   4. link
+
+On Linux, Unix or Mac OS X systems create a symbolic link named typo3_src
+pointing to the source package:
+	ln -s /var/www/typo3_src-4.3.0 /var/www/example.com/typo3_src
+
+On Windows Vista or Windows 7 create a symbolic link named typo3_src
+pointing to the source package:
+	mklink /D C:\<dir>\typo3_src-4.3.0 C:\<dir>\example.com\typo3_src
+
+Users of Windows XP/2000 can use the "junction" program by Marc Russinovich to
+create links. The program can be obtained at:
+	http://technet.microsoft.com/en-us/sysinternals/bb896768.aspx
+Use junction to list junctions:
+Usage: [-s]
+-s    Recurse subdirectories
+Examples:
+To determine if a file is a junction, specify the file name:
+junction c:\test
+To list junctions beneath a directory, include the –s switch:
+junction -s c:\
+To create a junction c:\Program-Files for "c:\Program Files":
+C:\>md Program-Files
+C:\>junction c:\Program-Files "c:\Program Files"
+To delete a junction, use the –d switch:
+junction -d c:\Program-Files
    
+
 2010.12.20
 ----------
 
