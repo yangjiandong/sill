@@ -10,6 +10,7 @@ require "debug_log"
       # ActionView::Base.send(:include, Sill::Callback::Helper)
 # ActionController::Base.send(:include, Sill::Callback::Helper)
 
+#ActionController::Base.view_paths.insert(1, "app/views/addons")
 ActionController::Base.send(:include, DebugLog)
 ActiveRecord::Base.send(:include, DebugLog)
 
