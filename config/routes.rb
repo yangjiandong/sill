@@ -21,6 +21,7 @@ Sill::Application.routes.draw do
   resources :categories #:only => [:index]
   match 'category/category_tree', :controller => 'categories', :action => 'category_tree'
   match 'category/json', :controller => 'categories', :action => 'index_json'
+  match 'category/layout', :controller => 'categories', :action => 'layout'
 
   root :to => 'sessions#login'
 

@@ -12,6 +12,16 @@ Sill - rails3
    http://localhost:3000/category/category_tree 不能正常运行(长时间没反应)
    Gemfile 返回 ror 3.0.1
 
+   3. 加速jruby 运行速度
+   http://blog.headius.com/2009/05/jruby-nailgun-support-in-130.html
+   --好象速度没有变快
+   jruby/tool/nailgun/jruby --ng-server
+   open other command
+   jruby --ng -e 'puts 1'
+   jruby --ng script/rails s
+   --测试
+   jruby --ng -e 'puts Time.now; require "config/environment";puts Time.now'
+   
 2010.12.23
 ----------
 

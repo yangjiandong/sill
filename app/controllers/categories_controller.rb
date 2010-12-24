@@ -21,7 +21,10 @@ class CategoriesController < ApplicationController
     data = get_tree(categories, nil)
     Rails.logger.info("category_tree: #{data.to_json}")
     render :text => data.to_json, :layout => false
+  end
 
+  def layout
+    
   end
 
   def get_tree(categories, parent)
