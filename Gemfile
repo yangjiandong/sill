@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.1'
 if defined?(JRUBY_VERSION)
     # gem 'jdbc-sqlite3'
     gem 'activerecord-jdbc-adapter'

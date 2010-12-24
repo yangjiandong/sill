@@ -16,6 +16,7 @@ class CategoriesController < ApplicationController
   end
 
   def category_tree
+    # Rails.logger.info("Begin ... tree")
     categories = Category.find_by_sql("select * from t_categories where parent_id is null")
     data = get_tree(categories, nil)
     Rails.logger.info("category_tree: #{data.to_json}")
@@ -24,6 +25,7 @@ class CategoriesController < ApplicationController
   end
 
   def get_tree(categories, parent)
+    Rails.logger.info("Begin:#{categories.to_json}")
     data = Array.new
 
     categories.each { |category|

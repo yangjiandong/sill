@@ -1,6 +1,17 @@
 Sill - rails3
 =============
 
+2010.12.24
+----------
+
+   1. gem install ruby-debug
+   0.10.4
+   http://blog.headius.com/2010/12/jruby-finally-installs-ruby-debug-gem.html 
+
+   2. awesome_nested_set 1.2.5 + ror 3.0.3 有问题,
+   http://localhost:3000/category/category_tree 不能正常运行(长时间没反应)
+   Gemfile 返回 ror 3.0.1
+
 2010.12.23
 ----------
 

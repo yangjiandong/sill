@@ -11,14 +11,13 @@
 %>
 <title><%= title %></title>
 
-<%= javascript_include_tag "prototype" %>
+<%= javascript_include_tag :defaults %>
 
 <% if ENV['RAILS_ENV'] == 'production'%>
   <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
   <%= javascript_include_tag "ext/adapter/ext/ext-base", "ext/ext-all" %>
 <% else %>
   <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
-  <%#= javascript_include_tag :defaults %>
   <%= javascript_include_tag "ext/adapter/ext/ext-base-debug", "ext/ext-all-debug" %>
   <%#= javascript_include_tag "ext/adapter/prototype/ext-prototype-adapter-debug" %>
 <% end %>
