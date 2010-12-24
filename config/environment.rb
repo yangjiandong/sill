@@ -37,6 +37,8 @@ end
 # Initialize the rails application
 Sill::Application.initialize!
 
+ActionController::Base.view_paths.insert(1, "app/views/addons")
+
 # clear rails cache,if use filecache,it dele tmp/cache/**
 Rails.cache.clear
 

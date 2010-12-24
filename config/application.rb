@@ -17,6 +17,18 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Sill
   class Application < Rails::Application
+
+    #http://garbageburrito.com/blog/entry/1326901/organizing-large-rails-projects-the-simple-way?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+garbageburrito-blog+%28Garbage+Burrito+-+Latest+Blog+Entries%29
+    # ActionController::Base.view_paths.insert(1, "app/views/addons") add to environments.rb
+    config.load_paths += %W(
+      #{Rails.root.to_s}/app/controllers/addons
+      #{Rails.root.to_s}/app/models/addons
+      #{Rails.root.to_s}/app/helpers/addons
+    )
+
+    config.controller_paths += %W(
+      #{Rails.root.to_s}/app/controllers/addons
+    )
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
