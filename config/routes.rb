@@ -2,6 +2,7 @@ Sill::Application.routes.draw do
 
   match 'home' => 'system#index', :as => :home
   match 'system' => 'system#index', :as => :system
+  match 'welcome' => 'system#welcome', :as => :welcome
 
   match 'login' => 'sessions#login', :as => :login
   match 'logout' => 'sessions#logout', :as => :logout

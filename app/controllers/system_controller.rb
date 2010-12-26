@@ -3,6 +3,8 @@ require 'fastercsv'
 class SystemController < ApplicationController
 #  caches_page :index
 
+  skip_before_filter :check_authentication
+
   SECTION=Navigation::SECTION_CONFIGURATION
 
   def index
@@ -17,6 +19,10 @@ class SystemController < ApplicationController
         send_data(to_csv, :type => 'text/csv; charset=utf-8', :disposition => 'attachment; filename=sill_system_info.csv')
       }
     end
+  end
+
+  def welcome
+    render :layout => false
   end
 
   private

@@ -10,14 +10,14 @@
   end
 %>
 <title><%= title %></title>
+<meta name="description" content="Rails and Extjs applications." />
 
 <%= javascript_include_tag :jquery %>
 
+<%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
 <% if ENV['RAILS_ENV'] == 'production'%>
-  <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
   <%= javascript_include_tag "ext/adapter/ext/ext-base", "ext/ext-all" %>
 <% else %>
-  <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
   <%= javascript_include_tag "ext/adapter/ext/ext-base-debug", "ext/ext-all-debug" %>
 <% end %>
 
@@ -26,13 +26,40 @@
   Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
   //]]>
 </script>
+
+<%= stylesheet_link_tag "app.css" %>
+<%= javascript_include_tag "ext.ux/TabCloseMenu.js" %>
+<%= javascript_include_tag "app/app.js" %>
+
 <link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
 <link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
 </head>
 
-<body>
-    <div class="container">
-      <%= yield %>
+<body scroll="no" id="docs">
+<div id="loading-mask"></div>
+<div id="loading">
+    <div class="loading-indicator">
+        <img src="<%= image_path 'extanim32.gif' %>" width="32" height="32" style="margin-right:8px;" align="absmiddle" />
+        Loading&hellip;
     </div>
+</div>
+
+<div id="header">
+    <img style="margin-left: 5px" src="<%= image_path 'title-ext.png' %>" alt="Ext JS API Documentation" height="49" width="380" />
+    <div style="float:right; margin-top: 15px;margin-right: 10px;color: #CCC">
+        <a href="http://dev.sencha.com/deploy/dev/examples/" style="padding:5px">examples</a> |
+        <a href="http://www.sencha.com/" style="padding:5px">sencha.com</a>
+    </div>
+</div>
+
+<div id="classes"></div>
+
+<div id="main"></div>
+
+<select id="search-options" style="display:none">
+    <option>Starts with</option>
+    <option>Ends with</option>
+    <option>Any Match</option>
+</select>
 </body>
 </html>
