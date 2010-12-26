@@ -145,6 +145,8 @@ junction -d c:\Program-Files
 
    log文件存放在log/debug.log
    tail debug.log 可跟踪显示.
+   --实时显示log信息
+   tail debug.log -f 
 
    2. rspec
 
