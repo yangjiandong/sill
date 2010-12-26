@@ -16,9 +16,9 @@
 
 <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
 <% if ENV['RAILS_ENV'] == 'production'%>
-  <%= javascript_include_tag "ext/adapter/ext/ext-base", "ext/ext-all" %>
+  <%= javascript_include_tag "ext/adapter/ext/ext-base", "ext/ext-all", "ext/ext-lang-zh_CN" %>
 <% else %>
-  <%= javascript_include_tag "ext/adapter/ext/ext-base-debug", "ext/ext-all-debug" %>
+  <%= javascript_include_tag "ext/adapter/ext/ext-base-debug", "ext/ext-all-debug", "ext/ext-lang-zh_CN"  %>
 <% end %>
 
 <script type="text/javascript">
@@ -40,14 +40,14 @@
 <div id="loading">
     <div class="loading-indicator">
         <img src="<%= image_path 'extanim32.gif' %>" width="32" height="32" style="margin-right:8px;" align="absmiddle" />
-        Loading&hellip;
+        加载中&hellip;
     </div>
 </div>
 
 <div id="header">
     <img style="margin-left: 5px" src="<%= image_path 'title-ext.png' %>" alt="Ext JS API Documentation" height="49" width="380" />
     <div style="float:right; margin-top: 15px;margin-right: 10px;color: #CCC">
-        <a href="http://dev.sencha.com/deploy/dev/examples/" style="padding:5px">examples</a> |
+        <a href="http://dev.sencha.com/deploy/dev/examples/" style="padding:5px">登录用户</a> |
         <a href="http://www.sencha.com/" style="padding:5px">sencha.com</a>
     </div>
 </div>
