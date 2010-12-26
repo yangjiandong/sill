@@ -1,6 +1,38 @@
-<%= render :partial => 'layouts/head' %>
-<% if params[:layout]=='false' %>
-  <%= render :partial => 'layouts/nolayout' %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<%
+  if @page_title
+    title="Sill - #{h(@page_title)}"
+  elsif @project
+    title="Sill - #{h(@project.name)}"
+  else
+    title='Sill'
+  end
+%>
+<title><%= title %></title>
+
+<%= javascript_include_tag :jquery %>
+
+<% if ENV['RAILS_ENV'] == 'production'%>
+  <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
+  <%= javascript_include_tag "ext/adapter/ext/ext-base", "ext/ext-all" %>
 <% else %>
-  <%= render :partial => 'layouts/layout' %>
+  <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
+  <%= javascript_include_tag "ext/adapter/ext/ext-base-debug", "ext/ext-all-debug" %>
 <% end %>
+
+<script type="text/javascript">
+  //<![CDATA[
+  Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
+  //]]>
+</script>
+<link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+<link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+</head>
+
+<body>
+    <div class="container">
+      <%= yield %>
+    </div>
+</body>
+</html>
