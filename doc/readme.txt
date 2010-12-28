@@ -1,12 +1,17 @@
 Sill - rails3
 =============
 
+2010.12.28
+----------
+
+   1. 参考ext doc, 树形菜单,可查找定位
+
 2010.12.24
 ----------
 
    1. gem install ruby-debug
    0.10.4
-   http://blog.headius.com/2010/12/jruby-finally-installs-ruby-debug-gem.html 
+   http://blog.headius.com/2010/12/jruby-finally-installs-ruby-debug-gem.html
 
    2. awesome_nested_set 1.2.5 + ror 3.0.3 有问题,
    http://localhost:3000/category/category_tree 不能正常运行(长时间没反应)
@@ -21,11 +26,11 @@ Sill - rails3
    jruby --ng script/rails s
    --测试
    jruby --ng -e 'puts Time.now; require "config/environment";puts Time.now'
-   
+
 2010.12.23
 ----------
 
-   1. rspec 
+   1. rspec
 
 2010.12.22
 ----------
@@ -49,48 +54,48 @@ Sill - rails3
    master 采用extjs
 
    2. 采用mongrel,
-   另一个server,>gem install eventmachine-0.12.10-java.gem 
-   高并发时有得一拼：http://www.rubyinside.com/thin-a-ruby-http-daemon-thats-faster-than-mongrel-688.html 
+   另一个server,>gem install eventmachine-0.12.10-java.gem
+   高并发时有得一拼：http://www.rubyinside.com/thin-a-ruby-http-daemon-thats-faster-than-mongrel-688.html
 
    3. 采用mvn jetty方式运行，页面压缩率没有mongrel 高
    通过对login页面的对比：
 文档 (1 文件)	2 KB (2 KB 解压的)
-	http://localhost:9001/dev/login	2 KB (2 KB 解压的)
-	图片 (1 文件)	21 KB
-	http://localhost:9001/dev/images/favicon.ico?1291723898	21 KB
-	对象 (0 文件)	
-	脚本 (2 文件)	101 KB (1430 KB 解压的)
-	http://localhost:9001/dev/javascripts/ext/ext-all-debug.js?1292636297	54 KB (1336 KB 解压的)
-	http://localhost:9001/dev/javascripts/ext/adapter/ext/ext-base-debug.js?1292636297	47 KB (94 KB 解压的)
-	样式表 (1 文件)	68 KB (136 KB 解压的)
-	http://localhost:9001/dev/javascripts/ext/resources/css/ext-all.css?1292636297	68 KB (136 KB 解压的)
-	总计	192 KB (1589 KB 解压的)
+  http://localhost:9001/dev/login	2 KB (2 KB 解压的)
+  图片 (1 文件)	21 KB
+  http://localhost:9001/dev/images/favicon.ico?1291723898	21 KB
+  对象 (0 文件)
+  脚本 (2 文件)	101 KB (1430 KB 解压的)
+  http://localhost:9001/dev/javascripts/ext/ext-all-debug.js?1292636297	54 KB (1336 KB 解压的)
+  http://localhost:9001/dev/javascripts/ext/adapter/ext/ext-base-debug.js?1292636297	47 KB (94 KB 解压的)
+  样式表 (1 文件)	68 KB (136 KB 解压的)
+  http://localhost:9001/dev/javascripts/ext/resources/css/ext-all.css?1292636297	68 KB (136 KB 解压的)
+  总计	192 KB (1589 KB 解压的)
 
 文档 (1 文件)	2 KB (2 KB 解压的)
-	http://localhost:3000/login	2 KB (2 KB 解压的)
-	图片 (1 文件)	8 KB
-	http://localhost:3000/images/favicon.ico?1291723898	8 KB
-	对象 (0 文件)	
-	脚本 (2 文件)	12 KB (1430 KB 解压的)
-	http://localhost:3000/javascripts/ext/ext-all-debug.js?1292636297	8 KB (1336 KB 解压的)
-	http://localhost:3000/javascripts/ext/adapter/ext/ext-base-debug.js?1292636297	4 KB (94 KB 解压的)
-	样式表 (1 文件)	96 KB (136 KB 解压的)
-	http://localhost:3000/javascripts/ext/resources/css/ext-all.css?1292636297	96 KB (136 KB 解压的)
-	总计	118 KB (
+  http://localhost:3000/login	2 KB (2 KB 解压的)
+  图片 (1 文件)	8 KB
+  http://localhost:3000/images/favicon.ico?1291723898	8 KB
+  对象 (0 文件)
+  脚本 (2 文件)	12 KB (1430 KB 解压的)
+  http://localhost:3000/javascripts/ext/ext-all-debug.js?1292636297	8 KB (1336 KB 解压的)
+  http://localhost:3000/javascripts/ext/adapter/ext/ext-base-debug.js?1292636297	4 KB (94 KB 解压的)
+  样式表 (1 文件)	96 KB (136 KB 解压的)
+  http://localhost:3000/javascripts/ext/resources/css/ext-all.css?1292636297	96 KB (136 KB 解压的)
+  总计	118 KB (
 
    4. link
 
 On Linux, Unix or Mac OS X systems create a symbolic link named typo3_src
 pointing to the source package:
-	ln -s /var/www/typo3_src-4.3.0 /var/www/example.com/typo3_src
+  ln -s /var/www/typo3_src-4.3.0 /var/www/example.com/typo3_src
 
 On Windows Vista or Windows 7 create a symbolic link named typo3_src
 pointing to the source package:
-	mklink /D C:\<dir>\typo3_src-4.3.0 C:\<dir>\example.com\typo3_src
+  mklink /D C:\<dir>\typo3_src-4.3.0 C:\<dir>\example.com\typo3_src
 
 Users of Windows XP/2000 can use the "junction" program by Marc Russinovich to
 create links. The program can be obtained at:
-	http://technet.microsoft.com/en-us/sysinternals/bb896768.aspx
+  http://technet.microsoft.com/en-us/sysinternals/bb896768.aspx
 Use junction to list junctions:
 Usage: [-s]
 -s    Recurse subdirectories
@@ -104,7 +109,7 @@ C:\>md Program-Files
 C:\>junction c:\Program-Files "c:\Program Files"
 To delete a junction, use the –d switch:
 junction -d c:\Program-Files
-   
+
 
 2010.12.20
 ----------
@@ -146,7 +151,7 @@ junction -d c:\Program-Files
    log文件存放在log/debug.log
    tail debug.log 可跟踪显示.
    --实时显示log信息
-   tail debug.log -f 
+   tail debug.log -f
 
    2. rspec
 

@@ -23,13 +23,32 @@ ApiPanel = function() {
         collapseMode : 'mini',
         loader : new Ext.tree.TreeLoader({
               preloadChildren : true,
-              clearOnLoad : false
+              clearOnLoad : false,
+              dataUrl: 'category/category_tree'
             }),
         root : new Ext.tree.AsyncTreeNode({
           text : 'Ext JS',
           id : 'root',
           expanded : true
             // , children:[Docs.classData]
+//          ,children: [{
+//                        text: 'First',
+//                        expanded: true,
+//                        children: [{
+//                            text: 'one',
+//                            leaf: true
+//                        }, {
+//                            text: 'two',
+//                            leaf: true
+//                        }]
+//                    }, {
+//                        text: 'Second',
+//                        expanded: true,
+//                        children: [{
+//                            text: 'one',
+//                            leaf: true
+//                        }]
+//                    }]
           }),
         collapseFirst : false
       });
@@ -47,7 +66,7 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
         Ext.apply(this, {
               tbar : [' ', new Ext.form.TextField({
                         width : 200,
-                        emptyText : 'Find a Class',
+                        emptyText : '菜单查找',
                         enableKeyEvents : true,
                         listeners : {
                           render : function(f) {
