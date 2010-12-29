@@ -1,0 +1,73 @@
+oracle
+========
+
+1. http://forums.pragprog.com/forums/125/topics/7047
+
+example:
+
+adapter: oracle
+host: 10.2.221.189
+port: 1528
+database: LEGALDEV
+username: ...
+password: ...
+
+
+2. enhanced
+
+https://github.com/rsim/oracle-enhanced
+
+http://wiki.oracle.com/page/JRuby+on+Rails:+Deploying+to+Oracle+Application+Server
+
+jruby -S gem install activerecord-oracle_enhanced-adapter
+jruby -S gem install ruby-plsql
+sudo mv ojdbc14.jar $JRUBY_HOME/lib
+
+Test connectivity:
+
+require 'rubygems'require 'active_record'
+
+ActiveRecord::Base.establish_connection(
+:adapter=>'oracle_enhanced',
+:host=>'192.168.0.101',
+:port=>1521,
+:database => 'owcdb01',
+:username=>'ruby',
+:password=>'ruby')
+
+connection = ActiveRecord::Base.connection
+puts connection.select_value("select sysdate from dual")
+
+Create a Rails application and configure oracle_enhanced driver
+
+jruby -S rails mytest -d oracle
+
+Edit config/database.yml:
+
+development:
+adapter: oracle_enhanced
+host: 192.168.0.101
+port: 1521
+database: owcdb01
+username: ruby
+password: ruby
+
+Also see configuration steps in: http://wiki.github.com/rsim/oracle-enhanced/usage which includes:
+
+1) Add to config/environment.rb to ensure that the oracle_enhanced adapter is loaded:
+
+config.gem "activerecord-oracle_enhanced-adapter", :lib => "active_record/connection_adapters/oracle_enhanced_adapter"
+
+2) Create a config/initializers/oracle.rb file to hold adapter parameters:
+
+ActiveRecord::ConnectionAdapters::OracleEnhancedAdapter.class_eval do
+self.emulate_integers_by_column_name = true
+self.emulate_dates_by_column_name = true
+self.emulate_booleans_from_strings = true
+self.string_to_date_format = "%d.%m.%Y"
+self.string_to_time_format = "%d.%m.%Y %H:%M:%S"
+end
+
+   --END
+
+
