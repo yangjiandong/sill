@@ -176,6 +176,9 @@ junction -d c:\Program-Files
    --run
    rake jobs:work
 
+   --配置
+   initializers/delayed_job_config.rb
+
    相关信息:
    http://asciicasts.com/episodes/171-delayed-job
    http://blog.plataformatec.com.br/2010/02/monitoring-delayed-job-with-bluepill-and-capistrano/

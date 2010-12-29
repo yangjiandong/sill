@@ -110,15 +110,23 @@ ok    9. jrubyc
 
     http://www.sencha.com/forum/archive/index.php/t-73821.html
     this.clientId = Ext.util.MD5(Math.random());
-    this.authorizationRealm = 
+    this.authorizationRealm =
       Ext.util.base64.encode(this.clientId + '-' + this.username + ':' + this.password);
 
-    Ext.Ajax.defaultHeaders = {'Authorization' : 'Basic ' + this.authorizationRealm};      
+    Ext.Ajax.defaultHeaders = {'Authorization' : 'Basic ' + this.authorizationRealm};
 
    14. 后台任务
    git://github.com/ncr/background-fu.git
 
-   采用plugin 方式,rails plugin install git://github.com/ncr/background-fu.git 
+   采用plugin 方式,rails plugin install git://github.com/ncr/background-fu.git
+   --不能正常运行,
+
+   delayed_job https://github.com/tobi/delayed_job/tree
+
+   or
+
+   navvy https://github.com/jeffkreeftmeijer/navvy
+
 
 --END
 
