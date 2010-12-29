@@ -19,6 +19,8 @@ class CategoriesController < ApplicationController
     # Rails.logger.info("Begin ... tree")
     categories = Category.find_by_sql("select * from t_categories where parent_id is null")
     data = get_tree(categories, nil)
+
+    Rails.logger.info("data tree:" + data.to_json)
     render :text => data.to_json, :layout => false
   end
 
@@ -29,13 +31,14 @@ class CategoriesController < ApplicationController
   def get_tree(categories, parent)
     data = Array.new
 
+    # 一般以iconCls为树节点显示图标
     categories.each { |category|
       if !category.leaf?
         if data.empty?
           Rails.logger.info("icon-docs, tree" + category.description)
           data = [{"text" => category.description,
-          "id" => category.id,
-          #"iconCls" => "icon-docs", #"icon-docs",
+          "id" => 'ext.' + category.id.to_s,
+          #"iconCls" => "icon-pkg", #"icon-docs",
           "cls" => "fold",
           "leaf" => false,
           "singleClickExpand" => true,
@@ -44,7 +47,7 @@ class CategoriesController < ApplicationController
         else
           Rails.logger.info("icon-pkg, tree" + category.description)
           data.concat([{"text" => category.description,
-                      "id" => category.id,
+                      "id" => 'ext.'+ category.id.to_s,
                       #"iconCls" => "icon-pkg",
                       "cls" => "fold",#"package",
                       "leaf" => false,
@@ -56,9 +59,9 @@ class CategoriesController < ApplicationController
 
         data.concat([{"text" => category.description,
                     "href" => "output/Ext.chart.BarChart.html",
-                    "id" => category.id,
+                    "id" => 'ext.'+ category.id.to_s,
                     "iconCls" => "icon-cls",
-                    "cls" => "cls",#"file",
+                    #"cls" => "cls",#"file",
                     "isClass" => true,
                     "leaf" => true}])
 

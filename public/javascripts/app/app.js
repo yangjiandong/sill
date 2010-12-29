@@ -16,39 +16,22 @@ ApiPanel = function() {
         margins : '0 0 5 5',
         cmargins : '0 0 0 0',
         rootVisible : false,
-        lines : false,
+        //lines : false,
         autoScroll : true,
         animCollapse : false,
         animate : false,
         collapseMode : 'mini',
         loader : new Ext.tree.TreeLoader({
               preloadChildren : true,
-              clearOnLoad : false,
+              clearOnLoad : false
+              ,
               dataUrl: 'category/category_tree'
             }),
         root : new Ext.tree.AsyncTreeNode({
           text : 'Ext JS',
           id : 'root',
           expanded : true
-            // , children:[Docs.classData]
-//          ,children: [{
-//                        text: 'First',
-//                        expanded: true,
-//                        children: [{
-//                            text: 'one',
-//                            leaf: true
-//                        }, {
-//                            text: 'two',
-//                            leaf: true
-//                        }]
-//                    }, {
-//                        text: 'Second',
-//                        expanded: true,
-//                        children: [{
-//                            text: 'one',
-//                            leaf: true
-//                        }]
-//                    }]
+          //, children:[Docs.classData]
           }),
         collapseFirst : false
       });
@@ -84,14 +67,14 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
                         }
                       }), ' ', ' ', {
                     iconCls : 'icon-expand-all',
-                    tooltip : 'Expand All',
+                    tooltip : '全部扩展',
                     handler : function() {
                       this.root.expand(true);
                     },
                     scope : this
                   }, '-', {
                     iconCls : 'icon-collapse-all',
-                    tooltip : 'Collapse All',
+                    tooltip : '全部收缩',
                     handler : function() {
                       this.root.collapse(true);
                     },
@@ -352,8 +335,9 @@ Ext.extend(MainPanel, Ext.TabPanel, {
       var p = this.add(new DocPanel({
             id : id,
             cclass : cls,
-            autoLoad : autoLoad,
-            iconCls : Docs.icons[cls]
+            autoLoad : autoLoad
+            ,iconCls : 'icon-cls'
+            // Docs.icons[cls]
           }));
       this.setActiveTab(p);
     }

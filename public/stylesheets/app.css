@@ -49,16 +49,6 @@ html,body {
   margin: 5px;
 }
 
-.loading-indicator {
-  font-size: 11px;
-  background-image: url(../images/loading.gif);
-  background-repeat: no-repeat;
-  background-position: top left;
-  padding-left: 20px;
-  height: 18px;
-  text-align: left;
-}
-
 #doc-body .loading-indicator {
   font: bold 13px Helvetica, Arial, Tahoma, Verdana, sans-serif;
   position: absolute;
@@ -102,12 +92,15 @@ a#help-forums {
   border: 1px solid #fff;
 }
 
-#api-tree  .x-tree-selected {
+/**
+no use
+**/
+#api-tree.old  .x-tree-selected {
   border: 1px dotted #a3bae9;
   background: #DFE8F6;
 }
 
-#api-tree  .x-tree-node .x-tree-selected a span {
+#api-tree.old  .x-tree-node .x-tree-selected a span {
   background: transparent;
   color: #1E4176;
   font-weight: bold;
