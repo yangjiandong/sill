@@ -11,7 +11,13 @@ if defined?(JRUBY_VERSION)
     gem 'jruby-rack'
 else
     gem 'sqlite3-ruby', :require => 'sqlite3'
+    gem 'ruby-oci8', '~> 2.0.4'
 end
+
+# for oracle
+# http://blog.rayapps.com/2010/09/09/oracle-enhanced-adapter-1-3-1-and-how-to-use-it-with-rails3/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+rayapps_blog+%28Ray%3A%3AApps.blog%29 
+gem 'activerecord-oracle_enhanced-adapter', '~> 1.3.1'
+gem "ruby-plsql", "~> 0.4.3"
 
 gem 'haml'
 gem 'will_paginate',        '>= 3.0.pre2'

@@ -1,8 +1,5 @@
 # Load the rails application
 require File.expand_path('../application', __FILE__)
-
-# require 'java'
-# require 'memcache'
 require 'dalli'
 
 memcache_options = {
@@ -20,12 +17,6 @@ rescue Exception => e
   puts 'no memecached server'
 end
 
-# CACHE = MemCache.new :namespace => 'tze'
-# CACHE.servers = '127.0.0.1:11211'
-
-# config.action_controller.fragment_cache_store = CACHE, {}
-
- # Session Storage Configuration
 #  session_options = {   :cache => CACHE,
 #                        :session_key => '_bbsession',
 #                        :session_domain => '.mysite.com',

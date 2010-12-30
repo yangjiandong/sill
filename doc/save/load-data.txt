@@ -1,0 +1,37 @@
+装载初始数据
+------------
+
+1. http://stackoverflow.com/questions/3082643/how-to-load-the-data-from-a-yml-file-to-database
+
+Try this after loading the date from the yml file to records:
+
+class Question < ActiveRecord::Base
+  # Question model just to import the yml file
+end
+records.each { |record| Question.create(record) }
+You can simply create a model just for importing. You don't need to create the app/models/question.rb. Just write the code above in the script responsible for the importing.
+
+UPDATE:
+
+You can use the following function:
+
+def create_class(class_name, superclass, &block)
+  klass = Class.new superclass, &block
+  Object.const_set class_name, klass
+end
+source
+
+File.open("#{RAILS_ROOT}/db/fixtures/#{table_name}.yml", 'r') do |file|
+  YAML::load(file).each do |record|
+    model_name = table_name.singularize.camelize
+    create_class(model_name, ActiveRecod::Base) do
+      set_table_name table_name.to_sym
+    end
+    Kernel.const_get(model_name).create(record)
+  end
+end
+To use the connection directly you can use the following:
+
+ActiveRecord::Base.connection.execute("YOUR SQL CODE")
+
+   --END

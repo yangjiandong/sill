@@ -9,6 +9,11 @@ group :test, :development do
 end
 It needs to be in the :development group to expose generators and rake tasks without having to type RAILS_ENV=test.
 
+config/application.rb add:
+config.generators do |g|
+  g.test_framework :rspec
+end
+
 Now you can run:
 
 script/rails generate rspec:install
