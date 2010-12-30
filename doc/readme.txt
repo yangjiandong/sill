@@ -309,7 +309,9 @@ string.gsub(/(\d)(?=(\d\d\d)+(?!\d))/) { |match| match + ',' }
    git push origin use.prototype.js
 
    3. 引入ext3.3.0
-   public/javascripts/ext
+   public/javascripts/ext(ext/adapter,resources,ext-all.js,ext-all-debug.js,ext-lang-zh_CN.js),
+                      ext.ux(ext/examples/ux)
+   --不包含到git
 
    4. name shrek
    http://www.google.com/images?hl=en&q=shrek&um=1&ie=UTF-8&source=univ&ei=gQIGTZGWBYOsrAezhPmQDw&sa=X&oi=image_result_group&ct=title&resnum=8&ved=0CHsQsAQwBw&biw=1239&bih=754
