@@ -10,11 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101218144654) do
+ActiveRecord::Schema.define(:version => 20101228133211) do
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
+    t.integer  "priority",   :precision => 38, :scale => 0, :default => 0
+    t.integer  "attempts",   :precision => 38, :scale => 0, :default => 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
@@ -39,12 +39,12 @@ ActiveRecord::Schema.define(:version => 20101218144654) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "t_categories", :force => true do |t|
-    t.string   "name",        :limit => 40,  :null => false
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
+    t.string   "name",        :limit => 40,                                 :null => false
+    t.integer  "parent_id",                  :precision => 38, :scale => 0
+    t.integer  "lft",                        :precision => 38, :scale => 0
+    t.integer  "rgt",                        :precision => 38, :scale => 0
     t.string   "description", :limit => 100
-    t.integer  "depth"
+    t.integer  "depth",                      :precision => 38, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,23 +59,23 @@ ActiveRecord::Schema.define(:version => 20101218144654) do
   end
 
   create_table "t_groups_resources", :id => false, :force => true do |t|
-    t.integer "resource_id"
-    t.integer "group_id"
+    t.integer "resource_id", :precision => 38, :scale => 0
+    t.integer "group_id",    :precision => 38, :scale => 0
   end
 
   create_table "t_groups_users", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "group_id"
+    t.integer "user_id",  :precision => 38, :scale => 0
+    t.integer "group_id", :precision => 38, :scale => 0
   end
 
-  add_index "t_groups_users", ["group_id"], :name => "index_t_groups_users_on_group_id"
-  add_index "t_groups_users", ["user_id"], :name => "index_t_groups_users_on_user_id"
+  add_index "t_groups_users", ["group_id"], :name => "i_t_groups_users_group_id"
+  add_index "t_groups_users", ["user_id"], :name => "i_t_groups_users_user_id"
 
   create_table "t_properties", :force => true do |t|
     t.string  "prop_key",    :limit => 512
     t.string  "prop_value",  :limit => 4000
-    t.integer "resource_id"
-    t.integer "user_id"
+    t.integer "resource_id",                 :precision => 38, :scale => 0
+    t.integer "user_id",                     :precision => 38, :scale => 0
   end
 
   create_table "t_resources", :force => true do |t|

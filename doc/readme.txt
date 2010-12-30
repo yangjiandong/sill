@@ -1,6 +1,24 @@
 Sill - rails3
 =============
 
+2010.12.30
+----------
+
+   1. oracle
+   example: https://github.com/rsim/rails3_oracle_sample.git
+
+   --专门建立个oracle环境
+   --config/environments/oracle.rb
+   http://blog.rayapps.com/2010/09/09/oracle-enhanced-adapter-1-3-1-and-how-to-use-it-with-rails3/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+rayapps_blog+%28Ray%3A%3AApps.blog%29
+
+   rake db:migrate RAILS_ENV=oracle
+   rails s -e oracle
+
+   2. 增加数据导出
+   rake db:extract_fixtures
+   导出目录 db/yml
+   --有问题,个别表导不出数据,如t_resources,delayed_jobs
+
 2010.12.28
 ----------
 
