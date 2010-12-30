@@ -55,7 +55,18 @@ html,body {
   top: 35%;
   left: 43%;
   color: #444;
-  background-image: url(../images/shared/large-loading.gif);
+  background-image: url(../images/ajax_load16.gif);
+  background-repeat: no-repeat;
+  text-align: left;
+}
+
+#doc-body .larg-loading-indicator {
+  font: bold 13px Helvetica, Arial, Tahoma, Verdana, sans-serif;
+  position: absolute;
+  top: 35%;
+  left: 43%;
+  color: #444;
+  background-image: url(../images/shared/blue-loading.gif);
   background-repeat: no-repeat;
   background-position: left 5px;
   padding: 10px 10px 10px 38px;
