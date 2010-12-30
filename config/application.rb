@@ -19,7 +19,7 @@ module Sill
   class Application < Rails::Application
 
     #http://garbageburrito.com/blog/entry/1326901/organizing-large-rails-projects-the-simple-way?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+garbageburrito-blog+%28Garbage+Burrito+-+Latest+Blog+Entries%29
-    # ActionController::Base.view_paths.insert(1, "app/views/addons") add to lib/sill.rb 
+    # ActionController::Base.view_paths.insert(1, "app/views/addons") add to lib/sill.rb
     # 有问题,没成功
     # config.autoload_paths += %W(
       # #{Rails.root.to_s}/app/controllers/addons
@@ -81,6 +81,10 @@ module Sill
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    config.generators do |g|
+      g.test_framework :rspec
+    end
 
   end
 end

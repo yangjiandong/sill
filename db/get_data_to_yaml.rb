@@ -1,5 +1,8 @@
+# encoding: UTF-8
+$KCODE = 'UTF8' unless RUBY_VERSION >= '1.9'
 require 'rubygems'
 require 'active_record'
+require 'ya2yaml'
 
 ActiveRecord::Base.establish_connection(
     :adapter => 'oracle_enhanced',
@@ -11,10 +14,10 @@ ActiveRecord::Base.establish_connection(
 
 connection = ActiveRecord::Base.connection
 
-file = File.open('get_data_to_ymal.yml','w')
-data = connection.select_value('select hz,py,wb from sys_hzk')
+file = File.open('yml/hzk_ymal.yml','w')
+data = connection.select_all('select hz,py,wb from sys_hzk')
 i = '000'
 file.write data.inject({}){|hash, record|
-  hash["data_ymal_#{i.succ!}"] = record
+  hash["hzk_#{i.succ!}"] = record
   hash
-}.to_yaml
+}.ya2yaml(:syck_compatible => true)

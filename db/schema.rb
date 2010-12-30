@@ -10,80 +10,86 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101228133211) do
+ActiveRecord::Schema.define(:version => 20101230031918) do
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :precision => 38, :scale => 0, :default => 0
-    t.integer  "attempts",   :precision => 38, :scale => 0, :default => 0
+    t.integer  "priority",   :limit => 10, :default => 0
+    t.integer  "attempts",   :limit => 10, :default => 0
     t.text     "handler"
     t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at",     :limit => 23
+    t.datetime "locked_at",  :limit => 23
+    t.datetime "failed_at",  :limit => 23
     t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :limit => 23
+    t.datetime "updated_at", :limit => 23
   end
 
-  add_index "delayed_jobs", ["locked_by"], :name => "delayed_jobs_locked_by"
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  # unrecognized index "delayed_jobs_locked_by" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "delayed_jobs_priority" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
+    t.string   "session_id",               :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :limit => 23
+    t.datetime "updated_at", :limit => 23
   end
 
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+  # unrecognized index "index_sessions_on_session_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "index_sessions_on_updated_at" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "t_categories", :force => true do |t|
-    t.string   "name",        :limit => 40,                                 :null => false
-    t.integer  "parent_id",                  :precision => 38, :scale => 0
-    t.integer  "lft",                        :precision => 38, :scale => 0
-    t.integer  "rgt",                        :precision => 38, :scale => 0
+    t.string   "name",        :limit => 40,  :null => false
+    t.integer  "parent_id",   :limit => 10
+    t.integer  "lft",         :limit => 10
+    t.integer  "rgt",         :limit => 10
     t.string   "description", :limit => 100
-    t.integer  "depth",                      :precision => 38, :scale => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "depth",       :limit => 10
+    t.datetime "created_at",  :limit => 23
+    t.datetime "updated_at",  :limit => 23
   end
 
-  add_index "t_categories", ["name", "parent_id"], :name => "index_category_name_pid"
+  # unrecognized index "index_category_name_pid" with type ActiveRecord::ConnectionAdapters::IndexDefinition
 
   create_table "t_groups", :force => true do |t|
     t.string   "name",        :limit => 40
     t.string   "description", :limit => 200
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :limit => 23
+    t.datetime "updated_at",  :limit => 23
   end
 
   create_table "t_groups_resources", :id => false, :force => true do |t|
-    t.integer "resource_id", :precision => 38, :scale => 0
-    t.integer "group_id",    :precision => 38, :scale => 0
+    t.integer "resource_id", :limit => 10
+    t.integer "group_id",    :limit => 10
   end
 
   create_table "t_groups_users", :id => false, :force => true do |t|
-    t.integer "user_id",  :precision => 38, :scale => 0
-    t.integer "group_id", :precision => 38, :scale => 0
+    t.integer "user_id",  :limit => 10
+    t.integer "group_id", :limit => 10
   end
 
-  add_index "t_groups_users", ["group_id"], :name => "i_t_groups_users_group_id"
-  add_index "t_groups_users", ["user_id"], :name => "i_t_groups_users_user_id"
+  # unrecognized index "index_t_groups_users_on_group_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+  # unrecognized index "index_t_groups_users_on_user_id" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "t_hzk", :id => false, :force => true do |t|
+    t.string "hz", :limit => 10
+    t.string "py", :limit => 10
+    t.string "wb", :limit => 10
+  end
 
   create_table "t_properties", :force => true do |t|
     t.string  "prop_key",    :limit => 512
     t.string  "prop_value",  :limit => 4000
-    t.integer "resource_id",                 :precision => 38, :scale => 0
-    t.integer "user_id",                     :precision => 38, :scale => 0
+    t.integer "resource_id", :limit => 10
+    t.integer "user_id",     :limit => 10
   end
 
   create_table "t_resources", :force => true do |t|
     t.string   "resname",     :limit => 100
     t.string   "resurl",      :limit => 400
     t.string   "description", :limit => 200
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :limit => 23
+    t.datetime "updated_at",  :limit => 23
   end
 
   create_table "t_users", :force => true do |t|
@@ -92,10 +98,10 @@ ActiveRecord::Schema.define(:version => 20101228133211) do
     t.string   "email",                     :limit => 100
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :limit => 23
+    t.datetime "updated_at",                :limit => 23
     t.string   "remember_token",            :limit => 500
-    t.datetime "remember_token_expires_at"
+    t.datetime "remember_token_expires_at", :limit => 23
   end
 
 end

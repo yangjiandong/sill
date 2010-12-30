@@ -19,6 +19,30 @@ Sill - rails3
    导出目录 db/yml
    --有问题,个别表导不出数据,如t_resources,delayed_jobs
 
+   整个数据库的导入导出,还是用yaml_db
+   -- --> db/data.yml
+   rake db:dump
+   --导入
+   rake db:load
+   --string 中文导出显示为 !binary,
+   --http://groups.google.com/group/rails-i18n/browse_thread/thread/bda8e00bce10cafc
+   --hack String(config/initializers/sill.rb)类,也没能正常显示为中文,考虑用ya2ymal
+
+   --一般流程
+   1). rake db:dump
+   2). Edit config/database.yml and change your adapter to mysql, set up database params
+   3). mysqladmin create [database name]
+   4). rake db:migrate
+   5). rake db:load
+
+   3. 直接导出
+   cd db
+   jruby get_data_to_yaml.rb
+   --采用了ya2ymal,能正常显示为中文
+
+   4. hzk
+   rails g model hzk
+
 2010.12.28
 ----------
 
