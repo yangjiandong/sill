@@ -7,7 +7,7 @@ class CreateHzs < ActiveRecord::Migration
     end
 
     file = File.open("#{RAILS_ROOT}/db/seeds/hzk.yml", 'r')
-    YAML::load(file).each do |record|
+    YAML::load(file).each do |k,record|
       # ["hzk_001", {"hz"=>"啊", "py"=>"A", "wb"=>"BS"}]
       Hz.create!(record)
     end

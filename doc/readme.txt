@@ -42,6 +42,17 @@ Sill - rails3
 
    4. hzk
    rails g model hzk
+   migrate 装载初始化数据
+
+    file = File.open("#{RAILS_ROOT}/db/seeds/hzk.yml", 'r')
+    YAML::load(file).each do |k,record|
+      # ["hzk_001", {"hz"=>"啊", "py"=>"A", "wb"=>"BS"}]
+      Hz.create!(record)
+    end
+
+    --有关其它装载方法参考 http://stackoverflow.com/questions/3082643/how-to-load-the-data-from-a-yml-file-to-database
+    --save/load-data.txt
+
 
 2010.12.28
 ----------
