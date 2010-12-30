@@ -53,6 +53,10 @@ Sill - rails3
     --有关其它装载方法参考 http://stackoverflow.com/questions/3082643/how-to-load-the-data-from-a-yml-file-to-database
     --save/load-data.txt
 
+    5. 一个vim 方案
+    https://github.com/carlhuda/janus 
+    windows 平台上安装不成功 
+
 2010.12.29
 ----------
 
