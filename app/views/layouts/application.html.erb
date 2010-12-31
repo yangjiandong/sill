@@ -65,7 +65,9 @@
     </div>
 </div>
 
+<%= stylesheet_link_tag "ext_icon" %>
 <%= stylesheet_link_tag "../javascripts/ext/resources/css/ext-all", :media => 'all' %>
+
 <script type="text/javascript">document.getElementById('loading-msg').innerHTML = '正在装载基本库...';</script>
 <% if ENV['RAILS_ENV'] == 'production'%>
   <%= javascript_include_tag "ext/adapter/ext/ext-base" %>
@@ -86,7 +88,9 @@
   //]]>
 </script>
 
-<%= stylesheet_link_tag "app.css" %>
+<%= stylesheet_link_tag "app" %>
+<%= stylesheet_link_tag "eredg4" %>
+<%= stylesheet_link_tag "ext_patch_firefox" %>
 <%= javascript_include_tag "ext.ux/TabCloseMenu.js" %>
 <%= javascript_include_tag "app/app.js" %>
 

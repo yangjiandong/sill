@@ -1,5 +1,9 @@
+ @CHARSET "UTF-8";
+
 body {
   font: normal 12px helvetica, arial, verdana, tahoma, sans-serif;
+  font-family: "宋体";
+  font-size: 13px;
 }
 
 html,body {
@@ -84,24 +88,31 @@ a#help-forums {
   display: block
 }
 
-#api-tree a span {
+/**
+影响字体大小
+no use
+**/
+#api-tree.old a span {
   font-family: helvetica, arial, verdana, tahoma, sans-serif;
   font-size: 11px;
 }
 
-#api-tree .cls a:hover span {
+#api-tree.old .cls a:hover span {
   text-decoration: underline;
 }
 
-#api-tree .x-panel-body {
+#api-tree.old .x-panel-body {
   background-color: white;
   position: relative;
   padding: 3px;
 }
 
-#api-tree .cls {
+#api-tree.old .cls {
   border: 1px solid #fff;
 }
+/**
+end
+**/
 
 /**
 no use
@@ -116,6 +127,9 @@ no use
   color: #1E4176;
   font-weight: bold;
 }
+/**
+end
+**/
 
 a {
   color: #1E4176;

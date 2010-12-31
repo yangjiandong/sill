@@ -60,7 +60,7 @@ class CategoriesController < ApplicationController
         data.concat([{"text" => category.description,
                     "href" => "output/Ext.chart.BarChart.html",
                     "id" => 'ext.'+ category.id.to_s,
-                    "iconCls" => "icon-cls",
+                    "iconCls" => "user_commentIcon",
                     #"cls" => "cls",#"file",
                     "isClass" => true,
                     "leaf" => true}])

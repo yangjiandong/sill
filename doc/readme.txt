@@ -56,6 +56,7 @@ Sill - rails3
     5. 一个vim 方案
     https://github.com/carlhuda/janus 
     windows 平台上安装不成功 
+    --windows下不能正常运行command-t需ruby编译安装
 
 2010.12.29
 ----------
