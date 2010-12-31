@@ -16,6 +16,8 @@ ApiPanel = function() {
         margins : '0 0 5 5',
         cmargins : '0 0 0 0',
         rootVisible : false,
+        //采用ext/resources/images/deafult/tree/arrow.gif
+        useArrows:true,
         //lines : false,
         autoScroll : true,
         animCollapse : false,

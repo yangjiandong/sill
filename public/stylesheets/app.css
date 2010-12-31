@@ -88,48 +88,6 @@ a#help-forums {
   display: block
 }
 
-/**
-影响字体大小
-no use
-**/
-#api-tree.old a span {
-  font-family: helvetica, arial, verdana, tahoma, sans-serif;
-  font-size: 11px;
-}
-
-#api-tree.old .cls a:hover span {
-  text-decoration: underline;
-}
-
-#api-tree.old .x-panel-body {
-  background-color: white;
-  position: relative;
-  padding: 3px;
-}
-
-#api-tree.old .cls {
-  border: 1px solid #fff;
-}
-/**
-end
-**/
-
-/**
-no use
-**/
-#api-tree.old  .x-tree-selected {
-  border: 1px dotted #a3bae9;
-  background: #DFE8F6;
-}
-
-#api-tree.old  .x-tree-node .x-tree-selected a span {
-  background: transparent;
-  color: #1E4176;
-  font-weight: bold;
-}
-/**
-end
-**/
 
 a {
   color: #1E4176;
@@ -247,61 +205,6 @@ a:hover {
   background: transparent !important;
 }
 
-.icon-cls {
-  background-image: url(../images/class.gif) !important;
-}
-
-.icon-event {
-  background-image: url(../images/event.gif) !important;
-}
-
-.icon-config {
-  background-image: url(../images/config.gif) !important;
-}
-
-.icon-prop {
-  background-image: url(../images/prop.gif) !important;
-}
-
-.icon-method {
-  background-image: url(../images/method.gif) !important;
-}
-
-.icon-cmp {
-  background-image: url(../images/cmp.gif) !important;
-}
-
-.icon-pkg {
-  background-image: url(../images/pkg.gif) !important;
-}
-
-.icon-fav {
-  background-image: url(../images/fav.gif) !important;
-}
-
-.icon-static {
-  background-image: url(../images/static.gif) !important;
-}
-
-.icon-docs {
-  background-image: url(../images/docs.gif) !important;
-}
-
-.icon-expand-all {
-  background-image: url(../images/expand-all.gif) !important;
-}
-
-.icon-collapse-all {
-  background-image: url(../images/collapse-all.gif) !important;
-}
-
-.icon-expand-members {
-  background-image: url(../images/expand-members.gif) !important;
-}
-
-.icon-hide-inherited {
-  background-image: url(../images/hide-inherited.gif) !important;
-}
 
 #legend li {
   line-height: 16px;
@@ -384,4 +287,31 @@ h3.home-title {
 
 .x-border-layout-ct {
   background: none;
+}
+
+/* 解决IE下PNG图片透明Bug */
+.IEPNG {
+  behavior: url(./htc/iepngfix.htc);
+}
+
+/* 管理首页Frame样式 */
+.mainFrame {
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+/** 如下为解决Ext表单元素禁用状态字体模糊的办法
+  *  IE下还是解决不了
+  */
+.x-custom-field-disabled {
+  color: black !important;
+  color: black;
+  background: #F0F8FF;
+}
+
+/* 树节点被选中后的状态 */
+.node_checked .x-tree-node-anchor span {
+  text-decoration: line-through;
+  color: #777;
 }
