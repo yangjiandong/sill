@@ -89,13 +89,12 @@
 </script>
 
 <%= stylesheet_link_tag "app" %>
-<%= stylesheet_link_tag "eredg4" %>
 <% if client_browser_name == 'Mozilla'%>
 <%= stylesheet_link_tag "ext_patch_firefox" %>
 <% end %>
 
-<%= javascript_include_tag "ext.ux/TabCloseMenu.js" %>
-<%= javascript_include_tag "app/app.js" %>
+<%= javascript_include_tag "app/extuxTabCloseMenu" %>
+<%= javascript_include_tag "app/app" %>
 
 <div id="header">
     <img style="margin-left: 5px" src="<%= image_path 'title-ext.png' %>" alt="Ext JS API Documentation" height="49" width="380" />

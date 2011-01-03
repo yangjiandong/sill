@@ -127,6 +127,23 @@ ok    9. jrubyc
 
    navvy https://github.com/jeffkreeftmeijer/navvy
 
+   15. 事务
+
+   http://blog.csdn.net/wind00sky/archive/2009/08/20/4465575.aspx
+   ActiveRecord::Base.transaction do
+   ...
+   end
+
+   http://huacnlee.com/blog/rails-transaction-tutorial 
+   begin
+   Post.transaction do 
+   ...
+   end
+   rescue Exception => ex
+
+   end
+   不支持 Model.connection.execute()  
+
 
 --END
 

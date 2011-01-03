@@ -8,7 +8,7 @@ ApiPanel = function() {
         id : 'api-tree',
         region : 'west',
         split : true,
-        header : false,
+        //header : false,
         width : 280,
         minSize : 175,
         maxSize : 500,
@@ -20,7 +20,7 @@ ApiPanel = function() {
         useArrows:true,
         //lines : false,
         autoScroll : true,
-        animCollapse : false,
+        animCollapse : true,
         animate : false,
         collapseMode : 'mini',
         loader : new Ext.tree.TreeLoader({
@@ -51,7 +51,7 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
         Ext.apply(this, {
               tbar : [' ', new Ext.form.TextField({
                         width : 200,
-                        emptyText : '菜单查找',
+                        emptyText : '菜单过滤',
                         enableKeyEvents : true,
                         listeners : {
                           render : function(f) {

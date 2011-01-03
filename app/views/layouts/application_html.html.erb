@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<%
+  if @page_title
+    title="Sill - #{h(@page_title)}"
+  elsif @project
+    title="Sill - #{h(@project.name)}"
+  else
+    title='Sill'
+  end
+%>
+<title><%= title %></title>
+<meta name="description" content="Rails and Extjs applications." />
+<link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+<link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+
+<%= javascript_include_tag :jquery %>
+<%= csrf_meta_tag %>
+</head>
+<body>
+    <div id="main">
+      <%= yield %>
+    </div>
+</body>
+</html>

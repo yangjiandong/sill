@@ -7,6 +7,10 @@ require "need_authentication"
 #require "slf4j_logger"
 require "debug_log"
 
+# 
+require "enum_attr"
+Object.send :include, EnumAttr::Mixin
+
       # ActionView::Base.send(:include, Sill::Callback::Helper)
 # ActionController::Base.send(:include, Sill::Callback::Helper)
 

@@ -1,6 +1,29 @@
 Sill - rails3
 =============
 
+2011.01.02
+-----------
+
+   1. enum 方式
+   http://www.javaeye.com/topic/448235
+
+   lib/enum_attr.rb
+   example:
+   category.rb
+   enum_attr :sex, [['男', 0], ['女', 1]]
+   # <%= form.select :sex, Category::ENUMS_SEX %>
+   # #在显示输出的时候我们可以直接调用扩展方法
+   # <%= category.sex_name %>
+
+   另一个插件: https://github.com/jeffp/enumerated_attribute
+
+   -- 感觉不如定义个表存放记录
+
+   2. 在线翻译
+   https://github.com/qichunren/acts_as_translatebox/wiki
+
+   访问google来进行翻译
+
 2010.12.30
 ----------
 
@@ -54,8 +77,8 @@ Sill - rails3
     --save/load-data.txt
 
     5. 一个vim 方案
-    https://github.com/carlhuda/janus 
-    windows 平台上安装不成功 
+    https://github.com/carlhuda/janus
+    windows 平台上安装不成功
     --windows下不能正常运行command-t需ruby编译安装
 
 2010.12.29

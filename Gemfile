@@ -9,9 +9,11 @@ if defined?(JRUBY_VERSION)
     gem 'activerecord-jdbcmssql-adapter'
     gem 'jruby-openssl'
     gem 'jruby-rack'
+    gem 'rmagick4j'
 else
     gem 'sqlite3-ruby', :require => 'sqlite3'
     gem 'ruby-oci8', '~> 2.0.4'
+    gem 'rmagick'
 end
 
 # for oracle
