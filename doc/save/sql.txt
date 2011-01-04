@@ -1,0 +1,79 @@
+
+http://www.simpleanswer.us/answer/rails-extjs-and-sql-server
+
+Rails, Extjs and SQL Server
+So I'm running Extjs on top of Rails 2.3.3 against a SQL Server DB. I'm able to pull data from the DB and display it, but I'm unable to create, update or destroy.
+Oddly enough, it's not throwing console or any other errors on attempted updates or deletes -- it simply fails.
+On create, an InvalidStatement error gets thrown, probably related to the fact that new rows aren't being assigned an appropriate ID. They're getting assigned a null ID, and of course it's not allowed as an identity value.
+Has anybody encountered anything similar? Any ideas on workarounds for the issues on create, update or destroy using Extjs + SqlServer?
+Thanks!
+
+UPDATE:
+Auto-increment is set on the ID field of the table in question. The specific error I'm getting handed back:
+
+ ActiveRecord::StatementInvalid (DVI::DatabaseError: 37000 (339) [ODBC SQL Server Driver][SQL Server] DEFAULT or NULL are not allowed as explicit identity values. INSERT INTO [table] ([username], [fullname], [ID], [password], [superuser]) VALUES('testing', 'testing', NULL, 'testing', 1)):
+ # ... ruby exceptions mostly springing from the sqlserver adapter ...
+Note that if I pop open the debugger and add in the ID manually, it works fine...
+
+UPDATE2:
+On update/destroy, the initial POST request gets constructed with the proper (modified) field data, and a successful response is shown. However, the update data is not reflected in the subsequent GET request.
+Digging into to the logs, we find the SQL generated on update has the following issue:
+
+ Administrators Load (0.0ms)   SELECT * FROM [Administrators] WHERE ([Administrators].[id] = '2')
+ EXECUTE (0.0ms)   BEGIN TRANSACTION
+ Administrators Update (0.0ms)   UPDATE [Administrators] SET [superuser] = 1 WHERE [id] = NULL
+A similar issue is plaguing the destroy requests.
+
+What's going on here? How/why is the id getting set to null in between pulling the appropriate record and performing the operation?
+Note that this is the behavior even when I manually perform this operation in the debugger, i.e.,
+(rdb:63) Administratiors.find(2).destroy
+selects the appropriate row based on ID, but then attempts to delete the row from the table whose id is NULL. Which of course fails...
+
+UPDATE3:
+OK, so the only way I've found to get the delete operation to work is to roll my own SQL. Replacing @admin.destroy with
+
+sql = ActiveRecord::Base.connection()
+sql.begin_db_transaction
+sql.execute("SELECT * FROM Administrators WHERE ([Administrators].[id] = #{params[:id]})");
+sql.delete("DELETE FROM Administrators WHERE ([Administrators].[id] = #{params[:id]})");
+sql.commit_db_transaction
+performs the operation as expected.
+
+UPDATE4:
+This also works:
+
+Administrators.delete(params[:id])
+UPDATE5:
+
+Alright, so now CRUD works between Extjs and SQL server. But it's an ugly hack (the update operation especially) and I'd love some insight on how to do this more cleanly:
+
+# POST /administrators
+def create
+  @administrator = Administrators.new(params[:administrators])
+  @administrator.ID = Administrators.all.length+1
+
+  respond_to do |format|
+    format.html
+    format.ext_json {render :json => @administrator.to_ext_json(:success => @administrator.save!)}
+  end
+end
+
+# PUT /administrators/1
+def update
+  attrs_to_update = ""
+  params[:administrators].each {|k,v| attrs_to_update += "#{k} = \'#{v}\', "}
+  attrs_to_update = attrs_to_update.strip.chomp(",")
+  sql = ActiveRecord::Base.connection()
+  sql.begin_db_transaction
+  sql.execute("SELECT * FROM Administrators WHERE ([Administrators].[id] = #{params[:id]})");
+  sql.execute("UPDATE Administrators SET #{attrs_to_update} WHERE ([Administrators].[id] = #{params[:id]})");
+  sql.commit_db_transaction
+  render :json => @administrator.to_ext_json(:success => @administrator.update_attributes!(params[:administrators]))
+end
+
+# DELETE /administrators/1
+def destroy
+  Administrators.delete(params[:id])
+  head :ok
+end
+Any thoughts on how to clean this up? Or again why it wouldn't be working out of the box in the first place? :)

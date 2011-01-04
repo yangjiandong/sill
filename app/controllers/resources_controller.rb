@@ -1,4 +1,6 @@
-class CategoriesController < ApplicationController
+class ResourcesController < ApplicationController
+  include ApplicationHelper
+
   skip_before_filter :check_authentication
 
   def index
@@ -6,26 +8,20 @@ class CategoriesController < ApplicationController
   end
 
   def index_json
-    @datas = Category.find(:all)
-    #debug_log("category,datas:" + @datas.to_json)
+    datas = Resource.find(:all)
+    #debug_log("resource,datas:" + @datas.to_json)
 
     render :json => {
-        :rows => @datas,
-        :results => @datas.count
+        :time => get_database_time(),
+        :rows => datas,
+        :results => datas.count
         }, :layout => false
   end
 
-  def category_tree
-    # Rails.logger.info("Begin ... tree")
-    categories = Category.find_by_sql("select * from t_categories where parent_id is null")
-    data = get_tree(categories, nil)
+  def get_module
+    modules = Resource.find_by_sql("select * from t_resources where parentid=0 order by orderno")
 
-    #Rails.logger.info("data tree:" + data.to_json)
-    render :text => data.to_json, :layout => false
-  end
-
-  def layout
-
+    render :json => modules, :layout => false
   end
 
   def get_tree(categories, parent)

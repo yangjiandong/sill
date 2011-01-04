@@ -6,7 +6,7 @@ class Category < ActiveRecord::Base
   acts_as_nested_set
   
   # 测设enum_attr的DSL语法
-  enum_attr :sex, [['男', 0], ['女', 1]]
+  # enum_attr :sex, [['男', 0], ['女', 1]]
 
   Category.include_root_in_json = false if Category.respond_to?(:include_root_in_json)
   

@@ -160,6 +160,10 @@
     background-image:url(../images/icons/book_previous.png) !important;
  }
 
+.bookIcon {
+    background-image:url(../images/icons/book.png) !important;
+ }
+
 .window_caise_listIcon {
     background-image:url(../images/icons/window_caise_list.png) !important;
  }

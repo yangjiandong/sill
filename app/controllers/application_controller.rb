@@ -1,6 +1,10 @@
 #
 
 class ApplicationController < ActionController::Base
+  # 不起作用
+  #helper ApplicationHelper
+  #or
+  #helper :all
 
   include AuthenticatedSystem
   include NeedAuthorization::Helper
@@ -8,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_authentication
   # 不需要每次去验证
   # ,:check_database_version
-  
+
   before_filter :getmenus
 
   # TODO 需删除
@@ -77,7 +81,7 @@ class ApplicationController < ActionController::Base
         {:key => :sub2, :name => 'Group', :url => 'Groups'}
     ]}
     ]
-    
+
   end
 
   private

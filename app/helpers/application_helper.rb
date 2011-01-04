@@ -91,6 +91,7 @@ module ApplicationHelper
     content_tag("span", content, html_options)
   end
 
+  # 大写金额
   def self.ConvertNumToChinese(num)
     chineseNumArr=['零','壹','贰','叁','肆','伍','陆','柒','捌','玖']
     chinesePosArr=['万','仟','佰','拾','亿','仟','佰','拾','万','仟','佰','拾','元','角','分']
@@ -157,6 +158,7 @@ module ApplicationHelper
     strChinese
   end
 
+  # 判断浏览器
   def client_browser_name
     user_agent =
     request.env['HTTP_USER_AGENT'].downcase
@@ -173,5 +175,9 @@ module ApplicationHelper
     else
                                   "Unknown"
     end
+  end
+
+  def get_database_time
+    Property.get_database_time()
   end
 end

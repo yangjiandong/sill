@@ -1,6 +1,12 @@
 Sill - rails3
 =============
 
+2011.01.04
+-----------
+
+   1. sqlserver
+   https://github.com/rails-sqlserver/tiny_tds
+
 2011.01.02
 -----------
 

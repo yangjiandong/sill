@@ -1,4 +1,4 @@
-#
+# 菜单资源,只用到三级,第一级为模块,第二级为子菜单,第三级为连接
 
 class Resource < ActiveRecord::Base
   set_table_name 't_resources'

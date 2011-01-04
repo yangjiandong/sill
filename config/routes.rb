@@ -24,6 +24,10 @@ Sill::Application.routes.draw do
   match 'category/json', :controller => 'categories', :action => 'index_json'
   match 'category/layout', :controller => 'categories', :action => 'layout'
 
+  # resource
+  match 'resource/modules', :controller => 'resources', :action => 'get_module'
+  match 'resource/json', :controller => 'resources', :action => 'index_json'
+
   root :to => 'sessions#login'
 
   match '/about', :to => 'static#about', :as => :about

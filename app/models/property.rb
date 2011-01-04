@@ -1,5 +1,5 @@
- #
- # 设置信息
+#
+# 设置信息
 class Property < ActiveRecord::Base
   set_table_name 't_properties'
 
@@ -67,6 +67,33 @@ class Property < ActiveRecord::Base
     end
     xml
   end
+
+  def self.get_database_time
+    sql = ActiveRecord::Base.connection();
+    #Rails.logger.info(sql.adapter_name)
+    if sql.adapter_name == "MsSQL"
+      #sql.execute "SET autocommit=0";
+      #sql.begin_db_transaction
+      rows = sql.select_one("Select CONVERT(varchar(100), GETDATE(), 102) as value");
+      #sql.commit_db_transaction
+      #Rails.logger.info(rows.to_s)
+      value = rows["value"];
+    elsif sql.adapter_name =~ "SQLite"
+      rows = sql.select_one("select strftime('%Y.%m.%d',date('now')) as value;");
+      value = rows["value"];
+    else
+      value = Time.now;
+    end
+
+    value;
+  end
+
+  #execute - executes SQL query. For "SELECT ..." query will return Mysql::Result class (or other result-set class for your Ruby database interface).
+  #insert - executes SQL query and returns last inserted id
+  #update, delete - executes SQL query and returns number of affected rows
+  #begin_db_transaction - executes SQL query 'BEGIN' (transaction start)
+  #commit_db_transaction - executes SQL query 'COMMIT' (confirm transaction)
+  #rollback_db_transaction - executes SQL query 'ROLLBACK' (rollback transaction)
 
   private
 

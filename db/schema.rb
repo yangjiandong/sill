@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101230031918) do
+ActiveRecord::Schema.define(:version => 20101228133211) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :limit => 10, :default => 0
@@ -85,9 +85,13 @@ ActiveRecord::Schema.define(:version => 20101230031918) do
   end
 
   create_table "t_resources", :force => true do |t|
-    t.string   "resname",     :limit => 100
-    t.string   "resurl",      :limit => 400
-    t.string   "description", :limit => 200
+    t.integer  "parentid",    :limit => 10,  :null => false
+    t.string   "resname",     :limit => 40
+    t.string   "restype",     :limit => 1
+    t.string   "iconcls",     :limit => 40
+    t.string   "resurl",      :limit => 100
+    t.string   "description", :limit => 100
+    t.integer  "orderNo",     :limit => 10
     t.datetime "created_at",  :limit => 23
     t.datetime "updated_at",  :limit => 23
   end
