@@ -78,7 +78,7 @@ class Property < ActiveRecord::Base
       #sql.commit_db_transaction
       #Rails.logger.info(rows.to_s)
       value = rows["value"];
-    elsif sql.adapter_name =~ "SQLite"
+    elsif sql.adapter_name == "SQLite"
       rows = sql.select_one("select strftime('%Y.%m.%d',date('now')) as value;");
       value = rows["value"];
     else
