@@ -315,3 +315,9 @@ h3.home-title {
   text-decoration: line-through;
   color: #777;
 }
+
+#footer {
+  color: blue;
+  font-family: arial,sanas-serif;
+  font-size: 10px;
+  padding: 0px 0px 0px 16px; }

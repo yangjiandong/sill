@@ -3,6 +3,29 @@ Ext.ns("Ext.app");
 
 Docs = {};
 
+//var titleBar = new Ext.Panel({
+//          region : 'north',
+//          id : 'north-panel',
+//          split : false,
+//          height : 56,
+//          border : false,
+//          collapsible : false,
+//          margins : '0 0 0 0',
+//          layout : 'border',
+//          items : [{
+//            region : 'north',
+//            html : '<div id="titlebar"><input type=hidden value="" id="activeFrameId">'
+//                + '</input><h1>' + "product " + '</h1></div>',
+//            border : false,
+//            height : 28
+//          }, {
+//            region : 'center',
+//            border : false,
+//            height : 26,
+//            items : [menuBar]
+//          }]
+//        });
+
 ApiPanel = function() {
   ApiPanel.superclass.constructor.call(this, {
         id : 'api-tree',
@@ -400,6 +423,14 @@ Ext.onReady(function() {
             api.selectClass(tab.cclass);
           });
 
+      var statusBar = new Ext.BoxComponent({
+          region : 'south',
+          height : 16,
+          autoEl : {
+            html : '<div id="footer"><p>Powered by jror &copy; 2008 - All rights reserved. 版权所有</p></div>'
+          }
+      });
+
       var viewport = new Ext.Viewport({
             layout : 'border',
             items : [{
@@ -410,7 +441,7 @@ Ext.onReady(function() {
                   el : 'header',
                   border : false,
                   margins : '0 0 5 0'
-                }, api, mainPanel]
+                }, statusBar, api, mainPanel]
           });
 
       api.expandPath('/root/apidocs');
