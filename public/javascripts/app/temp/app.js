@@ -1,6 +1,7 @@
 // Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
 Ext.ns("Ext.app");
 Ext.ns("Ext.app.Utils");
+var sysConfig;
 
 Docs = {};
 
@@ -9,7 +10,8 @@ Ext.app.Utils.getSysConfig = function() {
 
   var result = function(response){
     var x = Ext.decode(response.responseText);
-    x2 = x.data;
+
+    alert(x.data.copyright)
   }
  Ext.Ajax.request({
   url: 'system/sysConfig',
@@ -439,12 +441,12 @@ Ext.onReady(function() {
       mainPanel.on('tabchange', function(tp, tab) {
             api.selectClass(tab.cclass);
           });
-      var sysConfig = Ext.app.Utils.getSysConfig();
+      sysConfig = Ext.app.Utils.getSysConfig();
       var statusBar = new Ext.BoxComponent({
           region : 'south',
           height : 16,
           autoEl : {
-            html : '<div id="footer"><p>Powered by jror &copy; ' + sysConfig.copyright+ ' - All rights reserved. 版权所有</p></div>'
+            html : '<div id="footer"><p>Powered by jror &copy; ' + ' - All rights reserved. 版权所有</p></div>'
           }
       });
 
