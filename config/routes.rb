@@ -3,6 +3,7 @@ Sill::Application.routes.draw do
   match 'home' => 'system#index', :as => :home
   match 'system' => 'system#index', :as => :system
   match 'welcome' => 'system#welcome', :as => :welcome
+  match 'SysFacade.getSysConfig' => 'system#sysConfig'
 
   match 'login' => 'sessions#login', :as => :login
   match 'logout' => 'sessions#logout', :as => :logout
@@ -31,7 +32,9 @@ Sill::Application.routes.draw do
   root :to => 'sessions#login'
 
   match '/about', :to => 'static#about', :as => :about
-  # match ':controller(/:action(/:id(.:format)))'
+
+  # 保持传统格式
+  match ':controller(/:action(/:id(.:format)))'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

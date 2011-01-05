@@ -68,7 +68,7 @@ class Property < ActiveRecord::Base
     xml
   end
 
-  def self.get_database_time
+  def self.get_database_date
     sql = ActiveRecord::Base.connection();
     #Rails.logger.info(sql.adapter_name)
     if sql.adapter_name == "MsSQL"
@@ -94,6 +94,26 @@ class Property < ActiveRecord::Base
   #begin_db_transaction - executes SQL query 'BEGIN' (transaction start)
   #commit_db_transaction - executes SQL query 'COMMIT' (confirm transaction)
   #rollback_db_transaction - executes SQL query 'ROLLBACK' (rollback transaction)
+
+  def self.get_database_time
+    sql = ActiveRecord::Base.connection();
+    #Rails.logger.info(sql.adapter_name)
+    if sql.adapter_name == "MsSQL"
+      #sql.execute "SET autocommit=0";
+      #sql.begin_db_transaction
+      rows = sql.select_one("Select CONVERT(varchar(100), GETDATE(), 20) as value");
+      #sql.commit_db_transaction
+      #Rails.logger.info(rows.to_s)
+      value = rows["value"];
+    elsif sql.adapter_name == "SQLite"
+      rows = sql.select_one("select strftime('%Y.%m.%d %H:%M%S',date('now')) as value;");
+      value = rows["value"];
+    else
+      value = Time.now;
+    end
+
+    value;
+  end
 
   private
 

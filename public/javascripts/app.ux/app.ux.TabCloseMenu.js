@@ -1,8 +1,9 @@
 /**
  * TabPanel右键关闭Tab卡片插件
  */
+Ext.ns('App.ux');
 
-Ext.ux.TabCloseMenu = function(){
+App.ux.TabCloseMenu = function(){
     var tabs, menu, ctxItem;
     this.init = function(tp){
         tabs = tp;

@@ -84,6 +84,7 @@
 
 <script type="text/javascript">
   //<![CDATA[
+Ext.QuickTips.init();
 Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
 NEW_LINE = '\n';
   //]]>
@@ -94,8 +95,8 @@ NEW_LINE = '\n';
 <%= stylesheet_link_tag "ext_patch_firefox" %>
 <% end %>
 
-<%= javascript_include_tag "app/extuxTabCloseMenu" %>
-<%= javascript_include_tag "app/app" %>
+<%= javascript_include_tag "app.ux/app.ux.TabCloseMenu" %>
+<%= javascript_include_tag "app/temp/app" %>
 
 <div id="header">
     <img style="margin-left: 5px" src="<%= image_path 'title-ext.png' %>" alt="Ext JS API Documentation" height="49" width="380" />

@@ -1,7 +1,23 @@
 // Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
 Ext.ns("Ext.app");
+Ext.ns("Ext.app.Utils");
 
 Docs = {};
+
+Ext.app.Utils.getSysConfig = function() {
+  var x2;
+
+  var result = function(response){
+    x = Ext.decode(response.responseText);
+    x2 = x.data;
+  }
+ Ext.Ajax.request({
+  url: 'system/sysConfig',
+  success: result
+ })
+
+  return x2;
+}
 
 //var titleBar = new Ext.Panel({
 //          region : 'north',
@@ -25,6 +41,7 @@ Docs = {};
 //            items : [menuBar]
 //          }]
 //        });
+
 
 ApiPanel = function() {
   ApiPanel.superclass.constructor.call(this, {
@@ -278,7 +295,7 @@ MainPanel = function() {
         resizeTabs : true,
         minTabWidth : 135,
         tabWidth : 135,
-        plugins : new Ext.ux.TabCloseMenu(),
+        plugins : new App.ux.TabCloseMenu(),
         enableTabScroll : true,
         activeTab : 0,
 
@@ -422,12 +439,12 @@ Ext.onReady(function() {
       mainPanel.on('tabchange', function(tp, tab) {
             api.selectClass(tab.cclass);
           });
-
+      var sysConfig = Ext.app.Utils.getSysConfig();
       var statusBar = new Ext.BoxComponent({
           region : 'south',
           height : 16,
           autoEl : {
-            html : '<div id="footer"><p>Powered by jror &copy; 2008 - All rights reserved. 版权所有</p></div>'
+            html : '<div id="footer"><p>Powered by jror &copy; ' + sysConfig.copyright+ ' - All rights reserved. 版权所有</p></div>'
           }
       });
 

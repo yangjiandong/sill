@@ -1,112 +1,113 @@
 /**
  * 系统主页面
  */
-Ext.namespace('Divo');
-Ext.namespace('Divo.app');
-Ext.QuickTips.init();
-Ext.BLANK_IMAGE_URL = 'public/extjs/resources/images/default/s.gif';
-
 var uiDcInc;
+Ext.ns("Ext.app");
 
 /**
  * 关于对话框
  */
-Divo.app.AboutWin = Ext.extend(Ext.Window, {
-      itemPanel : null,
-      sysConfig : null,
-      initComponent : function() {
-        // 创建内容
-        this.itemPanel = this.getItemPanel();
+Ext.app.AboutWin = Ext.extend(Ext.Window, {
+  itemPanel : null,
+  sysConfig : null,
+  initComponent : function() {
+    // 创建内容
+    this.itemPanel = this.getItemPanel();
 
-        Ext.apply(this, {
-              iconCls : 'icon-win',
-              autoHeight : false,
-              title : this.sysConfig ? '关于&nbsp;&nbsp;' + this.sysConfig.productName : '关于',
-              width : 570,
-              height : 320,
-              layout : 'border',
-              plain : false,
-              buttonAlign : 'right',
-              closable : true,
-              closeAction : 'hide',
-              modal : true,
-              items : [this.itemPanel],
-              buttons : [{
-                    text : '确定',
-                    handler : this.onWinHide.createDelegate(this)
-                  }]
+    Ext.apply(this, {
+          iconCls : 'icon-win',
+          autoHeight : false,
+          title : this.sysConfig ? '关于&nbsp;&nbsp;'
+              + this.sysConfig.productName : '关于',
+          width : 570,
+          height : 320,
+          layout : 'border',
+          plain : false,
+          buttonAlign : 'right',
+          closable : true,
+          closeAction : 'hide',
+          modal : true,
+          items : [this.itemPanel],
+          buttons : [{
+                text : '确定',
+                handler : this.onWinHide.createDelegate(this)
+              }]
+        });
+
+    Ext.app.AboutWin.superclass.initComponent.apply(this, arguments);
+  },
+  render : function() {
+    Ext.app.AboutWin.superclass.render.apply(this, arguments);
+  },
+  initEvents : function() {
+    Ext.app.AboutWin.superclass.initEvents.call(this);
+  },
+  /**
+   * 关闭窗体
+   */
+  onWinHide : function() {
+    this.hide();
+  },
+  getItemPanel : function() {
+    if (this.itemPanel) {
+      return this.itemPanel;
+
+    } else {
+      var item;
+      if (this.sysConfig == null) {
+        item = new Ext.Panel({
+              region : 'center',
+              html : '没有找到系统配置信息'
             });
 
-        Divo.app.AboutWin.superclass.initComponent.apply(this, arguments);
-      },
-      render : function() {
-        Divo.app.AboutWin.superclass.render.apply(this, arguments);
-      },
-      initEvents : function() {
-        Divo.app.AboutWin.superclass.initEvents.call(this);
-      },
-      /**
-       * 关闭窗体
-       */
-      onWinHide : function() {
-        this.hide();
-      },
-      getItemPanel : function() {
-        if (this.itemPanel) {
-          return this.itemPanel;
-
-        } else {
-          var item;
-          if (this.sysConfig == null) {
-            item = new Ext.Panel({
-                  region : 'center',
-                  html : '没有找到系统配置信息'
-                });
-
-          } else {
-            var html = [
-                '<table width="100%" border="0" cellspacing="0" cellpadding="0">',
-                ' <tr>',
-                '<td colspan="2" align="right"><img src="public/images/about.gif"></td>',
-                '</tr>',
-                '<tr>',
-                '<td width="7%">&nbsp;</td>',
-                '<td width="93%"><table width="100%" border="0" cellspacing="0" cellpadding="0">',
-                '<tr>',
-                '<td height="35" class="moduleTitle" >' + this.sysConfig.productName + '</td>',
-                '</tr>',
-                '<tr>',
-                '<td><p>版本: <span>' + this.sysConfig.version + '</span></p>',
-                '</tr>',
-                '<tr>',
-                '<td><p>构建标识: <span>' + this.sysConfig.buildId + '</span></p>',
-                '</tr>',
-                '<tr>',
-                '<td><p>版权所有&nbsp;&copy;' + this.sysConfig.copyright + '</p>',
-                '</tr>',
-                '<tr>',
-                '<td><p>请访问: <a href="' + this.sysConfig.website + '"  target="_blank">'
-                    + this.sysConfig.website + '</a></p>', '</tr>', '</table></td>', '</tr>'];
-            item = new Ext.Panel({
-                  region : 'center',
-                  html : html.join('')
-                });
-          }
-
-          return item;
-        }
-
+      } else {
+        var html = [
+            '<table width="100%" border="0" cellspacing="0" cellpadding="0">',
+            ' <tr>',
+            '<td colspan="2" align="right"><img src="public/images/about.gif"></td>',
+            '</tr>',
+            '<tr>',
+            '<td width="7%">&nbsp;</td>',
+            '<td width="93%"><table width="100%" border="0" cellspacing="0" cellpadding="0">',
+            '<tr>',
+            '<td height="35" class="moduleTitle" >'
+                + this.sysConfig.productName + '</td>',
+            '</tr>',
+            '<tr>',
+            '<td><p>版本: <span>' + this.sysConfig.version + '</span></p>',
+            '</tr>',
+            '<tr>',
+            '<td><p>构建标识: <span>' + this.sysConfig.buildId + '</span></p>',
+            '</tr>',
+            '<tr>',
+            '<td><p>版权所有&nbsp;&copy;' + this.sysConfig.copyright + '</p>',
+            '</tr>',
+            '<tr>',
+            '<td><p>请访问: <a href="' + this.sysConfig.website
+                + '"  target="_blank">' + this.sysConfig.website + '</a></p>',
+            '</tr>', '</table></td>', '</tr>'];
+        item = new Ext.Panel({
+              region : 'center',
+              html : html.join('')
+            });
       }
-    });
-Ext.reg('Divo.app.AboutWin', Divo.app.AboutWin);
+
+      return item;
+    }
+
+  }
+});
+Ext.reg('Ext.app.AboutWin', Ext.app.AboutWin);
 
 /* 操作界面主面板 */
-Divo.app.MainPanel = function() {
-  var html = ['<div id="welcome-div">',
+Ext.app.MainPanel = function() {
+  var html = [
+      '<div id="welcome-div">',
       '<div style="float:left;"><img src="public/images/layout-icon.gif" /></div>',
-      '<div style="margin-left:100px;">', '<h2>欢迎使用财务一体化管理系统！</h2>', '<p></p>', '</div>'];
+      '<div style="margin-left:100px;">', '<h2>欢迎使用财务一体化管理系统！</h2>', '<p></p>',
+      '</div>'];
 
-  Divo.app.MainPanel.superclass.constructor.call(this, {
+  Ext.app.MainPanel.superclass.constructor.call(this, {
         id : 'menu-content-panel',
         region : 'center',
         margins : '3 3 3 0',
@@ -127,14 +128,15 @@ Divo.app.MainPanel = function() {
       });
 }
 
-Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
+Ext.extend(Ext.app.MainPanel, Ext.TabPanel, {
   NEW_LINE : '\n',
   CFG_DEPLOYMENT_TYPE : 'DEV',
   loadContent : function(href, menuId, title) {
     var ifrId = 'frame-' + menuId;
     var tabId = 'contants-tab-' + menuId;
 
-    if (Ext.isEmpty(document.getElementById(ifrId)) && !Ext.isEmpty(window.frames[ifrId])) {
+    if (Ext.isEmpty(document.getElementById(ifrId))
+        && !Ext.isEmpty(window.frames[ifrId])) {
       delete window.frames[ifrId];
     }
 
@@ -185,11 +187,14 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
   buildHtmlHead : function(href) {
     var out = '';
     out += '<head>' + this.NEW_LINE;
-    out += ' 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8"/>' + this.NEW_LINE;
+    out += ' 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8"/>'
+        + this.NEW_LINE;
     if (this.CFG_DEPLOYMENT_TYPE == 'DEV') { // 开发模式(DEV)
-      out += ' 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"/>' + this.NEW_LINE;
+      out += ' 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"/>'
+          + this.NEW_LINE;
     } else { // 生产模式(PROD)
-      out += ' 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PRIVATE"/>' + this.NEW_LINE;
+      out += ' 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="PRIVATE"/>'
+          + this.NEW_LINE;
     }
 
     out += this.buildImportExtjs();
@@ -213,8 +218,10 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
         + this.NEW_LINE;
     out += '  <link rel="stylesheet" type="text/css" href="public/css/default.css"/>'
         + this.NEW_LINE;
-    out += ' <link rel="stylesheet" type="text/css" href="public/css/app.css"/>' + this.NEW_LINE;
-    out += ' <link rel="stylesheet" type="text/css" href="public/css/portal.css"/>' + this.NEW_LINE; // 窗体拖拽
+    out += ' <link rel="stylesheet" type="text/css" href="public/css/app.css"/>'
+        + this.NEW_LINE;
+    out += ' <link rel="stylesheet" type="text/css" href="public/css/portal.css"/>'
+        + this.NEW_LINE; // 窗体拖拽
     out += '  <script type="text/javascript" src="public/extjs/ext-base.js" ><\/script>'
         + this.NEW_LINE;
     out += '  <script type="text/javascript" src="public/extjs/ext-all.js" ><\/script>'
@@ -231,7 +238,8 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
     }
 
     if (Ext.isIE) {
-      out += '<script id="ie-deferred-loader" defer="defer" src="//:"></script>' + this.NEW_LINE;
+      out += '<script id="ie-deferred-loader" defer="defer" src="//:"></script>'
+          + this.NEW_LINE;
     }
 
     out += '';
@@ -239,18 +247,18 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
   },
   buildImportEkingBase : function() {
     var out = '';
-    out += '  <script type="text/javascript" src="public/js/common/core.js' + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="public/js/common/base-grid.js' + '"><\/script>'
-        + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="public/js/common/core.js'
+        + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="public/js/common/base-grid.js'
+        + '"><\/script>' + this.NEW_LINE;
     out += '  <script type="text/javascript" src="public/js/common/base-edit-grid.js'
         + '"><\/script>' + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="public/js/common/base-form.js' + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="public/js/common/utils.js' + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="public/js/common/column-tree.js' + '"><\/script>'
-        + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="public/js/common/base-form.js'
+        + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="public/js/common/utils.js'
+        + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="public/js/common/column-tree.js'
+        + '"><\/script>' + this.NEW_LINE;
     out += '  <script type="text/javascript" src="public/js/common/tdgi.borderLayout.js'
         + '"><\/script>' + this.NEW_LINE;
 
@@ -264,14 +272,14 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
       ts = '?_t_=' + (new Date()).getTime();
     }
 
-    out += '  <script type="text/javascript" src="dwr/engine.js' + ts + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="dwr/util.js' + ts + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="dwr/interface/SysFacade.js' + ts + '"><\/script>'
-        + this.NEW_LINE;
-    out += '  <script type="text/javascript" src="dwr/interface/FaFacade.js' + ts + '"><\/script>'
-        + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="dwr/engine.js' + ts
+        + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="dwr/util.js' + ts
+        + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="dwr/interface/SysFacade.js'
+        + ts + '"><\/script>' + this.NEW_LINE;
+    out += '  <script type="text/javascript" src="dwr/interface/FaFacade.js'
+        + ts + '"><\/script>' + this.NEW_LINE;
 
     out += '';
     return out;
@@ -287,8 +295,8 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
     var pDcArray = uiDcInc.get(jsUI)
     if (pDcArray != undefined) {
       for (var j = 0; j < pDcArray.length; j++) {
-        out += '<script  type="text/javascript" src="' + basePath + pDcArray[j] + ts
-            + '"><\/script>' + this.NEW_LINE;
+        out += '<script  type="text/javascript" src="' + basePath + pDcArray[j]
+            + ts + '"><\/script>' + this.NEW_LINE;
       }
     }
 
@@ -298,7 +306,7 @@ Ext.extend(Divo.app.MainPanel, Ext.TabPanel, {
 
 });
 
-Divo.app.Main = function() {
+Ext.app.Main = function() {
   /* -------------------- private属性 -------------------- */
   var aboutWin, menuBar, menuComponent, mainPanel, viewport;
   var sysConfig, subSysMenu, thumbTemplate;
@@ -309,7 +317,8 @@ Divo.app.Main = function() {
    * 创建菜单栏显示模板
    */
   function initTemplates() {
-    thumbTemplate = new Ext.XTemplate('<tpl for=".">',
+    thumbTemplate = new Ext.XTemplate(
+        '<tpl for=".">',
         '<div class="thumb-wrap" id="menu-icon-div-{oid}">',
         '<div class="thumb"><img src="public/icons/menus/{oid}.gif" title="{text}"></div>',
         '<span>{text}</span></div>', '</tpl>');
@@ -432,21 +441,22 @@ Divo.app.Main = function() {
                 'click' : function(dataview, index, node, e) {
                   e.stopEvent();
                   var selRecord = dataview.getSelectedRecords()[0];
-                  mainPanel
-                      .loadContent(selRecord.data.url, selRecord.data.oid, selRecord.data.text);
+                  mainPanel.loadContent(selRecord.data.url, selRecord.data.oid,
+                      selRecord.data.text);
                 }
               }
             });
 
         menuComponent.add({
-          id : 'menu-according-panel-' + subSys[i].oid,
-          region : 'center',
-          layout : 'fit',
-          cls : 'img-chooser-view',
-          title : '<img src="public/icons/menus/' + subSys[i].oid + '.gif">&nbsp;' + subSys[i].text,
-          autoScroll : true,
-          items : [dataView]
-        });
+              id : 'menu-according-panel-' + subSys[i].oid,
+              region : 'center',
+              layout : 'fit',
+              cls : 'img-chooser-view',
+              title : '<img src="public/icons/menus/' + subSys[i].oid
+                  + '.gif">&nbsp;' + subSys[i].text,
+              autoScroll : true,
+              items : [dataView]
+            });
       }
     }
 
@@ -467,7 +477,7 @@ Divo.app.Main = function() {
 
   // 创建布局
   function createViewport() {
-    aboutWin = new Divo.app.AboutWin({
+    aboutWin = new Ext.app.AboutWin({
           sysConfig : sysConfig
         });
 
@@ -479,7 +489,7 @@ Divo.app.Main = function() {
           }
         });
 
-    mainPanel = new Divo.app.MainPanel();
+    mainPanel = new Ext.app.MainPanel();
     // 限制最多能打开的面板,防止浏览器过载崩溃
     mainPanel.on('beforeadd', function(container, component, index) {
           if (index > maxPanelNum) {
@@ -514,27 +524,27 @@ Divo.app.Main = function() {
         });
 
     var titleBar = new Ext.Panel({
-          region : 'north',
-          id : 'north-panel',
-          split : false,
-          height : 56,
-          border : false,
-          collapsible : false,
-          margins : '0 0 0 0',
-          layout : 'border',
-          items : [{
-            region : 'north',
-            html : '<div id="titlebar"><input type=hidden value="" id="activeFrameId">'
-                + '</input><h1>' + sysConfig.productName + '</h1></div>',
-            border : false,
-            height : 28
-          }, {
-            region : 'center',
-            border : false,
-            height : 26,
-            items : [menuBar]
-          }]
-        });
+      region : 'north',
+      id : 'north-panel',
+      split : false,
+      height : 56,
+      border : false,
+      collapsible : false,
+      margins : '0 0 0 0',
+      layout : 'border',
+      items : [{
+        region : 'north',
+        html : '<div id="titlebar"><input type=hidden value="" id="activeFrameId">'
+            + '</input><h1>' + sysConfig.productName + '</h1></div>',
+        border : false,
+        height : 28
+      }, {
+        region : 'center',
+        border : false,
+        height : 26,
+        items : [menuBar]
+      }]
+    });
 
     viewport = new Ext.Viewport({
           layout : 'tdgi_border',
@@ -596,7 +606,7 @@ Divo.app.Main = function() {
 
   // 获取当前用户的信息
   function getCurUserInfos() {
-    var curUser = Divo.Utils.getCurUser();
+    var curUser = Ext.Utils.getCurUser();
     if (curUser) {
       Ext.get('cur-user-name').dom.innerHTML = curUser.userName;
     }
@@ -606,7 +616,7 @@ Divo.app.Main = function() {
   return {
     init : function() {
       uiDcInc = new Ext.util.MixedCollection();
-      sysConfig = Divo.Utils.getSysConfig();
+      sysConfig = Ext.app.Utils.getSysConfig();
 
       initUiDcIncludes(uiDcInc);
       initTemplates();
@@ -617,4 +627,4 @@ Divo.app.Main = function() {
   }
 }();
 
-Ext.onReady(Divo.app.Main.init, Divo.app.Main, true);
+Ext.onReady(Ext.app.Main.init, Ext.app.Main, true);

@@ -21,6 +21,20 @@ class SystemController < ApplicationController
     end
   end
 
+  def sysConfig
+    data = {
+        :time => Property.get_database_time(),
+        :version => "1.0",
+        :buildId => "xxxx",
+        :copyright => "2008",
+        :productName => "ror - 应用程序"
+        };
+
+    render :json => {
+        :success => true, :data => data
+        }, :layout => false
+  end
+
   def welcome
     render :layout => false
   end
