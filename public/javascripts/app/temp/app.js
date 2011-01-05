@@ -8,7 +8,7 @@ Ext.app.Utils.getSysConfig = function() {
   var x2;
 
   var result = function(response){
-    x = Ext.decode(response.responseText);
+    var x = Ext.decode(response.responseText);
     x2 = x.data;
   }
  Ext.Ajax.request({
