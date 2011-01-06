@@ -8,17 +8,12 @@ Docs = {};
 Ext.app.Utils.getSysConfig = function() {
   var x2;
 
-  var result = function(response){
-    var x = Ext.decode(response.responseText);
+  sysConfig=new Ext.data.JsonStore({
+        url:'system/sysConfig'
+    });
+  sysConfig.load();
 
-    alert(x.data.copyright)
-  }
- Ext.Ajax.request({
-  url: 'system/sysConfig',
-  success: result
- })
 
-  return x2;
 }
 
 //var titleBar = new Ext.Panel({
@@ -441,12 +436,12 @@ Ext.onReady(function() {
       mainPanel.on('tabchange', function(tp, tab) {
             api.selectClass(tab.cclass);
           });
-      sysConfig = Ext.app.Utils.getSysConfig();
+      Ext.app.Utils.getSysConfig();
       var statusBar = new Ext.BoxComponent({
           region : 'south',
           height : 16,
           autoEl : {
-            html : '<div id="footer"><p>Powered by jror &copy; ' + ' - All rights reserved. 版权所有</p></div>'
+            html : '<div id="footer"><p>Powered by jror &copy; ' + sysConfig.copyright + ' - All rights reserved. 版权所有</p></div>'
           }
       });
 

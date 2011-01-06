@@ -19,7 +19,6 @@ class Property < ActiveRecord::Base
     hash
   end
 
-
   def self.value(key, resource_id=nil, default_value=nil)
     prop=Property.find(:first, :conditions => {'prop_key' => key, 'resource_id' => resource_id, 'user_id' => nil})
     prop ? prop.text_value : default_value
@@ -106,7 +105,7 @@ class Property < ActiveRecord::Base
       #Rails.logger.info(rows.to_s)
       value = rows["value"];
     elsif sql.adapter_name == "SQLite"
-      rows = sql.select_one("select strftime('%Y.%m.%d %H:%M%S',date('now')) as value;");
+      rows = sql.select_one("select strftime('%Y.%m.%d %H:%M:%S','now','localtime') as value;");
       value = rows["value"];
     else
       value = Time.now;

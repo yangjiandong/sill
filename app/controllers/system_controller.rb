@@ -30,9 +30,7 @@ class SystemController < ApplicationController
         :productName => "ror - 应用程序"
         };
 
-    render :json => {
-        :success => true, :data => data
-        }, :layout => false
+    render :json => data, :layout => false
   end
 
   def welcome
