@@ -27,6 +27,8 @@ Sill - rails3
 
    2. vim
   set statusline=%f\ [%{&fenc}\ %{&ff}]\ [%Y]\ [\%03.3b\ \%02.2B]\ [%02v\ %03l\ %L\ %p%%]  
+  js format
+  map <F5> :call g:Jsbeautify()<CR>
 
 2011.01.04
 -----------
