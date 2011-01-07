@@ -1,0 +1,22 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <%= link_to '修改', edit_post_path(@post) %> |
+  <%= link_to '返回', posts_path %>
+</div>
+<div id="post">
+    <p>
+    <b>Title:</b>
+    <%= @post.title %>
+  </p>
+    <p>
+    <b>Body:</b>
+    <%= @post.body %>
+  </p>
+    <p>
+    <b>User:</b>
+    <%= @post.user_id %>
+  </p>
+  </div>

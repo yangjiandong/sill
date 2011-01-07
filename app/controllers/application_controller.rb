@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include NeedAuthorization::Helper
 
-  before_filter :check_authentication
+  #before_filter :check_authentication
   # 不需要每次去验证
   # ,:check_database_version
 

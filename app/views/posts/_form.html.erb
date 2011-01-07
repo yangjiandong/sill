@@ -1,0 +1,14 @@
+<div id="post" class="form">
+<%= simple_form_for(@post, 
+  :url => (@post.id.blank? ? posts_path : post_path(@post)) ) do |f| %>
+
+  <div class="inputs">
+  <%= f.input :title %>
+  <%= f.input :body %>
+  <%= f.input :user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit "提交", :class => "button" %> 或者 <%= link_to '返回', posts_path %>
+  </div>
+<% end %>
+</div>

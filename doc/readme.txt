@@ -6,12 +6,24 @@ Sill - rails3
 
    1. 学习自定义模板
    http://huacnlee.com/blog/how-to-custom-scaffold-templates-in-rails3
-   gem "wice_grid", '3.0.0.pre1'
-   gem "simple_form"
+   gem "wice_grid", '3.0.0.pre1'  --https://github.com/leikind/wice_grid/tree/rails3,example:http://grid.leikind.org/ 
+   gem "simple_form" --https://github.com/plataformatec/simple_form
+   lib/templates
+
+   --以下步骤没成功,需手工拷贝文件
+   rails g wice_grid_assets_jquery 
 
    example:
+   --生成前台界面
    rails g scaffold Post title:string body:text user_id:integer
+   --生成后台
+   rails g scaffold_controller admin/post title:string body:text user_id:integer
 
+   --test
+   http://localhost:6000/posts 
+
+   --采用html 形式的控制器统一继承ApplicationHtmlController
+   --模板中也采用该控制器
 
    2. vim
   set statusline=%f\ [%{&fenc}\ %{&ff}]\ [%Y]\ [\%03.3b\ \%02.2B]\ [%02v\ %03l\ %L\ %p%%]  

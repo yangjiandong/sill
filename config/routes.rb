@@ -1,4 +1,6 @@
 Sill::Application.routes.draw do
+  resources :posts
+
   match 'home' => 'system#index', :as => :home
   match 'system' => 'system#index', :as => :system
   match 'welcome' => 'system#welcome', :as => :welcome
