@@ -41,6 +41,18 @@ Ext.app.Utils.getSysConfig = function() {
 		}])
 	});
 
+  var dss = new Ext.data.Store({
+    proxy: new Ext.data.HttpProxy({
+             url: ''
+           })
+           reader: new Ext.data.JsonReader({
+                     root: 'topics',
+             totalProperty: 'totalCount',
+             id: 'post_id'},[
+             {name :'title', mapping : 'title'},
+             {name :'time', mapping :'time'}
+               ])
+             })
 }
 
 //var titleBar = new Ext.Panel({
