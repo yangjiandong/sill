@@ -22,7 +22,13 @@ gem 'activerecord-oracle_enhanced-adapter', '~> 1.3.1'
 gem "ruby-plsql", "~> 0.4.3"
 
 gem 'haml'
-gem 'will_paginate',        '>= 3.0.pre2'
+gem 'will_paginate',        '~> 3.0.pre2'
+
+#http://huacnlee.com/blog/how-to-custom-scaffold-templates-in-rails3
+#https://github.com/leikind/wice_grid/tree/rails3 
+gem "wice_grid", '3.0.0.pre1'
+#https://github.com/plataformatec/simple_form 
+gem "simple_form"
 
 # format log
 gem 'awesome_print',      '>= 0.2.1'

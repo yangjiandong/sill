@@ -1,6 +1,21 @@
 Sill - rails3
 =============
 
+2011.01.06
+-----------
+
+   1. 学习自定义模板
+   http://huacnlee.com/blog/how-to-custom-scaffold-templates-in-rails3
+   gem "wice_grid", '3.0.0.pre1'
+   gem "simple_form"
+
+   example:
+   rails g scaffold Post title:string body:text user_id:integer
+
+
+   2. vim
+  set statusline=%f\ [%{&fenc}\ %{&ff}]\ [%Y]\ [\%03.3b\ \%02.2B]\ [%02v\ %03l\ %L\ %p%%]  
+
 2011.01.04
 -----------
 
