@@ -1,6 +1,31 @@
 Sill - rails3
 =============
 
+2011.01.11
+-----------
+
+   1. git flow
+   https://github.com/nvie/gitflow 
+
+Manual installation(cygwin)
+
+If you prefer a manual installation, please use the following instructions. After downloading the sources from Github, also fetch the submodules:
+
+$ git submodule init
+$ git submodule update
+Then, you can install git-flow, using:
+
+$ sudo make install
+
+install -m 0644 git-flow-init git-flow-feature git-flow-hotfix git-flow-release git-flow-support git-flow-version gitflo
+w-common gitflow-shFlags /usr/local/bin
+
+  注意,最后需将usr/local/bin 下生成的文件考到cygwin/binary
+
+  2. vim
+  set ignorecase    " ignore case when searching "
+  http://nvie.com/posts/how-i-boosted-my-vim/
+
 2011.01.10
 -----------
 
