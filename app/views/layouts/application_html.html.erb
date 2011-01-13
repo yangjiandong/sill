@@ -1,35 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%
-  if @page_title
-    title="Sill - #{h(@page_title)}"
-  elsif @project
-    title="Sill - #{h(@project.name)}"
-  else
-    title='Sill'
-  end
-%>
-<title><%= title %></title>
-<meta name="description" content="Rails and jquery applications." />
-<link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
-<link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
-<!-- START:stylesheet -->
-<%= stylesheet_link_tag "scaffold" %>
-<%= stylesheet_link_tag "wice_grid" %>
-<!-- END:stylesheet -->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%
+      if @page_title
+        title="Sill - #{h(@page_title)}"
+      elsif @project
+        title="Sill - #{h(@project.name)}"
+      else
+        title='Sill'
+      end
+    %>
+    <title><%= title %></title>
+    <meta name="description" content="Rails and jquery applications." />
+    <link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+    <link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+    <!-- START:stylesheet -->
+    <%= stylesheet_link_tag "scaffold" %>
+    <%= stylesheet_link_tag "wice_grid" %>
+    <!-- END:stylesheet -->
 
-<%= javascript_include_tag :jquery %>
-<%= javascript_include_tag 'wice_grid_jquery' %>
+    <%= javascript_include_tag :jquery %>
+    <%= javascript_include_tag 'wice_grid_jquery' %>
 
-<%#= include_wice_grid_assets %>
-<%= csrf_meta_tag %>
+    <%#= include_wice_grid_assets %>
+    <%= csrf_meta_tag %>
 
-</head>
-<body>
+  </head>
+  <body>
     <div id="main">
       <%= yield %>
     </div>
-</body>
+  </body>
 </html>

@@ -1,27 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%
-  if @page_title
-    title="Sill - #{h(@page_title)}"
-  elsif @project
-    title="Sill - #{h(@project.name)}"
-  else
-    title='Sill'
-  end
-%>
-<title><%= title %></title>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%
+      if @page_title
+        title="Sill - #{h(@page_title)}"
+      elsif @project
+        title="Sill - #{h(@project.name)}"
+      else
+        title='Sill'
+      end
+    %>
+    <title><%= title %></title>
 
-<%= javascript_include_tag :jquery %>
-<link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
-<link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
-</head>
-<body>
-  <div>
-    <div id="bd">
-       <div id="nonav">
+    <%= javascript_include_tag :jquery %>
+    <link rel="icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+    <link rel="shortcut icon" type="image/x-icon" href="<%= image_path('favicon.ico') -%>" />
+  </head>
+  <body>
+    <div>
+      <div id="bd">
+        <div id="nonav">
           <%= yield %>
+        </div>
       </div>
-  </div>
-<%= render :partial => 'layouts/info' %>
-</body>
-</html>
+      <%= render :partial => 'layouts/info' %>
+    </body>
+  </html>

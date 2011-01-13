@@ -21,6 +21,9 @@ end
    with_deleted或only_deleted
    参数得到被隐藏的记录. 
 
+   2. vim 下排版
+   gg=G
+
 2011.01.12
 -----------
 
