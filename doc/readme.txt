@@ -24,6 +24,10 @@ end
    2. vim 下排版
    gg=G
 
+   3. 文档生成工具
+   参考 sinatra-book, thor, maruku
+   https://github.com/cypher/sinatra-book.git 
+
 2011.01.12
 -----------
 
