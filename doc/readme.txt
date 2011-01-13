@@ -1,11 +1,36 @@
 Sill - rails3
 =============
 
+2011.01.13
+-----------
+
+   1. 用acts_as_paranoid 做"假删除" 
+
+rails plugin install git://github.com/technoweenie/acts_as_paranoid.git
+rails generate migration add_deleted_at_to_post deleted_at:datetime
+rake db:migrate
+
+   在对应model中增加
+class Post < ActiveRecord::Base  
+  acts_as_paranoid  
+end 
+
+   加上后,调用这个模型的destroy方法将不会真正地删除记录,只会将记录从视图上移除
+   ,并且在deleted_at里记录当前的时间.
+   当然,你可以在find中使用
+   with_deleted或only_deleted
+   参数得到被隐藏的记录. 
+
 2011.01.12
 -----------
 
    1. ramdisk 加速系统应用
    save/ramdisk.txt
+
+   2. update rubygems, update gems
+
+   gem update --system
+   gem update
 
 2011.01.11
 -----------
