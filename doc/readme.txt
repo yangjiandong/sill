@@ -20,6 +20,25 @@ Sill - rails3
 $ jruby -S trinidad --config   # it uses config/trinidad.yml
 $ jruby -S trinidad --config /etc/default/trinidad/config.yml
 
+   3. jruby1.6rc1
+   
+官方声明中还列举了以下一些主要特性：
+
+内置剖析器
+RubyGems 1.4.2
+不再捆绑RSpec
+jruby-complete.jar包含1.9标准库
+改善嵌入API
+此次新增的内置剖析器得到了RedCar作者Dan Lucraft的帮助，
+JRuby核心开发者Charles Nutter还发表了一篇博客，通过示例介绍了--profile.flat和--profile.graph这两个新参数的用法：
+
+~/projects/jruby ? jruby --profile.flat -e "def foo; 100000.times { (2 ** 200).to_s }; end; foo"
+   
+jruby --profile.graph -e "def foo; 100000.times { (2 ** 200).to_s }; end; foo"
+
+   -- get all gems
+   jruby -e "t = Time.now; require 'rubygems'; puts Time.now - t"
+
 2011.01.13
 -----------
 
