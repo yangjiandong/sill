@@ -1,6 +1,25 @@
 Sill - rails3
 =============
 
+2011.01.14
+-----------
+
+   1. jruby gem  删除 .yardoc  目录
+   采用 gem update 升级自动产生了该目录，多余
+
+   2. embedded Apache Tomcat
+   git clone git://github.com/calavera/trinidad
+   cd xxx
+   rake trinidad:build 
+   cd pkg
+   gem install xxx.gem
+   --没成功
+
+   jgem install trinidad
+   --
+$ jruby -S trinidad --config   # it uses config/trinidad.yml
+$ jruby -S trinidad --config /etc/default/trinidad/config.yml
+
 2011.01.13
 -----------
 

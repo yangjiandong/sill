@@ -7,3 +7,6 @@ config/database.yml
 *.class
 db/data.yml
 gitrm.bat
+ssl
+work
+log
