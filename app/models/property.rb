@@ -120,3 +120,15 @@ class Property < ActiveRecord::Base
     #Java::OrgSonarServerUi::JRubyFacade.new.reloadConfiguration()
   end
 end
+
+# == Schema Information
+#
+# Table name: t_properties
+#
+#  id          :integer(10)     not null, primary key
+#  prop_key    :string(512)
+#  prop_value  :string(4000)
+#  resource_id :integer(10)
+#  user_id     :integer(10)
+#
+

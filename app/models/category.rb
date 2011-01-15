@@ -19,3 +19,19 @@ class Category < ActiveRecord::Base
     
   end
 end
+
+# == Schema Information
+#
+# Table name: t_categories
+#
+#  id          :integer(10)     not null, primary key
+#  name        :string(40)      not null
+#  parent_id   :integer(10)
+#  lft         :integer(10)
+#  rgt         :integer(10)
+#  description :string(100)
+#  depth       :integer(10)
+#  created_at  :datetime(23)
+#  updated_at  :datetime(23)
+#
+

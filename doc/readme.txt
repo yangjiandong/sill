@@ -1,6 +1,20 @@
 Sill - rails3
 =============
 
+2011.01.15
+-----------
+
+   1. jruby 1.6rc1, 设置为1.9时,速度确实比1.8快,但程序有以下错误
+   lib/active_record/connection_adapters/oracle_enhanced_context_index.rb:132: syntax error, unexpected kDO_BLOCK
+   
+   jruby1.6rc1(ruby1.8.7):
+     jruby -e "t = Time.now; require 'rubygems'; puts Time.now - t"
+     平均0.64
+     换成1.9(JRUBY_OPTS=--1.9)
+     0 OR 0.016
+
+  2. save/annotate.txt
+
 2011.01.14
 -----------
 

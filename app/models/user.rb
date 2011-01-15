@@ -103,3 +103,20 @@ class User < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+#
+# Table name: t_users
+#
+#  id                        :integer(10)     not null, primary key
+#  login                     :string(40)
+#  name                      :string(100)
+#  email                     :string(100)
+#  crypted_password          :string(40)
+#  salt                      :string(40)
+#  created_at                :datetime(23)
+#  updated_at                :datetime(23)
+#  remember_token            :string(500)
+#  remember_token_expires_at :datetime(23)
+#
+

@@ -31,3 +31,15 @@ class Group < ActiveRecord::Base
     name<=>other.name
   end
 end
+
+# == Schema Information
+#
+# Table name: t_groups
+#
+#  id          :integer(10)     not null, primary key
+#  name        :string(40)
+#  description :string(200)
+#  created_at  :datetime(23)
+#  updated_at  :datetime(23)
+#
+
