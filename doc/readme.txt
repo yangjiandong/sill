@@ -15,6 +15,14 @@ Sill - rails3
 
   2. save/annotate.txt
 
+     标注model 表结构
+
+  3. 记录model变更历史,https://github.com/seejohnrun/track_history 
+    save\track_history.txt
+
+    gem 'track_history', '0.0.10'
+    bundle update
+
 2011.01.14
 -----------
 
@@ -74,7 +82,7 @@ end
    参数得到被隐藏的记录. 
 
    2. vim 下排版
-   gg=G
+   gg=G or =}
 
    3. 文档生成工具
    参考 sinatra-book, thor, maruku

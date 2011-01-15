@@ -40,13 +40,15 @@ group :development do
    gem 'warbler'
    gem 'bullet'
    gem 'mongrel'
-
 end
 
 gem 'yaml_db'
 gem 'uuidtools'
 gem 'fastercsv'
+# track_history model
+gem 'track_history', '0.0.10'
 
+# memcache
 gem 'dalli'
 #background job
 gem 'delayed_job'
