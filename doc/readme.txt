@@ -1,6 +1,26 @@
 Sill - rails3
 =============
 
+2011.01.16
+-----------
+
+   1. acts_as_paranoid 有问题,
+   undefined method `destroy_without_callbacks' for class `Post'
+   use: https://github.com/winton/acts_as_archive
+   or https://github.com/backupify/acts_as_archive 
+
+   rails g migration add_archive
+
+   --sqlite3
+   AlsoMigrate error: ActiveRecord::JDBCError: near "LIKE": syntax error:
+   CREATE TABLE archived_posts LIKE posts;
+   --手工处理
+   execute " CREATE TABLE archived_posts (id integer primary key autoincrement not null, title varchar(255), body varchar(255), user_id integer, created_at datetime, updated_at datetime,deleted_at datetime)"
+   --destroy 时,没看到效果
+
+   --mysql
+   处理hz库导入时间过长394.9380s 
+
 2011.01.15
 -----------
 
