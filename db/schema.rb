@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110116050841) do
+ActiveRecord::Schema.define(:version => 20110116111938) do
 
   create_table "archived_posts", :force => true do |t|
     t.string   "title"
@@ -36,6 +36,13 @@ ActiveRecord::Schema.define(:version => 20110116050841) do
 
   # unrecognized index "delayed_jobs_locked_by" with type ActiveRecord::ConnectionAdapters::IndexDefinition
   # unrecognized index "delayed_jobs_priority" with type ActiveRecord::ConnectionAdapters::IndexDefinition
+
+  create_table "post_histories", :force => true do |t|
+    t.integer  "post_id"
+    t.string   "title_before"
+    t.string   "title_after"
+    t.datetime "created_at"
+  end
 
   create_table "posts", :force => true do |t|
     t.string   "title"

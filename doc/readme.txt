@@ -21,6 +21,11 @@ Sill - rails3
    --mysql
    处理hz库导入时间过长394.9380s 
 
+   2. track_history
+   rails g migration add_track_histroy
+   -- use sqlite3, 程序运行没成功 
+   uninitialized constant TrackHistory::ActsAsMethods::HistoryMethods 
+
 2011.01.15
 -----------
 
