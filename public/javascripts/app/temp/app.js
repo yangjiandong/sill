@@ -11,47 +11,39 @@ Ext.app.Utils.getSysConfig = function() {
   // url:'system/sysConfig'
   // });
   // sysConfig.load();
-  var myData = [['3m Co', 71.72, 0.02, 0.03, '9/1 12:00am'], 
-      ['Alcoa Inc', 29.01, 0.42, 1.47, '9/1 12:00am'], 
-      ['Wal-Mart Stores, Inc.', 45.45, 0.73, 1.63, '9/1 12:00am'], 
-      ['Walt Disney Company (The) (Holding Company)', 29.89, 0.24, 0.81, '9/1 12:00am']];
+//  var myData = [['3m Co', 71.72, 0.02, 0.03, '9/1 12:00am'],
+//      ['Alcoa Inc', 29.01, 0.42, 1.47, '9/1 12:00am'],
+//      ['Wal-Mart Stores, Inc.', 45.45, 0.73, 1.63, '9/1 12:00am'],
+//      ['Walt Disney Company (The) (Holding Company)', 29.89, 0.24, 0.81, '9/1 12:00am']];
+//
+//  var ds = new Ext.data.Store({
+//    proxy: new Ext.data.MemoryProxy(myData),
+//      reader: new Ext.data.ArrayReader({},
+//        [{
+//          name: 'company'
+//        },
+//        {
+//          name: 'price',
+//      type: 'float'
+//        },
+//        {
+//          name: 'change',
+//      type: 'float'
+//        },
+//        {
+//          name: 'pctChange',
+//      type: 'float'
+//        },
+//        {
+//          name: 'lastChange',
+//      type: 'date',
+//      dateFormat: 'n/j h:ia'
+//        }])
+//  });
 
-  var ds = new Ext.data.Store({
-    proxy: new Ext.data.MemoryProxy(myData),
-      reader: new Ext.data.ArrayReader({},
-        [{
-          name: 'company'
-        },
-        {
-          name: 'price',
-      type: 'float'
-        },
-        {
-          name: 'change',
-      type: 'float'
-        },
-        {
-          name: 'pctChange',
-      type: 'float'
-        },
-        {
-          name: 'lastChange',
-      type: 'date',
-      dateFormat: 'n/j h:ia'
-        }])
-  });
-
-  var dss = new Ext.data.Store({
-    proxy: new Ext.data.HttpProxy({
-             url: ''
-           }),
-      reader: new Ext.data.JsonReader({
-                root: 'topics',
-      totalProperty: 'totalCount',
-      id: 'post_id'},[
-      {name :'title', mapping : 'title'},
-      {name :'time', mapping :'time'}
-      ])
+  var dss = new Ext.data.JsonStore({
+    url: 'system/sysConfig',
+    fields: ['time', 'version', 'buildId', 'copyright', 'productName']
   })
 }
 
@@ -470,12 +462,19 @@ Ext.onReady(function() {
   mainPanel.on('tabchange', function(tp, tab) {
     api.selectClass(tab.cclass);
   });
-  Ext.app.Utils.getSysConfig();
+  //Ext.app.Utils.getSysConfig();
+
+    var dss = new Ext.data.JsonStore({
+    url: 'system/sysConfig',
+    fields: ['time', 'version', 'buildId', 'copyright', 'productName']
+  })
+  dss.load();
+
   var statusBar = new Ext.BoxComponent({
     region: 'south',
       height: 16,
       autoEl: {
-        html: '<div id="footer"><p>Powered by jror &copy;  + sysConfig.copyright +  - All rights reserved. 版权所有</p></div>'
+        html: '<div id="footer"><p>Powered by jror &copy;  '+ dss.getAt(0).get('copyright') + '  - All rights reserved. 版权所有</p></div>'
       }
   });
 
