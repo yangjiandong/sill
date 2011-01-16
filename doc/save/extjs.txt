@@ -1,0 +1,92 @@
+extjs
+========
+
+2011.01.16
+-----------
+
+1. ext 项目暂定规则
+
+命名空间: Ext.app,Ext.app.ux
+文件目录: app
+             app.module1(dir)
+             app.module2(dir)
+             app.utils.js
+             about.js
+             login.js
+             main.js
+          app.ux
+
+2011.01.14
+-----------
+
+1. Ext异步请求session过期解决方案
+http://lym6520.javaeye.com/blog/871092
+
+文章分类:Web前端
+    最近在开发后台管理系统，前台使用了Ext框架，在开发过程中，发现session过期时客服端仍然不断的进行了N次请求后才停止，
+    我想很多使用过Ext框架开发的同学都遇到过同样的问题吧！今天我就来说说我的解决方案吧！
+
+    前端通过Ext.Ajax.request的requestcomplete事件来进行session过期验证处理的：
+// Default headers to pass in every request
+  Ext.Ajax.defaultHeaders = {
+      'Request-By': 'Ext'	//标识ajax请求
+  };
+
+  // ajax回调函数处理系统退出
+  Ext.Ajax.on('requestcomplete',checkSessionStatus, this);
+  function checkSessionStatus(conn,response,options){
+      var json = Ext.decode(response.responseText);
+      if(typeof json == 'object'
+      && !json.success
+      && json.timeout){
+      alert("登入超时,系统将自动跳转到登陆页面,请重新登入!");
+      top.window.location.href = json.redirectUri;
+    }
+
+  }
+
+
+从上面的js代码中，注意下面这行代码：
+// Default headers to pass in every request
+  Ext.Ajax.defaultHeaders = {
+      'Request-By': 'Ext'	//标识ajax请求
+  };
+
+
+
+需要设置请求的头信息来标识ajax请求，过滤器在处理请求的时候就是通过请求的头信息Request-By值是否为Ext来判断是否为Ext的异步请求的，
+然后在做出不同的响应。
+
+最后看看过滤器的处理方式，以下是session超时处理的部分的代码：
+String ajaxTag = req.getHeader("Request-By");//Ext
+
+      if(ajaxTag == null || !ajaxTag.trim().equalsIgnoreCase("Ext")){
+        resp.sendRedirect(this.redirectUri);
+      }else{
+        resp.addHeader("sessionstatus", "timeout");
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("success", false);
+        result.put("timeout",true);
+        result.put("redirectUri", this.redirectUri);
+        PrintWriter out = resp.getWriter();
+        out.print(Json.object2Json(result));
+        out.flush();
+        out.close();
+      }
+
+
+
+通过判断是否为Ext的异步请求，来做出不同的动作处理：直接跳转到登入页面或输出session过期信息由前台js事件拦截处理。
+
+old
+-----------
+
+1. layout
+
+   采用最简单布局
+
+   ext/examples/layout-browser
+
+
+   --end
+
