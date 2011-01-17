@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(:version => 20110116111938) do
     t.integer  "user_id",    :limit => 10
     t.datetime "created_at", :limit => 23
     t.datetime "updated_at", :limit => 23
-    t.datetime "deleted_at", :limit => 23
   end
 
   create_table "sessions", :force => true do |t|

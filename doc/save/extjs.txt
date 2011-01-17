@@ -1,6 +1,23 @@
 extjs
 ========
 
+2011.01.17
+-----------
+
+1. extjs 回调函数callback
+   
+   ajax 的异步请求有时候会带来延时加载,load方法中提供了一个callback回调函数，
+   可以解决延迟加载的问题，我们需要处理的一部分代码可以放在callback函数中处理，
+   这样就解决了异步请求带来的问题
+
+collectIndex_ds.load({
+  callback :function(r,options,success){
+    if(success){
+     ...
+    }
+  }
+})
+
 2011.01.16
 -----------
 

@@ -45,6 +45,15 @@ Ext.app.Utils.getSysConfig = function() {
     url: 'system/sysConfig',
     fields: ['time', 'version', 'buildId', 'copyright', 'productName']
   })
+
+  dss.load({
+    callback : function(){
+                 alert(dss.getAt(0).time);
+               }
+  });
+
+  return dss;
+
 }
 
 //var titleBar = new Ext.Panel({
@@ -462,13 +471,14 @@ Ext.onReady(function() {
   mainPanel.on('tabchange', function(tp, tab) {
     api.selectClass(tab.cclass);
   });
-  //Ext.app.Utils.getSysConfig();
+  
+  dss = new Ext.app.Utils.getSysConfig();
 
-    var dss = new Ext.data.JsonStore({
-    url: 'system/sysConfig',
-    fields: ['time', 'version', 'buildId', 'copyright', 'productName']
-  })
-  dss.load();
+    // var dss = new Ext.data.JsonStore({
+    // url: 'system/sysConfig',
+    // fields: ['time', 'version', 'buildId', 'copyright', 'productName']
+  // })
+  // dss.load();
 
   var statusBar = new Ext.BoxComponent({
     region: 'south',
