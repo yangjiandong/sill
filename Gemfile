@@ -17,7 +17,7 @@ else
 end
 
 # for oracle
-# http://blog.rayapps.com/2010/09/09/oracle-enhanced-adapter-1-3-1-and-how-to-use-it-with-rails3/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+rayapps_blog+%28Ray%3A%3AApps.blog%29 
+# http://blog.rayapps.com/2010/09/09/oracle-enhanced-adapter-1-3-1-and-how-to-use-it-with-rails3/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+rayapps_blog+%28Ray%3A%3AApps.blog%29
 gem 'activerecord-oracle_enhanced-adapter', '~> 1.3.1'
 gem "ruby-plsql", "~> 0.4.3"
 
@@ -25,12 +25,12 @@ gem 'haml'
 gem 'will_paginate',        '~> 3.0.pre2'
 
 #http://huacnlee.com/blog/how-to-custom-scaffold-templates-in-rails3
-#https://github.com/leikind/wice_grid/tree/rails3 
+#https://github.com/leikind/wice_grid/tree/rails3
 gem "wice_grid", '3.0.0.pre1'
-#https://github.com/plataformatec/simple_form 
+#https://github.com/plataformatec/simple_form
 gem "simple_form"
 # add deleted_at
-gem 'acts_as_archive'
+# gem 'acts_as_archive'
 # format log
 gem 'awesome_print',      '>= 0.2.1'
 
@@ -47,7 +47,7 @@ gem 'yaml_db'
 gem 'uuidtools'
 gem 'fastercsv'
 # track_history model
-gem 'track_history', '0.0.10'
+gem 'track_history', '0.0.11'
 
 # memcache
 gem 'dalli'

@@ -7,7 +7,7 @@ Sill - rails3
    1. acts_as_paranoid 有问题,
    undefined method `destroy_without_callbacks' for class `Post'
    use: https://github.com/winton/acts_as_archive
-   or https://github.com/backupify/acts_as_archive 
+   or https://github.com/backupify/acts_as_archive
 
    rails g migration add_archive
 
@@ -19,19 +19,20 @@ Sill - rails3
    --destroy 时,没看到效果
 
    --mysql
-   处理hz库导入时间过长394.9380s 
+   处理hz库导入时间过长394.9380s
 
    2. track_history
    rails g migration add_track_histroy
-   -- use sqlite3, 程序运行没成功 
-   uninitialized constant TrackHistory::ActsAsMethods::HistoryMethods 
+   -- use sqlite3, http://localhost:3000/posts 新建程序运行没成功
+   uninitialized constant TrackHistory::ActsAsMethods::HistoryMethods
+   -- 提交bug后,作者回复,升级0.0.11,不再报错,可以对histroy中定义的field_after,field_before进行保存
 
 2011.01.15
 -----------
 
    1. jruby 1.6rc1, 设置为1.9时,速度确实比1.8快,但程序有以下错误
    lib/active_record/connection_adapters/oracle_enhanced_context_index.rb:132: syntax error, unexpected kDO_BLOCK
-   
+
    jruby1.6rc1(ruby1.8.7):
      jruby -e "t = Time.now; require 'rubygems'; puts Time.now - t"
      平均0.64
@@ -42,7 +43,7 @@ Sill - rails3
 
      标注model 表结构
 
-  3. 记录model变更历史,https://github.com/seejohnrun/track_history 
+  3. 记录model变更历史,https://github.com/seejohnrun/track_history
     save\track_history.txt
 
     gem 'track_history', '0.0.10'
@@ -57,7 +58,7 @@ Sill - rails3
    2. embedded Apache Tomcat
    git clone git://github.com/calavera/trinidad
    cd xxx
-   rake trinidad:build 
+   rake trinidad:build
    cd pkg
    gem install xxx.gem
    --没成功
@@ -68,7 +69,7 @@ $ jruby -S trinidad --config   # it uses config/trinidad.yml
 $ jruby -S trinidad --config /etc/default/trinidad/config.yml
 
    3. jruby1.6rc1
-   
+
 官方声明中还列举了以下一些主要特性：
 
 内置剖析器
@@ -80,7 +81,7 @@ jruby-complete.jar包含1.9标准库
 JRuby核心开发者Charles Nutter还发表了一篇博客，通过示例介绍了--profile.flat和--profile.graph这两个新参数的用法：
 
 ~/projects/jruby ? jruby --profile.flat -e "def foo; 100000.times { (2 ** 200).to_s }; end; foo"
-   
+
 jruby --profile.graph -e "def foo; 100000.times { (2 ** 200).to_s }; end; foo"
 
    -- get all gems
@@ -89,29 +90,29 @@ jruby --profile.graph -e "def foo; 100000.times { (2 ** 200).to_s }; end; foo"
 2011.01.13
 -----------
 
-   1. 用acts_as_paranoid 做"假删除" 
+   1. 用acts_as_paranoid 做"假删除"
 
 rails plugin install git://github.com/technoweenie/acts_as_paranoid.git
 rails generate migration add_deleted_at_to_post deleted_at:datetime
 rake db:migrate
 
    在对应model中增加
-class Post < ActiveRecord::Base  
-  acts_as_paranoid  
-end 
+class Post < ActiveRecord::Base
+  acts_as_paranoid
+end
 
    加上后,调用这个模型的destroy方法将不会真正地删除记录,只会将记录从视图上移除
    ,并且在deleted_at里记录当前的时间.
    当然,你可以在find中使用
    with_deleted或only_deleted
-   参数得到被隐藏的记录. 
+   参数得到被隐藏的记录.
 
    2. vim 下排版
    gg=G or =}
 
    3. 文档生成工具
    参考 sinatra-book, thor, maruku
-   https://github.com/cypher/sinatra-book.git 
+   https://github.com/cypher/sinatra-book.git
 
 2011.01.12
 -----------
@@ -128,7 +129,7 @@ end
 -----------
 
    1. git flow
-   https://github.com/nvie/gitflow 
+   https://github.com/nvie/gitflow
 
 Manual installation(cygwin)
 
@@ -170,12 +171,12 @@ some_person.age    # => 26
 
    1. 学习自定义模板
    http://huacnlee.com/blog/how-to-custom-scaffold-templates-in-rails3
-   gem "wice_grid", '3.0.0.pre1'  --https://github.com/leikind/wice_grid/tree/rails3,example:http://grid.leikind.org/ 
+   gem "wice_grid", '3.0.0.pre1'  --https://github.com/leikind/wice_grid/tree/rails3,example:http://grid.leikind.org/
    gem "simple_form" --https://github.com/plataformatec/simple_form
    lib/templates
 
    --以下步骤没成功,需手工拷贝文件
-   rails g wice_grid_assets_jquery 
+   rails g wice_grid_assets_jquery
 
    example:
    --生成前台界面
@@ -184,13 +185,13 @@ some_person.age    # => 26
    rails g scaffold_controller admin/post title:string body:text user_id:integer
 
    --test
-   http://localhost:6000/posts 
+   http://localhost:6000/posts
 
    --采用html 形式的控制器统一继承ApplicationHtmlController
    --模板中也采用该控制器
 
    2. vim
-  set statusline=%f\ [%{&fenc}\ %{&ff}]\ [%Y]\ [\%03.3b\ \%02.2B]\ [%02v\ %03l\ %L\ %p%%]  
+  set statusline=%f\ [%{&fenc}\ %{&ff}]\ [%Y]\ [\%03.3b\ \%02.2B]\ [%02v\ %03l\ %L\ %p%%]
   js format
   map <F5> :call g:Jsbeautify()<CR>
 
