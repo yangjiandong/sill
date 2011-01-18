@@ -1,6 +1,12 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.1'
+
+# Authentication/ Authorization
+# gem 'devise'
+# gem 'cancan'
+# gem 'jquery-rails'
+
 if defined?(JRUBY_VERSION)
     # gem 'jdbc-sqlite3'
     gem 'activerecord-jdbc-adapter'
@@ -34,13 +40,24 @@ gem "simple_form"
 # format log
 gem 'awesome_print',      '>= 0.2.1'
 
-group :development do
-   gem 'annotate',           '>= 2.4.0'
-   gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
-   gem 'rails3-generators'
-   gem 'warbler'
-   gem 'bullet'
-   gem 'mongrel'
+group :development, :test do
+  gem 'capybara' # aims to simplify the process of integration testing Rack applications
+  gem 'cucumber' # Cucumber is a tool that executes plain-text functional descriptions as automated tests
+  gem 'cucumber-rails'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'autotest'
+  gem 'annotate',           '>= 2.4.0'
+  #gem 'annotate-models'
+  gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
+  gem 'rails3-generators'
+  gem 'warbler'
+  gem 'bullet'
+  gem 'mongrel'
+  gem 'webrat'
 end
 
 gem 'yaml_db'
@@ -54,9 +71,9 @@ gem 'dalli'
 #background job
 gem 'delayed_job'
 
-group :test do
-  gem 'rspec-rails', '>= 2.0.1'
-  gem 'autotest'
-  gem 'webrat'
-  gem 'capybara'
-end
+# group :test do
+  # gem 'rspec-rails', '>= 2.0.1'
+  # gem 'autotest'
+  # gem 'webrat'
+  # gem 'capybara'
+# end

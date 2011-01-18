@@ -1,6 +1,14 @@
 Sill - rails3
 =============
 
+2011.01.18
+-----------
+
+   1. save/ror303setup.txt
+   http://www.dzone.com/links/r/rails_303_setup_delicious_clone.html
+
+   2. http://api.rubyonrails.org/
+
 2011.01.16
 -----------
 

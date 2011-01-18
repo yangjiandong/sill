@@ -62,6 +62,14 @@ GEM
     celerity (0.8.7)
     childprocess (0.1.6)
       ffi (~> 0.6.3)
+    cucumber (0.10.0)
+      builder (>= 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.3.2)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
     culerity (0.2.14)
     daemons (1.1.0)
     dalli (1.0.1)
@@ -71,10 +79,16 @@ GEM
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    factory_girl (1.3.3)
+    factory_girl_rails (1.0.1)
+      factory_girl (~> 1.3)
+      railties (>= 3.0.0)
     fastercsv (1.5.4)
     ffaker (1.0.0)
     ffi (0.6.3-java)
     gem_plugin (0.2.3)
+    gherkin (2.3.3-java)
+      json (~> 1.4.6)
     haml (3.0.25)
     i18n (0.4.2)
     jdbc-jtds (1.2.5-java)
@@ -84,6 +98,7 @@ GEM
     jruby-openssl (0.7.2)
       bouncy-castle-java
     jruby-rack (1.0.5)
+    json (1.4.6-java)
     json_pure (1.4.6)
     mail (2.2.14)
       activesupport (>= 2.3.6)
@@ -138,8 +153,10 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    shoulda (2.11.3)
     simple_form (1.3.0)
       rails (~> 3.0.0)
+    term-ansicolor (1.0.5)
     thor (0.14.6)
     track_history (0.0.11)
     treetop (1.4.9)
@@ -177,8 +194,12 @@ DEPENDENCIES
   awesome_print (>= 0.2.1)
   bullet
   capybara
+  cucumber
+  cucumber-rails
   dalli
   delayed_job
+  factory_girl
+  factory_girl_rails
   fastercsv
   ffaker (>= 0.4.0)
   haml
@@ -188,8 +209,10 @@ DEPENDENCIES
   rails (= 3.0.1)
   rails3-generators
   rmagick4j
-  rspec-rails (>= 2.0.1)
+  rspec
+  rspec-rails
   ruby-plsql (~> 0.4.3)
+  shoulda
   simple_form
   track_history (= 0.0.11)
   uuidtools

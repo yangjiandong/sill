@@ -1,0 +1,49 @@
+ror303setup
+===========
+http://www.dzone.com/links/r/rails_303_setup_delicious_clone.html
+
+https://github.com/charlesmaxwood/freemark.git
+
+1. rails new freemaker -J -T
+
+2. Gemfile
+# Authentication/ Authorization
+# gem 'devise'
+# gem 'cancan'
+# gem 'jquery-rails'
+
+group :development, :test do
+  gem 'capybara' # aims to simplify the process of integration testing Rack applications
+  gem 'cucumber' # https://github.com/aslakhellesoy/cucumber/wiki/tutorials-and-related-blog-posts
+  gem 'cucumber-rails'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'autotest'
+  gem 'annotate-models'
+  gem 'ffaker',             '>= 0.4.0' # Fast Faker for `rake crm:demo:load`
+  gem 'rails3-generators'
+  gem 'warbler'
+  gem 'bullet'
+  gem 'mongrel'
+end
+
+bundle install
+
+3. rails g cucumber:install
+   ? capybara
+   gem 'capybara'
+   rails g cucumber:install --capybara
+
+rails g rspec:install
+
+rails g devise:install
+
+rails g cancan:ability
+
+rails g jquery:install -ui
+
+   --END
+
