@@ -8,6 +8,7 @@ Object.prototype.hasOwnProperty = function(prop) {
 
 }
   */
+// NEW_LINE = '\n';
 
 function getCurUser() {
   var name;
@@ -100,8 +101,6 @@ function readCookie(name) {
 function eraseCookie(name) {
   createCookie(name,"",-1);
 }
-
-
 
 /**
  *  Decode a string which has been urlencoded

@@ -1,7 +1,6 @@
 
   var NEW_LINE = '\n';
 
-
   function buildHtml(pLang, pUi, pDcArray) {
      var out = '';
      out += '<html>'+NEW_LINE;

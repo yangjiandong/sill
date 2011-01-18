@@ -86,7 +86,7 @@
   //<![CDATA[
 Ext.QuickTips.init();
 Ext.BLANK_IMAGE_URL = 'javascripts/ext/resources/images/default/s.gif';
-NEW_LINE = '\n';
+CFG_DEPLOYMENT_TYPE = 'DEV',
   //]]>
 </script>
 
@@ -95,6 +95,9 @@ NEW_LINE = '\n';
 <%= stylesheet_link_tag "ext_patch_firefox" %>
 <% end %>
 
+<%= javascript_include_tag "app/lib.js" %>
+<%= javascript_include_tag "app/about" %>
+<%= javascript_include_tag "app/main.panel" %>
 <%= javascript_include_tag "app.ux/app.ux.TabCloseMenu" %>
 <%= javascript_include_tag "app/temp/app" %>
 
