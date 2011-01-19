@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!-- saved from url=(0102)http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="./Mass inserting data in Rails without killing your performance_files/default.include.1574815398.css" media="all">
+<script type="text/javascript" src="./Mass inserting data in Rails without killing your performance_files/default.include.1669810878.js"></script>
+	<title>Coffee Powered » Mass inserting data in Rails without killing your performance</title>
+	
+	
+	<link rel="alternate" type="application/rss+xml" href="http://www.coffeepowered.net/feed/" title="Coffee Powered Posts RSS feed">
+	<link rel="alternate" type="application/rss+xml" href="http://www.coffeepowered.net/comments/feed/" title="Coffee Powered Comments RSS feed">
+	<link rel="pingback" href="http://www.coffeepowered.net/xmlrpc.php">
+	<link rel="icon" type="image/png" href="http://www.coffeepowered.net/favicon.png"><link rel="stylesheet" type="text/css" href="./Mass inserting data in Rails without killing your performance_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Mass inserting data in Rails without killing your performance_files/shThemeDefault.css"></head><body>.
+	<link href="./Mass inserting data in Rails without killing your performance_files/css" rel="stylesheet" type="text/css">
+	<script src="./Mass inserting data in Rails without killing your performance_files/jquery.min.js" type="text/javascript"></script>
+	<link rel="alternate" type="application/rss+xml" title="Coffee Powered » Mass inserting data in Rails without killing your performance Comments Feed" href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/feed/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.coffeepowered.net/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.coffeepowered.net/wp-includes/wlwmanifest.xml"> 
+<link rel="index" title="Coffee Powered" href="http://www.coffeepowered.net/">
+<link rel="start" title="site_config – painless custom configuration for your Rails project" href="http://www.coffeepowered.net/2008/09/25/site_config-painless-config-variables-for-rails-projects/">
+<link rel="prev" title="Quick tip – use anonymous blocks!" href="http://www.coffeepowered.net/2008/10/09/quick-tip-use-anonymous-blocks/">
+<link rel="next" title="Desuckifying Experts-Exchange" href="http://www.coffeepowered.net/2009/02/07/desuckifying-experts-exchange/">
+<meta name="generator" content="WordPress 3.0.1">
+<link rel="canonical" href="./Mass inserting data in Rails without killing your performance_files/Mass inserting data in Rails without killing your performance.htm">
+<link rel="shortlink" href="http://www.coffeepowered.net/?p=82">
+	
+	<script src="./Mass inserting data in Rails without killing your performance_files/heatmap.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#wrapper").clickhax({ trigger: "#showHeatmap", endpoint: "/map" })
+		});
+	</script>
+
+
+
+<ul id="admin_controls">
+	<li>
+		<a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#" id="showHeatmap">Click Heatmap</a>
+	</li>
+</ul>
+<div id="wrapper" class="hfeed">
+	<a id="header" href="http://www.coffeepowered.net/">
+		</a><h1 id="blog-title"><a id="header" href="http://www.coffeepowered.net/"><span></span></a><a href="http://www.coffeepowered.net/" title="Coffee Powered" rel="home">Coffee Powered</a></h1>
+		<div id="blog-description">code and content</div>
+	<!--  #header -->
+
+	<div id="container">
+		<div id="content">
+
+
+			<div id="post-82" class="post-single hentry p1 post publish author-chris-heald category-rails tag-activerecord tag-performance tag-rails tag-sql y2009 m01 d23 h15">
+			<div class="entry-date">
+<div class="month">Jan</div>
+<div class="day">23</div>
+<div class="year">2009</div>
+</div>
+				<h1 class="entry-title">Mass inserting data in Rails without killing your performance</h1>
+                
+				<div class="entry-content">
+<p>Mass inserting is one of those operations that isn’t really well-supported by ActiveRecord, but which has to be done nonethless. You might say, “Well hey, I’ll just run a loop and create a bunch of AR objects, no sweat”.</p>
+<p>That’ll work, but if speed is a factor, it might not be your best option.</p>
+<p>ActiveRecord makes interface to the DB very easy, but it doesn’t necessarily make it fast. Instantiating an ActiveRecord object is costly, and if you do a lot of ‘em, that’s going to cause you to bump up against the garbage collector, which will significantly hinder performance. There are several options, though, depending on how much speed you need.</p>
+<p>There are benchmarks at the bottom of the post, so if you’re just interested in those, scroll down.<br>
+<span id="more-82"></span></p>
+<h2>Option 1: Use transactions</h2>
+<p>This is definitely the easiest method, and while you’ll realize gains from it, you aren’t going to be breaking any speed records using only this method. However, it’s well worth it if you are doing mass inserts via ActiveRecord.</p>
+<p>Instead of</p>
+<div id="highlighter_511791" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_511791_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_511791" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="constants">1000</code><code class="plain">.times { Model.create(options) }</code></td></tr></tbody></table></div></div></div>
+<p>You want:</p>
+<div id="highlighter_396434" class="syntaxhighlighter  "><div class="bar     "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_396434_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_396434" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">ActiveRecord::Base.transaction </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">1000</code><code class="plain">.times { Model.create(options) }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div></div></div>
+<p>The net effect is that the database performs all of your inserts in a single transaction, rather than starting and committing a new transaction for every request.</p>
+<h2>Options 2: Get down and dirty with the raw SQL</h2>
+<p>If you know that your data is valid and can afford to skip validations, you can save a <b>lot</b> of time by just jumping directly to raw SQL.</p>
+<p>Imagine, for example, that you’re running the following:</p>
+<div id="highlighter_663155" class="syntaxhighlighter  "><div class="bar"><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_663155_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_663155" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="constants">1000</code><code class="plain">.times {|i| Foo.create(</code><code class="color2">:counter</code> <code class="plain">=&gt; i) }</code></td></tr></tbody></table></div></div></div>
+<p>That’s going to create 1000 ActiveRecord objects, run validations, generate the insert SQL, and dump it into the database. You can realize large performance gains by just jumping directly to the generated SQL.</p>
+<div id="highlighter_104055" class="syntaxhighlighter  "><div class="bar      "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_104055_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_104055" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="constants">1000</code><code class="plain">.times </code><code class="keyword">do</code> <code class="plain">|i|</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">Foo.connection.execute </code><code class="string">"INSERT INTO foos (counter) values (#{i})"</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div></div></div>
+<p>You should use <code>sanitize_sql</code> and such as necessary to sanitize input values if they are not already sanitized, but with this technique you can realize extremely large performance gains. Of course, wrapping all those inserts in a single transaction, as in Option 1 gets you even more performance.</p>
+<div id="highlighter_986811" class="syntaxhighlighter  "><div class="bar "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_986811_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_986811" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">Foo.transaction </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">1000</code><code class="plain">.times </code><code class="keyword">do</code> <code class="plain">|i|</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">Foo.connection.execute </code><code class="string">"INSERT INTO foos (counter) values (#{i})"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div></div></div>
+<h2>Option 3: A single mass insert</h2>
+<p>Many databases support mass inserts of data in a single insert statement. They are able to significantly optimize this operation under the hood, and if you’re comfortable using it, will be your fastest option by far.</p>
+<div id="highlighter_110314" class="syntaxhighlighter  "><div class="bar    "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_110314_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_110314" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">inserts = []</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="constants">TIMES</code><code class="plain">.times </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">inserts.push </code><code class="string">"(3.0, '2009-01-23 20:21:13', 2, 1)"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="plain">sql = </code><code class="string">"INSERT INTO user_node_scores (`score`, `updated_at`, `node_id`, `user_id`) VALUES #{inserts.join("</code><code class="plain">, </code><code class="string">")}"</code></td></tr></tbody></table></div></div></div>
+<p>No transaction block is necessary here, since it’s just a single statement, and the DB will wrap it in a transaction. We build an array of value sets to include, then just join them into the <code>INSERT</code> statement. We don’t use string concatenation, since it will result in significantly more string garbage generated, which could potentially get us into the GC, which we’re trying to avoid (and hey, memory savings are always good).</p>
+<h2>Option 4: ActiveRecord::Extensions</h2>
+<p>njero in <code>#rubyonrails</code> pointed me at <a href="http://www.continuousthinking.com/tags/arext/rdoc/index.html">this nifty little gem</a> and I decided to include it. It seems to try to intelligently do mass inserts of data. I wasn’t able to get it to emulate the single mass insert for a MySQL database, but it does provide a significant speed increase without much additional work, and can preserve your validations and such.</p>
+<p>There’s the obvious added benefit that you stay in pure Ruby, and don’t have to get into the raw SQL.</p>
+<div id="highlighter_451274" class="syntaxhighlighter  "><div class="bar         "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_451274_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_451274" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">columns = [</code><code class="color2">:score</code><code class="plain">, </code><code class="color2">:node_id</code><code class="plain">, </code><code class="color2">:user_id</code><code class="plain">]</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="plain">values = []</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="constants">TIMES</code><code class="plain">.times </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">values.push [</code><code class="constants">3</code><code class="plain">, </code><code class="constants">2</code><code class="plain">, </code><code class="constants">1</code><code class="plain">]</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>6</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>7</code></td><td class="content"><code class="plain">UserNodeScore.import columns, values</code></td></tr></tbody></table></div></div></div>
+<h2>Benchmarks</h2>
+<p>I used a simple script to test each of the methods described here.</p>
+<div id="highlighter_819897" class="syntaxhighlighter  "><div class="bar                                                                                             "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_819897_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_819897" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="plain">require </code><code class="string">"ar-extensions"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="constants">CONN</code> <code class="plain">= ActiveRecord::Base.connection</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="constants">TIMES</code> <code class="plain">= </code><code class="constants">10000</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="keyword">def</code> <code class="plain">do_inserts</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="constants">TIMES</code><code class="plain">.times { UserNodeScore.create(</code><code class="color2">:user_id</code> <code class="plain">=&gt; </code><code class="constants">1</code><code class="plain">, </code><code class="color2">:node_id</code> <code class="plain">=&gt; </code><code class="constants">2</code><code class="plain">, </code><code class="color2">:score</code> <code class="plain">=&gt; </code><code class="constants">3</code><code class="plain">) }</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="keyword">def</code> <code class="plain">raw_sql</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="constants">TIMES</code><code class="plain">.times { </code><code class="constants">CONN</code><code class="plain">.execute </code><code class="string">"INSERT INTO `user_node_scores` (`score`, `updated_at`, `node_id`, `user_id`) VALUES(3.0, '2009-01-23 20:21:13', 2, 1)"</code> <code class="plain">}</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>13</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>14</code></td><td class="content"><code class="keyword">def</code> <code class="plain">mass_insert</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>15</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">inserts = []</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>16</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="constants">TIMES</code><code class="plain">.times </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>17</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">inserts.push </code><code class="string">"(3.0, '2009-01-23 20:21:13', 2, 1)"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>18</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>19</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">sql = </code><code class="string">"INSERT INTO user_node_scores (`score`, `updated_at`, `node_id`, `user_id`) VALUES #{inserts.join("</code><code class="plain">, </code><code class="string">")}"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>20</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="constants">CONN</code><code class="plain">.execute sql</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>21</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>22</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>23</code></td><td class="content"><code class="keyword">def</code> <code class="plain">activerecord_extensions_mass_insert(validate = </code><code class="keyword">true</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>24</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">columns = [</code><code class="color2">:score</code><code class="plain">, </code><code class="color2">:node_id</code><code class="plain">, </code><code class="color2">:user_id</code><code class="plain">]</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>25</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">values = []</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>26</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="constants">TIMES</code><code class="plain">.times </code><code class="keyword">do</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>27</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">values.push [</code><code class="constants">3</code><code class="plain">, </code><code class="constants">2</code><code class="plain">, </code><code class="constants">1</code><code class="plain">]</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>28</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>29</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>30</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">UserNodeScore.import columns, values, {</code><code class="color2">:validate</code> <code class="plain">=&gt; validate}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>31</code></td><td class="content"><code class="keyword">end</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>32</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>33</code></td><td class="content"><code class="plain">puts </code><code class="string">"Testing various insert methods for #{TIMES} inserts\n"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>34</code></td><td class="content"><code class="plain">puts </code><code class="string">"ActiveRecord without transaction:"</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>35</code></td><td class="content"><code class="plain">puts base = Benchmark.measure { do_inserts }</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>36</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>37</code></td><td class="content"><code class="plain">puts </code><code class="string">"ActiveRecord with transaction:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>38</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { ActiveRecord::Base.transaction { do_inserts } }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>39</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>40</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>41</code></td><td class="content"><code class="plain">puts </code><code class="string">"Raw SQL without transaction:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>42</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { raw_sql }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>43</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>44</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>45</code></td><td class="content"><code class="plain">puts </code><code class="string">"Raw SQL with transaction:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>46</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { ActiveRecord::Base.transaction { raw_sql } }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>47</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>48</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>49</code></td><td class="content"><code class="plain">puts </code><code class="string">"Single mass insert:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>50</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { mass_insert }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>51</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>52</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>53</code></td><td class="content"><code class="plain">puts </code><code class="string">"ActiveRecord::Extensions mass insert:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>54</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { activerecord_extensions_mass_insert }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>55</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>56</code></td><td class="content">&nbsp;</td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>57</code></td><td class="content"><code class="plain">puts </code><code class="string">"ActiveRecord::Extensions mass insert without validations:"</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>58</code></td><td class="content"><code class="plain">puts bench = Benchmark.measure { activerecord_extensions_mass_insert(</code><code class="keyword">true</code><code class="plain">)&nbsp; }</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>59</code></td><td class="content"><code class="plain">puts sprintf(</code><code class="string">"&nbsp; %2.2fx faster than base"</code><code class="plain">, base.real / bench.real)</code></td></tr></tbody></table></div></div></div>
+<p>And the results:</p>
+<div id="highlighter_592507" class="syntaxhighlighter  "><div class="bar                            "><div class="toolbar"><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#viewSource" title="view source" style="width: 16px; height: 16px; " class="item viewSource">view source</a><div class="item copyToClipboard"><embed width="16" height="16" id="highlighter_592507_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_592507" menu="false" src="http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf"></div><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#printSource" title="print" style="width: 16px; height: 16px; " class="item printSource">print</a><a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#about" title="?" style="width: 16px; height: 16px; " class="item about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="plain">Testing various insert methods </code><code class="keyword">for</code> <code class="constants">10000</code> <code class="plain">inserts</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="plain">ActiveRecord without transaction:</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;</code><code class="constants">14</code><code class="plain">.</code><code class="constants">930000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">640000</code>&nbsp; <code class="constants">15</code><code class="plain">.</code><code class="constants">570000</code> <code class="plain">( </code><code class="constants">18</code><code class="plain">.</code><code class="constants">898352</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="plain">ActiveRecord with transaction:</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;</code><code class="constants">13</code><code class="plain">.</code><code class="constants">420000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">310000</code>&nbsp; <code class="constants">13</code><code class="plain">.</code><code class="constants">730000</code> <code class="plain">( </code><code class="constants">14</code><code class="plain">.</code><code class="constants">619136</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">1</code><code class="plain">.29x faster than base</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="plain">Raw </code><code class="constants">SQL</code> <code class="plain">without transaction:</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">0</code><code class="plain">.</code><code class="constants">920000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">170000</code>&nbsp;&nbsp; <code class="constants">1</code><code class="plain">.</code><code class="constants">090000</code> <code class="plain">(&nbsp; </code><code class="constants">3</code><code class="plain">.</code><code class="constants">731032</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">5</code><code class="plain">.07x faster than base</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="plain">Raw </code><code class="constants">SQL</code> <code class="plain">with transaction:</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">0</code><code class="plain">.</code><code class="constants">870000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">150000</code>&nbsp;&nbsp; <code class="constants">1</code><code class="plain">.</code><code class="constants">020000</code> <code class="plain">(&nbsp; </code><code class="constants">1</code><code class="plain">.</code><code class="constants">648834</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">11</code><code class="plain">.46x faster than base</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>13</code></td><td class="content"><code class="plain">Single mass insert:</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>14</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">0</code><code class="plain">.</code><code class="constants">000000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">000000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">000000</code> <code class="plain">(&nbsp; </code><code class="constants">0</code><code class="plain">.</code><code class="constants">268634</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>15</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">70</code><code class="plain">.35x faster than base</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>16</code></td><td class="content"><code class="plain">ActiveRecord::Extensions mass insert:</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>17</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">6</code><code class="plain">.</code><code class="constants">580000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">280000</code>&nbsp;&nbsp; <code class="constants">6</code><code class="plain">.</code><code class="constants">860000</code> <code class="plain">(&nbsp; </code><code class="constants">9</code><code class="plain">.</code><code class="constants">409169</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>18</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">2</code><code class="plain">.01x faster than base</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>19</code></td><td class="content"><code class="plain">ActiveRecord::Extensions mass insert without validations:</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>20</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">6</code><code class="plain">.</code><code class="constants">550000</code>&nbsp;&nbsp; <code class="constants">0</code><code class="plain">.</code><code class="constants">240000</code>&nbsp;&nbsp; <code class="constants">6</code><code class="plain">.</code><code class="constants">790000</code> <code class="plain">(&nbsp; </code><code class="constants">9</code><code class="plain">.</code><code class="constants">446273</code><code class="plain">)</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>21</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="constants">2</code><code class="plain">.00x faster than base</code></td></tr></tbody></table></div></div></div>
+<p>The results are fairly self-explainatory, but of particular note is the specific single INSERT statement. At 70x faster than the non-transactional ActiveRecord insert, if you need speed, it’s hard to beat.</p>
+<h2>Conclusions</h2>
+<p>ActiveRecord is great, but sometimes it’ll hold you back. Finding the balance between ease of use (full ActiveRecord) and performance (bare metal mass inserts) can have a profound effect on the performance of your app.</p>
+
+				<div class="clearboth"></div>
+								</div>
+			</div><!-- .post -->
+
+			<div id="nav-below" class="navigation">
+				<div class="nav-previous"><a href="http://www.coffeepowered.net/2008/10/09/quick-tip-use-anonymous-blocks/" rel="prev"><span class="meta-nav">«</span> Quick tip – use anonymous blocks!</a></div>
+				<div class="nav-next"><a href="http://www.coffeepowered.net/2009/02/07/desuckifying-experts-exchange/" rel="next">Desuckifying Experts-Exchange <span class="meta-nav">»</span></a></div>
+				<div class="clearboth"></div>
+			</div>
+
+			<div id="comments">
+
+
+				<div id="comments-list" class="comments">
+					<h3><span>10</span> Comments</h3>
+
+					<ol>
+						<li id="comment-58" class="comment c0 c-y2009 c-m01 c-d23 c-h13 alt">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/14a4c86a0ccc5c7f6329102c0826c7d0" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://marketing.postedpost.com/2008/02/28/the-mis" rel="external nofollow" class="url url">Net Worth Statement</a></span></div>
+							<div class="comment-meta">January 23, 2009 at 7:49 pm <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-58" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>In fact, stored procedures that insert, update, and delete data in Oracle work in the same manner as they do for SQL Server. <a href="http://marketing.postedpost.com/2008/02/28/the-mission-statement-a-big-picture-view/215/net-worth-statement/" rel="nofollow">Net Worth Statement</a></p>
+</div>
+						</li>
+						<li id="comment-59" class="comment c1 c-y2009 c-m01 c-d23 c-h19">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/af54a0871600db7fbdbb5c558a6e29a3" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://mikeperham.com/" rel="external nofollow" class="url url">Mike Perham</a></span></div>
+							<div class="comment-meta">January 24, 2009 at 1:09 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-59" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>ar-extensions is great.  You didn't get the multi-insert capability because you didn't require the mysql connector extensions:</p>
+<p>require 'ar-extensions/adapters/mysql'</p>
+<p>require 'ar-extensions/import/mysql'</p>
+<p>Also, you can get a big performance increase from ar-extensions when saving a lot of models by disabling validations:</p>
+<p>  Model.import data, :validate =&gt; false</p>
+<p>Yes, I've spent a lot of time on this too.  :-)</p>
+</div>
+						</li>
+						<li id="comment-60" class="comment c2 c-y2009 c-m01 c-d23 c-h20 alt">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/b8c4bfb1b6002a5b43d87de3335401f5" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n">BJ Clark</span></div>
+							<div class="comment-meta">January 24, 2009 at 2:01 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-60" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>AR-Extensions is great, except that it monkey patches lots of stuff in ActiveRecord which can create crazy weird bugs if you're doing any other modifications of AR. We use Masochism (with mods) for DB load balancing, and AR-Extensions borked a bunch of stuff with it. Which ended up costing us more dev time than just doing a transaction with a big loop.</p>
+</div>
+						</li>
+						<li id="comment-61" class="comment c3 c-y2009 c-m01 c-d24 c-h00">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/9b00f41e5f2a69734051f2a78f4f3785" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n">Chris Heald</span></div>
+							<div class="comment-meta">January 24, 2009 at 6:24 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-61" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Thanks for the tip, Mike. The docs on ar-extensions seem to be a bit light!</p>
+<p>I'll give that a shot. It's nice to stay in Ruby when at all possible!</p>
+</div>
+						</li>
+						<li id="comment-62" class="comment c4 c-y2009 c-m01 c-d25 c-h19 alt">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/880cbab435f00197613c9cc2065b4f5a" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://danielharan.com/" rel="external nofollow" class="url url">Daniel Haran</a></span></div>
+							<div class="comment-meta">January 26, 2009 at 1:58 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-62" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>On MySQL, I used LOAD DATA LOCAL INFILE:<br>
+  <a href="http://danielharan.wordpress.com/2007/06/12/ruby-activerecord-is-too-slow/" rel="nofollow"></a><a href="http://danielharan.wordpress.com/2007/06/12/ruby-.." rel="nofollow">http://danielharan.wordpress.com/2007/06/12/ruby-..</a>.</p>
+</div>
+						</li>
+						<li id="comment-64" class="comment c5 c-y2009 c-m02 c-d06 c-h15">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/f6054fe38df02d331111d9a92c7dcffa" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://www.davidalison.com/" rel="external nofollow" class="url url">David Alison</a></span></div>
+							<div class="comment-meta">February 6, 2009 at 9:46 pm <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-64" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Excellent post Chris – exactly what I was looking for when I was trying to Google up solutions for bulk inserts in Rails. I appreciate you taking the time to write this down.</p>
+</div>
+						</li>
+						<li id="comment-96" class="comment c6 c-y2009 c-m02 c-d08 c-h16 alt">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/0fd9c0c07d7161defee1f25b6b46b20b" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://4loc.wordpress.com/" rel="external nofollow" class="url url">jfromm</a></span></div>
+							<div class="comment-meta">February 8, 2009 at 10:20 pm <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-96" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Good overview.</p>
+</div>
+						</li>
+						<li id="comment-205" class="comment c7 c-y2009 c-m06 c-d15 c-h18">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/07423d43a61690510a695b6c55c74afb" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n">Michael</span></div>
+							<div class="comment-meta">June 16, 2009 at 12:01 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-205" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Is it possible to tell Rails to *not* wrap Model.save in a transaction — we're uploading large volumes of data and the BEGIN/INSERT/COMMIT is surely much slower than a simple INSERT. Anyone know how to tell Rails to not wrap a 'save' in a transaction?</p>
+</div>
+						</li>
+						<li id="comment-220" class="comment c8 c-y2009 c-m07 c-d26 c-h09 alt">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/d9bd61e9a9ed9c9f3b995c07f7113ae5" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://www.startbreakingfree.com/" rel="external nofollow" class="url url">Brian Armstrong</a></span></div>
+							<div class="comment-meta">July 26, 2009 at 3:52 pm <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-220" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Awesome, you da man!  Thanks for sharing this.</p>
+</div>
+						</li>
+						<li id="comment-231" class="comment c9 c-y2009 c-m08 c-d06 c-h20">
+							<div class="comment-author vcard"><img alt="" src="./Mass inserting data in Rails without killing your performance_files/6344aa3c7d364a6544ab6754ca017fbb" class="photo avatar avatar-32 photo" height="32" width="32"> <span class="fn n"><a href="http://www.thirdpartycode.com/" rel="external nofollow" class="url url">Vid Luther</a></span></div>
+							<div class="comment-meta">August 7, 2009 at 2:19 am <span class="meta-sep">|</span> <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#comment-231" title="Permalink to this comment">Permalink</a></div>
+							<div class="comment-content"><p>Great post, just an FYI for all who are interested, the reason why the single mass insert in MySQL is so much faster, is because you're doing what's known as an "extended insert". What this does is, tells MySQL to rebuild the index AFTER the data has been inserted, not in the middle, or after each insert.</p>
+</div>
+						</li>
+
+					</ol>
+				</div><!-- #comments-list .comments -->
+
+
+				<div id="trackbacks-list" class="comments">
+					<h3><span>One</span> Trackback</h3>
+
+					<ol>
+
+						<li id="comment-197" class="pingback t0 c-y2009 c-m05 c-d20 c-h04 alt">
+							<div class="comment-author">By <a href="http://www.kalivo.com/convs/show/2044-rails-batch-inserts-updates-benchmark" rel="external nofollow" class="url">Kalivo.com - Rails Batch Inserts/updates benchmark</a> on May 20, 2009 at 10:52 am</div>
+							<p>[...] Here is a basic benchmark of ar-extensions.&nbsp; I used a slightly modified version of this script. [...]</p>
+						</li>
+
+					</ol>
+				</div><!-- #trackbacks-list .comments -->
+
+				<div id="respond">
+					<h3>Post a Comment</h3>
+
+					<div class="formcontainer">	
+						<form id="commentform" action="http://www.coffeepowered.net/wp-comments-post.php" method="post">
+
+
+							<p id="comment-notes">Your email is <em>never</em> published nor shared. Required fields are marked <span class="required">*</span></p>
+
+							<div class="form-label"><label for="author">Name</label> <span class="required">*</span></div>
+							<div class="form-input"><input id="author" name="author" type="text" value="" size="30" maxlength="20" tabindex="3"></div>
+
+							<div class="form-label"><label for="email">Email</label> <span class="required">*</span></div>
+							<div class="form-input"><input id="email" name="email" type="text" value="" size="30" maxlength="50" tabindex="4"></div>
+
+							<div class="form-label"><label for="url">Website</label></div>
+							<div class="form-input"><input id="url" name="url" type="text" value="" size="30" maxlength="50" tabindex="5"></div>
+
+
+							<div class="form-label"><label for="comment">Comment</label></div>
+							<div class="form-textarea"><textarea id="comment" name="comment" cols="45" rows="8" tabindex="6"></textarea></div>
+
+							<div class="form-submit"><input id="submit" name="submit" type="submit" value="Post Comment" tabindex="7" accesskey="P"><input type="hidden" name="comment_post_ID" value="82"></div>
+
+							
+						</form><!-- #commentform -->
+					</div><!-- .formcontainer -->
+
+				</div><!-- #respond -->
+
+			</div><!-- #comments -->
+
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="sidebar">
+		<ul class="xoxo">
+			<li>
+				<a href="http://github.com/cheald" class="gitfollow"><img src="data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%20%00%00%00%0F%08%06%00%00%00%85%80%CD%17%00%00%00%04sBIT%08%08%08%08%7C%08d%88%00%00%00%09pHYs%00%00%0B%12%00%00%0B%12%01%D2%DD~%FC%00%00%00%1CtEXtSoftware%00Adobe%20Fireworks%20CS4%06%B2%D3%A0%00%00%00%15tEXtCreation%20Time%0012%2F8%2F09%5E%88%A8%A3%00%00%048IDAT8%8D%BD%94%5DH%DBW%18%C6%7F%E7%FCc%3E%5C%14%17%B3%D8%A4Z%8Bq%A0%0E%D7X%E9%CA%3E%B2*tq%A3%DB%C5F%95%0E%0B%B6%17%A3%B0R%98%D0%0D3%D8%CD%3A%84%89%D8%CB%C9.%DC%06k%A1s%A30%9C%A3%A8utS%CAZ%91d%E9%8ARi%3B%1Bp%A1%BAL%B3%A6%89%F9%E7%DDEc)%B2%8E%5E%F5%B9%3B%BF%F7y%DF%F3%C0y9%F0p9%81%F3%C0%9B%FFQ%DB%02%9C%03%C2%FF%D3%BFY_%02_%3C%B2%BB%A2%A2%E2%00%20%5E%AF%F7%B7%CD%B5c%C7%8E5%01%D2%D4%D4%14%7D%D4y%1E%8Fg%B5%A2%A2bu3%D7%0Fk%18%1B%1B3zzz8y%F2%A4Y%40%1F%00%1D%00%E5%E5%E5Jk%8D%CB%E5*%7B%D4%00%0E%87%C3%EEt%3A%ED%9B%B9%E5%81%20%AF%01V%E0W%C0%D5%DF%DF%7F%A9%BD%BD%7D%A8%B4%B4%F4%1C%D0%02%7CZRR%F2%E7%DA%DA%DA%AD%A5%A5%A5%9C%C5b!%9B%CD*%E0%25%C0%06L%14f%B5%00Y%60%1A%F0%00%BB%81K6%9BML%D3%04%D8U%E0%E3%40%06%A0L)%F5%23%20%80(%A5RZ%EBtMMM7%20n%B7%BB%CF%E7%F3%FD%B2Q%B7Z%AD%B7%3B%3A%3A%DE%F0%F9%7Cy%A5%94lp%60%10%B0%19%86q%C7%E1p%C4%01%1A%1A%1A%0E%02R%5B%5B%FB%EE%9E%3D%7B%D6%B4%D6%F7%FD%86a%9C%07J%B4%CDf%FBJD%5E%1D%1E%1Efnn%0E%E0%89P(T%D4%D7%D7W%0C%10%0C%06w%8F%8F%8F%FFc%B5Z%09%06%83%CC%CF%CF%9B%AD%AD%AD%92L%26%A9%AD%ADedd%84%B6%B66%80%23.%97%EB%E5m%DB%B6%D9jjj%DC%00%A1P%C8%0F%B0w%EF%DE%FAT*%95u%3A%9D%0C%0F%0Fs%FC%F8qL%D3l-**%FAN777%EF%02%B8x%F1b%EF%F8%F8%F8%8B%00%1E%8F%E7%8FT*%F5%13%80R%CA%A8%AF%AF%7FGk%0D%B0R%5D%5D%DD%BC%BC%BC%9CH%A7%D3*%10%08%AC%EE%DB%B7%EF%F5C%87%0E%5D%06hnnn%B3X%2C9%20%07%90%CDfs%00%A6i%9A%D9l%D6%F0z%BD%F9%FD%FB%F7%B7wuu%0Dj%ADY__%7FE%9F9s%26%DA%D6%D6%C6%C0%C0%40%F8%E8%D1%A3S%5B%B7n%A5%BB%BB%7Blbb%22S%08%80Rj%C94MDd%5D)u%2B%9F%CFg%00%12%89%C4%8AR%EA%87%0B%17.%9C%05%A8%AA%AA%F2%88%88d2%19%05%E0v%BB%EF%3C%B0o%3A%97%CB%E5%94R%DF%9E8q%E2%9B%7C%3E%7F%0FVVV%1E%DC%BE%7D%FB%82%88%A8%A1%A1!%E6%E6%E6%E2%81%40%E0%13%8B%C5R%5EH%AF%26''%B5%D5je~~%BE%14%E8%9C%9A%9Az%CAb%B1%20%22%06%40%3E%9F%B7%00%14%17%17%A7%FD~%7F%F6%DA%B5k%0E%E0%FD%C1%C1%C1%B7%00%B4%D6%D8%EDv%B9q%E3%86%15%F8htt%B4%1F%A0%B7%B7%17%AD%94%BA%9DL%26%E3%00%A7N%9D%1A%A9%AB%AB%7B%5B)%B5%E8%F3%F9%ACZkr%B9%5CQKKK%B6%B3%B33%97H%24%1C%C0%D7Z%EB%1DN%A7%13%A5%94%06%B8%7B%F7%AE%5D)%C5%CA%CA%0A%3D%3D%3D%97%5D.%17%40_%3A%9D~%CE0%0C2%99%8C6%0C%C3%B4%D9l%00%1F%A7R%A9%9D%DD%DD%DD%84%C3%E1%0F%01%5E%F0%FB%FD%D7%BD%5E%AF%B8%5C%AEdaK%CF%C6b%B1%1D%91H%C4%8C%C5b%9F%03%88%C8g%D3%D3%D32%3B%3B%2B%F1x%FC%40%24%12%F9%3B%16%8B%8D%02%C4b%B1%AE%99%99%99%FC%CC%CC%CC%7B%22%12%88%C7%E3%7F%CD%CE%CE%CA%EA%EA%EAr4%1A5%A3%D1%E8%91H%24%F2%F3%CD%9B7%EF%2C..%CA%95%2BWDD%066%DEF%00%B9z%F5jBD%AE%1F%3E%7CX%00ill%AC%13%91gE%C4w%DF(%F2%BC%88%04D%C4!%22%CF%88Hu%81%97%89%C8N%11%F1%14%CE%5B%0A%3E%A7%884%8A%88KD%FC%22R%25%22%95%22%D2p%7F3%C2%E1%B0%94%95%95%89%DDn%FF%1D%F8%DE%E1pdB%A1%90%2C%2C%2C%3C%CD%E3%90%88%F4%9E%3E%7D%3A%B5%F1I%04%83%C1%F5%A5%A5%A5%F3%22R%F4X%02%14B%B4%8B%88)%F74)%22O%3E%AE%BB%FF%05%F5a%F7%07%0C%EA%3Aj%00%00%00%00IEND%AEB%60%82"> 25 followers</a>
+			</li>
+      <li id="about">
+        <h3>About</h3>
+        <img src="./Mass inserting data in Rails without killing your performance_files/9b00f41e5f2a69734051f2a78f4f3785_bigger.jpeg" align="left" style="margin: 0 10px 5px 0">
+        I'm Chris Heald, a software developer and entrepreneur in Phoenix, Arizona specializing in Ruby and Rails, with a secondary interest in just about everything I can get my hands on.      
+      </li>
+			<li id="pages">
+				<h3>Pages</h3>
+				<ul>
+				</ul>
+			</li>
+
+			<li id="categories">
+				<h3>Categories</h3>
+				<ul>
+	<li class="cat-item cat-item-64"><a href="http://www.coffeepowered.net/category/css/" title="View all posts filed under CSS">CSS</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://www.coffeepowered.net/category/how-to/" title="View all posts filed under How-To">How-To</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://www.coffeepowered.net/category/javascript-2/" title="View all posts filed under Javascript">Javascript</a>
+<ul class="children">
+	<li class="cat-item cat-item-54"><a href="http://www.coffeepowered.net/category/javascript-2/jquery/" title="View all posts filed under jQuery">jQuery</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://www.coffeepowered.net/category/javascript-2/node-js/" title="View all posts filed under node.js">node.js</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://www.coffeepowered.net/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.coffeepowered.net/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+<ul class="children">
+	<li class="cat-item cat-item-4"><a href="http://www.coffeepowered.net/category/ruby/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://www.coffeepowered.net/category/security-2/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.coffeepowered.net/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+ 
+
+				</ul>
+			</li>
+
+			<li id="archives">
+				<h3>Archives</h3>
+				<ul>
+	<li><a href="http://www.coffeepowered.net/2010/11/" title="November 2010">November 2010</a></li>
+	<li><a href="http://www.coffeepowered.net/2010/09/" title="September 2010">September 2010</a></li>
+	<li><a href="http://www.coffeepowered.net/2010/08/" title="August 2010">August 2010</a></li>
+	<li><a href="http://www.coffeepowered.net/2010/06/" title="June 2010">June 2010</a></li>
+	<li><a href="http://www.coffeepowered.net/2010/02/" title="February 2010">February 2010</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/12/" title="December 2009">December 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/07/" title="July 2009">July 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/06/" title="June 2009">June 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/03/" title="March 2009">March 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/02/" title="February 2009">February 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2009/01/" title="January 2009">January 2009</a></li>
+	<li><a href="http://www.coffeepowered.net/2008/10/" title="October 2008">October 2008</a></li>
+	<li><a href="http://www.coffeepowered.net/2008/09/" title="September 2008">September 2008</a></li>
+
+				</ul>
+			</li>
+			<li id="search">
+				<h3><label for="s">Search</label></h3>
+				<form id="searchform" method="get" action="http://www.coffeepowered.net/">
+					<div>
+						<input id="s" name="s" class="text-input" type="text" value="" size="10" tabindex="1" accesskey="S">
+						<input id="searchsubmit" class="submit-button" name="searchsubmit" type="submit" value="Find" tabindex="2">
+					</div>
+				</form>
+			</li>
+
+
+			<li id="rss-links">
+				<h3>RSS Feeds</h3>
+				<ul>
+					<li><a href="http://www.coffeepowered.net/feed/" title="Coffee Powered Posts RSS feed" rel="alternate" type="application/rss+xml">All posts</a></li>
+					<li><a href="http://www.coffeepowered.net/comments/feed/" title="Coffee Powered Comments RSS feed" rel="alternate" type="application/rss+xml">All comments</a></li>
+				</ul>
+			</li>
+
+			<li id="meta">
+				<h3>Meta</h3>
+				<ul>
+					
+					<li><a href="http://www.coffeepowered.net/wp-login.php">Log in</a></li>
+					
+				</ul>
+			</li>
+		</ul>
+	</div><!-- #secondary .sidebar -->
+<div class="sidebar">
+	<div class="entry-meta">
+		<h3>At a glance</h3>
+		<ul style="padding: 0; margin: 0 !important;">
+		<li>Written by <span class="author vcard"><a class="url fn n" href="http://www.coffeepowered.net/author/cheald/" title="View all posts by Chris Heald">Chris Heald</a></span> on <abbr class="published" title="2009-01-23T21:55:59+0000">January 23, 2009 at 9:55 pm</abbr></li><li>Filed under <a href="http://www.coffeepowered.net/category/ruby/rails/" title="View all posts in Rails" rel="category tag">Rails</a> and tagged <a href="http://www.coffeepowered.net/tag/activerecord/" rel="tag">activerecord</a>, <a href="http://www.coffeepowered.net/tag/performance/" rel="tag">performance</a>, <a href="http://www.coffeepowered.net/tag/rails/" rel="tag">Rails</a>, <a href="http://www.coffeepowered.net/tag/sql/" rel="tag">sql</a>.</li><li>Bookmark the <a href="./Mass inserting data in Rails without killing your performance_files/Mass inserting data in Rails without killing your performance.htm" title="Permalink to Mass inserting data in Rails without killing your performance" rel="bookmark">permalink</a></li><li>Follow the <a href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/feed/" title="Comments RSS to Mass inserting data in Rails without killing your performance" rel="alternate" type="application/rss+xml">RSS feed for this post</a></li>		</ul>
+
+		<a class="comment-link" href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/#respond" title="Post a comment">Post a comment</a> or leave a trackback: <a class="trackback-link" href="http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/trackback/" title="Trackback URL for your post" rel="trackback">Trackback URL</a>.	</div>
+</div>
+<div class="clearboth"></div>
+
+</div><!-- #wrapper .hfeed -->
+
+<!-- This Wordpress theme is provided free of charge, much like Wordpress itself. Please help us by leaving in the Wordpress and MB Web Design links on the footer of your website. It costs you nothing, but this token of appreciation means a lot. -->
+<div id="footer">
+	<span id="generator-link"><a href="http://wordpress.org/" title="WordPress" rel="generator">WordPress</a></span>
+	<span class="meta-sep">|</span>
+	<span>This is a <a href="http://www.mbwebdesign.co.uk/templates/wordpress">free Wordpress template</a> by <a href="http://www.mbwebdesign.co.uk/">MB Web Design</a></span>
+	</div><!-- #footer -->
+
+<script type="text/javascript" src="./Mass inserting data in Rails without killing your performance_files/shCore.js"></script>
+<script type="text/javascript" src="./Mass inserting data in Rails without killing your performance_files/shBrushRuby.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/styles/shCore.css?ver=2.1.364b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(corecss);
+		var themecssurl = "http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/styles/shThemeDefault.css?ver=2.1.364b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'http://www.coffeepowered.net/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.all();
+</script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./Mass inserting data in Rails without killing your performance_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5738363-1");
+pageTracker._trackPageview();
+</script>
+
+
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk
+Database Caching using disk
+
+Served from: www.coffeepowered.net @ 2011-01-19 07:21:11 --><script src="./Mass inserting data in Rails without killing your performance_files/cheald"></script><canvas id="heatmapOverlay" style="position: absolute; top: 0; left: 0; right: 0, bottom: 0; display: none;">This requires canvas support.</canvas><style type="text/css">.gitfollow { background: #fafafa; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fbfbfb), to(#ccc)); font: 11px "Lucida Grande", Verdana; outline: 0px; -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px; -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px; font-weight: bold; line-height: 1; cursor: pointer; position: relative; text-decoration: none; width: auto; border-bottom-color: rgba(0, 0, 0, 0.3); -moz-border-radius: 15px; -webkit-border-radius: 15px; padding: 4px 14px 6px; color: #4183C4; text-shadow: 0 1px 0 #fff; }.gitfollow:active { top: 1px; }.gitfollow:hover { background: #eee; text-decoration: none }.gitfollow img { vertical-align: middle; padding-right: 5px; border: none }.gitfollow.small { padding: 2px 14px 4px }</style></body></html>

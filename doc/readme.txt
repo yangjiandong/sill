@@ -1,6 +1,20 @@
 Sill - rails3
 =============
 
+2011.01.19
+-----------
+
+   1. 大量插入数据
+   http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+   -- mass insert 需考虑数据库,只适用于mysql
+   save\other\Mass inserting data in Rails without killing your performance.htm
+   
+   insert into t_hzk values (),()..方式是快,mysql下只要0.049s,mssql2005还不支持,网上资料mssql2008支持
+
+   or
+   http://jonah.org/articles/crewait_go_.html
+   save\other\Crewait.go!.htm
+
 2011.01.18
 -----------
 
@@ -14,6 +28,7 @@ Sill - rails3
 
    1. acts_as_paranoid 有问题,
    undefined method `destroy_without_callbacks' for class `Post'
+
    use: https://github.com/winton/acts_as_archive
    or https://github.com/backupify/acts_as_archive
 
@@ -28,6 +43,9 @@ Sill - rails3
 
    --mysql
    处理hz库导入时间过长394.9380s
+
+   # add deleted_at,记录删除历史,暂时用track_history
+   # gem 'acts_as_archive'
 
    2. track_history
    rails g migration add_track_histroy

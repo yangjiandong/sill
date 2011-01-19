@@ -1,0 +1,799 @@
+body {
+  font-family: helvetica, arial, sans-serif;
+  text-align: left;
+  padding: 10px;
+  margin: 0;
+  color: black;
+}
+
+a {
+	text-decoration:none;
+  color: black;
+}
+
+.post div a:nth-child(3n+2) {	border: 3px double orange; }
+.post div a:nth-child(3n) {	border: 3px double blue; }
+.post div a { border: 3px double purple;}
+
+.post div a:nth-child(3n+2):hover {	color: orange; }
+.post div a:nth-child(3n):hover {	color: blue; }
+.post div a:hover { color: purple;}
+
+.post div a {	padding: 2px; }
+
+abbr { border-bottom: none; }
+
+#wrap {
+  margin:0 auto;
+  width: 999px;
+}
+
+#header {
+  line-height: 50px;
+  letter-spacing: -10px;
+  font-size: 7em;
+	font-family: arial black, gadget, sans-serif;
+  margin-bottom: 10px;
+}
+
+div#main {
+  float:left;
+  width: 700px;
+}
+
+#main .border {
+  border-bottom: 1px #444 solid;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+#main img {
+  margin: 10px;
+}
+
+#main .photo {
+  text-align: center;
+}
+
+#main .photo img {
+  border: 2px #444 solid;
+}
+
+#main h2 {
+  font-weight: bold;
+	font-family: arial black, gadget, sans-serif;
+  color: black;
+  padding: 0;
+  margin: 0.25em 0 0 0.25em;
+  font-size: 4em;
+	line-height: 1em;
+}
+
+#main div:nth-child(3n+1) div.underline {
+	background-color: #A600CB;
+}
+#main div:nth-child(3n) div.underline {
+	background-color: blue;
+}
+
+#main div div.underline {
+	background-color: orange;
+	font-size: 2.5em;
+	margin: -0.66em 0 0 0;
+}
+
+
+#main div.underline.blue {
+	background-color: #4444FF !important;
+	font-size: 2.5em;
+	margin: -0.66em 0 0 0;
+}
+
+#main div.underdone {
+	background-color: orange;
+	font-size: 2.5em;
+	margin: -0.66em 0 0 0;
+}
+
+/* crazy hovers on titles */
+/*#main div:nth-child(3n+1) h2 a:hover {
+	border: 20px double blue;
+}
+#main div:nth-child(3n+2) h2 a:hover {
+	border: 20px double purple;
+}
+#main div:nth-child(3n+3) h2 a:hover {
+	border: 20px double orange;
+}
+*/
+#main .date {
+  text-align: right;
+}
+
+#main p {
+  margin: 10px 0 25px 0;
+  font-size: 105%;
+	font-family: verdana;
+  line-height: 1.6em;
+  text-align: left;
+}
+
+#main ul {
+  margin-top: -15px;
+}
+
+#main li {
+  line-height: 150%;
+}
+
+#archive {
+  font-size: 120%;
+  padding-bottom: 20px;
+}
+
+#archive-list {
+  padding-top: 2em;
+}
+
+#archive-list a {
+	padding: 2px;
+}
+
+#archive-list li:nth-child(3n+2) a {
+	border: 3px double orange;
+}
+
+#archive-list li:nth-child(3n) a {
+	border: 3px double blue;
+}
+
+#archive-list li a {
+	border: 3px double purple;
+}
+
+#archive-list li:nth-child(3n+2) a:hover {
+  color: orange;
+}
+
+#archive-list li:nth-child(3n) a:hover {
+  color: blue;
+}
+
+#archive-list li a:hover {
+  color: purple
+}
+
+#archive-list li {
+  font-size: 125%;
+  line-height: 35px;
+}
+
+#sidebar {
+  float: right;
+  width: 210px;
+  border-left: 1px #444 solid;
+  padding-left: 15px;
+  text-align: center;
+}
+
+#sidebar h3 {
+  margin: 20px 0 0 0;;
+}
+
+#sidebar .heading {
+	font-weight: bold;
+	margin: 0 0 15px 0;
+}
+
+#sidebar li {
+	list-style-type: none;
+}
+
+#sidebar li:nth-child(3n+2) a {
+	border: 3px double orange;
+}
+
+#sidebar li:nth-child(3n) a {
+	border: 3px double blue;
+}
+
+#sidebar li a {
+	border: 3px double purple;
+}
+
+#sidebar a {
+	padding: 2px;
+}
+
+#sidebar li:nth-child(3n+2) a:hover {
+  color: orange;
+}
+
+#sidebar li:nth-child(3n) a:hover {
+  color: blue;
+}
+
+#sidebar li a:hover {
+  color: purple
+}
+
+#sidebar p {
+  margin: 10px 0 30px 0;
+  line-height: 23px;
+}
+
+#sidebar ul {
+  margin: 10px 0 20px 0;
+  padding: 0 0 0 18px;
+}
+
+#sidebar li {
+  padding-bottom: 15px
+}
+
+#footer {
+  padding: 20px 0 10px 0;
+  clear: both;
+  text-align: center;
+  border-top: 1px #444 solid;
+}
+
+#footer a {
+	border: 3px double purple;
+	padding: 2px;
+}
+
+#footer a:hover {
+	color: purple;
+}
+
+li code, p code {
+  border: 1px #444 solid;
+  padding: 2px;
+  font-size: 100%;
+  background: black;
+	font-family: Monaco, Lucida Console, monospace;
+}
+
+pre {
+  margin: 0 0 27px 0;
+  border: 1px #444 solid;
+  padding: 10px;
+  font-size: 100%;
+  line-height: 150%;
+  background: black;
+	font-family: Monaco, Lucida Console, monospace;
+}
+
+pre {
+ overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+ white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+ white-space: -pre-wrap; /* Opera 4-6 */
+ white-space: -o-pre-wrap; /* Opera 7 */
+ /* width: 99%; */
+ word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.code a {
+	color:inherit;
+}
+
+.code a:nth-child(3n+2) {
+	border: 3px double orange;
+}
+
+.code a:nth-child(3n) {
+	border: 3px double blue;
+}
+
+.code a {	border: 3px double purple; }
+
+.code a:nth-child(3n+2):hover {
+	color: orange;
+}
+
+.code a:nth-child(3n+3):hover {
+	color: blue;
+}
+
+.code a:hover {
+	color: purple;
+}
+
+.code {
+	color: #EDEDED;
+	background-color: #000000;
+}
+
+.code .linenum {
+	width: 75px;
+	padding: 0.1em 1em 0.2em 0;
+	color: #888;
+	background-color: #eee;
+}
+.code span {
+   padding-top: 0.2em;
+   padding-bottom: 0.1em;
+}
+.code ::selection {
+	background-color: #FF1221;
+}
+/* Comment */
+.code .comment {
+	color: #7C7C7C;
+}
+
+/* Entity */
+.code .entity {
+	color: #FFD2A7;
+}
+
+/* Keyword */
+.code .keyword {
+	color: #96CBFE;
+}
+
+/* Keyword.control */
+.code .keyword_control {
+	color: #96CBFE;
+}
+
+/* Keyword.Operator */
+.code .keyword_operator {
+	color: #EDEDED;
+}
+
+/* Class */
+.code .entity_name_type {
+	color: #FFFFB6;
+	text-decoration: underline;
+}
+
+/* Support */
+.code .support {
+	color: #FFFFB6;
+	font-weight: bold;
+}
+
+/* Storage */
+.code .storage {
+	color: #CFCB90;
+}
+
+/* Storage.modifier */
+.code .storage_modifier {
+	color: #96CBFE;
+}
+
+/* Constant */
+.code .constant {
+	color: #99CC99;
+}
+
+/* String */
+.code .string {
+	color: #A8FF60;
+}
+
+/* Number */
+.code .constant_numeric {
+	color: #FF73FD;
+}
+
+/* Punctuation */
+.code .punctuation {
+}
+
+/* Variable */
+.code .variable {
+	color: #C6C5FE;
+}
+
+/* Invalid – Deprecated */
+.code .invalid_deprecated {
+	color: #FD5FF1;
+	font-style: italic;
+	text-decoration: underline;
+}
+
+/* Invalid – Illegal */
+.code .invalid_illegal {
+	color: #FD5FF1;
+	background-color: rgba(86, 45, 86, 0.75);
+}
+
+/* ♦ Embedded Source (Bright) */
+.code .text .source {
+	background-color: rgba(177, 179, 186, 0.03);
+}
+
+/* ♦ Entity inherited-class */
+.code .entity_other_inherited-class {
+	color: #9B5C2E;
+	font-style: italic;
+}
+
+/* ♦ String embedded-variable */
+.code .source .string .source {
+	color: #EDEDED;
+}
+
+/* ♦ String punctuation */
+.code .source .string .source .punctuation_section_embedded {
+	color: #00A0A0;
+}
+
+/* ♦ String constant */
+.code .string .constant {
+	color: #00A0A0;
+}
+
+/* ♦ String.regexp */
+.code .string_regexp {
+	color: #E9C062;
+}
+
+/* ♦ String.regexp.«special» */
+.code .string_regexp .constant_character_escape, .code .string_regexp .source_ruby_embedded, .code .string_regexp .string_regexp_arbitrary-repitition {
+	color: #FF8000;
+}
+
+/* ♦ String.regexp.group */
+.code .string_regexp_group {
+	color: #C6A24F;
+	background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ♦ String.regexp.character-class */
+.code .string_regexp_character-class {
+	color: #B18A3D;
+}
+
+/* ♦ String variable */
+.code .string .variable {
+	color: #8A9A95;
+}
+
+/* ♦ Support.function */
+.code .support_function {
+	color: #DAD085;
+}
+
+/* ♦ Support.constant */
+.code .support_constant {
+	color: #FFD2A7;
+}
+
+/* c C/C++ Preprocessor Line */
+.code .meta_preprocessor_c {
+	color: #8996A8;
+}
+
+/* c C/C++ Preprocessor Directive */
+.code .meta_preprocessor_c .keyword {
+	color: #AFC4DB;
+}
+
+/* j Cast */
+.code .meta_cast {
+	color: #676767;
+	font-style: italic;
+}
+
+/* ✘ Doctype/XML Processing */
+.code .meta_sgml_html .meta_doctype, .code .meta_sgml_html .meta_doctype .entity, .code .meta_sgml_html .meta_doctype .string, .code .meta_xml-processing, .code .meta_xml-processing .entity, .code .meta_xml-processing .string {
+	color: #494949;
+}
+
+/* ✘ Meta.tag.«all» */
+.code .meta_tag, .code .meta_tag .entity {
+	color: #96CBFE;
+	font-weight: bold;
+}
+
+/* ✘ Meta.tag.inline */
+.code .source .entity_name_tag, .code .source .entity_other_attribute-name, .code .meta_tag_inline, .code .meta_tag_inline .entity {
+	color: #96CBFE;
+}
+
+/* ✘ Meta.tag.attribute-name */
+.code .entity_other_attribute-name {
+	color: #FFD7B1;
+}
+
+/* ✘ Namespaces */
+.code .entity_name_tag_namespace, .code .entity_other_attribute-name_namespace {
+	color: #E18964;
+}
+
+/* § css tag-name */
+.code .meta_selector_css .entity_name_tag {
+	color: #96CBFE;
+	text-decoration: underline;
+}
+
+/* § css:pseudo-class */
+.code .meta_selector_css .entity_other_attribute-name_tag_pseudo-class {
+	color: #8F9D6A;
+}
+
+/* § css#id */
+.code .meta_selector_css .entity_other_attribute-name_id {
+	color: #8B98AB;
+}
+
+/* § css.class */
+.code .meta_selector_css .entity_other_attribute-name_class {
+	color: #62B1FE;
+}
+
+/* § css property-name: */
+.code .support_type_property-name_css {
+	color: #EDEDED;
+}
+
+/* § css property-value; */
+.code .meta_property-group .support_constant_property-value_css, .code .meta_property-value .support_constant_property-value_css {
+	color: #F9EE98;
+}
+
+/* § css @at-rule */
+.code .meta_preprocessor_at-rule .keyword_control_at-rule {
+	color: #8693A5;
+}
+
+/* § css additional-constants */
+.code .meta_property-value .support_constant_named-color_css, .code .meta_property-value .constant {
+	color: #87C38A;
+}
+
+/* § css constructor.argument */
+.code .meta_constructor_argument_css {
+	color: #8F9D6A;
+}
+
+/* ⎇ diff.header */
+.code .meta_diff, .code .meta_diff_header {
+	color: #F8F8F8;
+	font-style: italic;
+	background-color: #0E2231;
+}
+
+/* ⎇ diff.deleted */
+.code .markup_deleted {
+	color: #F8F8F8;
+	background-color: #420E09;
+}
+
+/* ⎇ diff.changed */
+.code .markup_changed {
+	color: #F8F8F8;
+	background-color: #4A410D;
+}
+
+/* ⎇ diff.inserted */
+.code .markup_inserted {
+	color: #F8F8F8;
+	background-color: #253B22;
+}
+
+/* Markup: Italic */
+.code .markup_italic {
+	color: #E9C062;
+	font-style: italic;
+}
+
+/* Markup: Bold */
+.code .markup_bold {
+	color: #E9C062;
+	font-weight: bold;
+}
+
+/* Markup: Underline */
+.code .markup_underline {
+	color: #E18964;
+	text-decoration: underline;
+}
+
+/* Markup: Quote */
+.code .markup_quote {
+	color: #E1D4B9;
+	font-style: italic;
+	background-color: rgba(254, 224, 156, 0.07);
+}
+
+/* Markup: Heading */
+.code .markup_heading, .code .markup_heading .entity {
+	color: #FEDCC5;
+	background-color: #632D04;
+}
+
+/* Markup: List */
+.code .markup_list {
+	color: #E1D4B9;
+}
+
+/* Markup: Raw */
+.code .markup_raw {
+	color: #578BB3;
+	background-color: rgba(177, 179, 186, 0.03);
+}
+
+/* Markup: Comment */
+.code .markup .comment {
+	color: #F67B37;
+	font-style: italic;
+}
+
+/* Markup: Separator */
+.code .meta_separator {
+	color: #60A633;
+	background-color: #242424;
+}
+
+/* Log Entry */
+.code .meta_line_entry_logfile, .code .meta_line_exit_logfile {
+	background-color: rgba(238, 238, 238, 0.16);
+}
+
+/* Log Entry Error */
+.code .meta_line_error_logfile {
+	background-color: #751012;
+}
+
+table {
+	border-spacing: 0;
+	width:700px;
+	margin: 0 0 15px 0;
+}
+table:nth-child(3n+1) th {background: #8888FF;}
+table:nth-child(3n+1) td {background: #DDDDFF;}
+table:nth-child(3n) th {background: #B622DB;}
+table:nth-child(3n) td {background: #EEAAFF;}
+table th {background: orange; font-size:110%; padding:5px;}
+table td {padding:5px; width:25%; background:#FFF0CC; border-bottom: 1px white solid;}
+
+
+/* MIT Media Lab Portfolio */
+center#main{
+	margin-top:50px;
+}
+
+span.project{
+	display:inline-block;
+	width:150px;
+	vertical-align:top;
+	margin:0 7px 20px;
+	padding:13px;
+}
+
+span.project.software {
+	background: #FFF0AA
+}
+
+span.project.software h4 {
+	color:orange;
+}
+
+span.project.math {
+	background: #DDDDFF;
+}
+
+span.project.music {
+	background: #EEAAFF;
+}
+
+span.project.math h4{
+	color:#8888FF;
+}
+
+span.project.music h4{
+	color:#B622DB;
+}
+
+
+.project h4{
+	font-family: verdana;
+	text-align:left;
+	font-size:80%;
+	padding:0;
+	margin: 0 0 0 0;
+}
+
+.project h3{
+	font-family: verdana;
+	text-align:left;
+	padding:0;
+	margin:0 0 3px 0;
+	margin-bottom:3px;
+}
+
+.project .years {
+	text-align: left;
+	margin-left: -10px;
+	display: inline;
+}
+
+.project p {
+	font-family: arial !important;
+	font-size: 90% !important;
+}
+
+.project ul.first {
+	padding:0;
+	margin-bottom:0;
+}
+
+.project ul.first > li {
+	padding-bottom: 10px;
+}
+
+.project ul {
+	text-align:left;
+	list-style-type: none;
+	padding:15px 8px 0px;
+}
+.project li {
+	text-align:left;
+	font-size: 15px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+.project ul.first > li:last-child {
+	padding-bottom:0px;
+}
+
+.formats {
+	font-size: 80%;
+}
+
+.project a {
+	padding: 2px;
+}
+
+.project.music a {
+	border: 3px double purple;
+}
+
+.project.math a {
+	border: 3px double blue;
+}
+
+.project.software a {
+	border: 3px double orange;
+}
+
+.project.music a:hover {
+  color: purple
+}
+
+.project.software a:hover {
+  color: orange;
+}
+
+.project.math a:hover {
+  color: blue;
+}
+
+.music .year {
+	font-size: 80%;
+	padding-left: 10px;
+}
+
+.music li {
+	line-height: 100% !important;
+	padding-bottom: 2px !important;
+}
+.music ul {
+	margin-top: 10px !important;
+}
+
+/* ul's in li's in ul's in projects */
+span.project ul li ul{
+	margin: 0px;
+	padding: 0px;
+	padding-left: 5px;
+}
+
+span.project ul li ul li ul{padding-top: 5px;}

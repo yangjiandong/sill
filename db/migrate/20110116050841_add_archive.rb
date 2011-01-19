@@ -10,7 +10,7 @@ class AddArchive < ActiveRecord::Migration
       when 'mssql'
        #execute " SELECT * INTO archived_posts FROM posts WHERE 1=0"
     else
-      ActsAsArchive.update Post
+      #ActsAsArchive.update Post
 
     end
     # Post.create_archive_table
@@ -18,7 +18,7 @@ class AddArchive < ActiveRecord::Migration
   end
 
   def self.down
-    execute " drop TABLE archived_posts"
+    #execute " drop TABLE archived_posts"
     #Post.drop_archive_table
   end
 end
