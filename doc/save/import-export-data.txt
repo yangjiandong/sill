@@ -1,0 +1,51 @@
+rails 导入导出数据
+==================
+
+1. 简单操作
+
+def import
+   import_file = params[:import_file]
+   FasterCSV.parse(import_file.read).each do |row|
+      temp_user = TempUser.new(:email => row[0], :first_name => row[1], :last_name => row[2])
+      unless temp_user.save
+         temp_user.is_valid = false
+         temp_user.save(false)
+      end
+   end
+end
+
+# borrowed from Scott Becker http://synthesis.sbecker.net/articles/2007/06/07/how-to-generate-csv-files-in-rails
+def export
+  temp_user = TempUser.find(:all)
+
+  csv_string = FasterCSV.generate do |csv|
+    temp_users.each do |user|
+      csv << [user.email, user.first_name, user.last_name]
+    end
+  end
+
+  send_data csv_string,
+            :type => 'text/csv; charset=iso-8859-1; header=present',
+            :disposition => "attachment; filename=users.csv"
+end
+
+2. 考虑数据库个性
+
+   http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+   -- mass insert 需考虑数据库,只适用于mysql
+   save\other\Mass inserting data in Rails without killing your performance.htm
+
+   insert into t_hzk values (),()..方式是快,mysql下只要0.049s,mssql2005还不支持,网上资料mssql2008支持
+
+   -- ar-extensions 只支持 mysql,sqlite3,postgresql
+   -- http://www.continuousthinking.com/tags/arext
+
+   or
+   http://jonah.org/articles/crewait_go_.html
+   https://github.com/theAlmanac/crewait
+   save\other\Crewait.go!.htm
+   gem install crewait
+   -- problem in slqite3, undefined method `current_database' for #<ActiveRecord::ConnectionAdapters::SQLite3Adapter:0x18be647>
+   -- mysql ,undefined method `fetch_hash' for [{"auto_increment"=>nil}]:Array
+
+   --END

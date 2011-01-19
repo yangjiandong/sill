@@ -181,7 +181,8 @@ module ApplicationHelper
     Property.get_database_time()
   end
 
-  def get_database_time
+  def get_database_date
     Property.get_database_date()
   end
+
 end

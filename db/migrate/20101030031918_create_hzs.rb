@@ -14,24 +14,39 @@ class CreateHzs < ActiveRecord::Migration
         inserts.push "('#{record['hz']}','#{record['py']}','#{record['wb']}')"
       end
       # for mysql 是快
-      # 0.05s
+      # 0.05s,0.5s
       sql = "INSERT INTO t_hzk (hz,py,wb) VALUES #{inserts.join(", ")}"
-      Hz.connection.execute sql 
+      Hz.connection.execute sql
     else
       # use ActiveRecord::Extensions
-      columns = [:hz, :py, :wb]
-      values = []
-      
+      # http://www.continuousthinking.com/tags/arext
+      # ar-extensions
+      #columns = [:hz, :py, :wb]
+      #values = []
+      #file = File.open("#{RAILS_ROOT}/db/seeds/hzk.yml", 'r')
+      #YAML::load(file).each do |k,record|
+      #  values.push "['#{record['hz']}','#{record['py']}','#{record['wb']}']"
+      #end
+      #Hz.import columns, values
+
+      #Crewait.start_waiting
+
       file = File.open("#{RAILS_ROOT}/db/seeds/hzk.yml", 'r')
       YAML::load(file).each do |k,record|
         # ["hzk_001", {"hz"=>"啊", "py"=>"A", "wb"=>"BS"}]
         # one by one insert ecord
         # mssql use 40s
-        #Hz.create!(record)
-        values.push "['#{record['hz']}','#{record['py']}','#{record['wb']}']"
+        Hz.create!(record)
+
+        # Hz.crewait(
+          # :hz => record['hz'],
+          # :py => record['py'],
+          # :wb => record['wb']
+        # )
 
       end
-      Hz.import columns, values
+      #Crewait.go!
+
     end
   end
 

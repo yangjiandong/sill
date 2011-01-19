@@ -39,6 +39,7 @@ gem "simple_form"
 # gem 'acts_as_archive'
 # format log
 gem 'awesome_print',      '>= 0.2.1'
+#gem 'crewait'
 
 group :development, :test do
   gem 'capybara' # aims to simplify the process of integration testing Rack applications

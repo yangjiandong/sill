@@ -5,15 +5,7 @@ Sill - rails3
 -----------
 
    1. 大量插入数据
-   http://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
-   -- mass insert 需考虑数据库,只适用于mysql
-   save\other\Mass inserting data in Rails without killing your performance.htm
-   
-   insert into t_hzk values (),()..方式是快,mysql下只要0.049s,mssql2005还不支持,网上资料mssql2008支持
-
-   or
-   http://jonah.org/articles/crewait_go_.html
-   save\other\Crewait.go!.htm
+   save/import-export-data.txt
 
 2011.01.18
 -----------
