@@ -35,7 +35,7 @@ gem 'will_paginate',        '~> 3.0.pre2'
 gem "wice_grid", '3.0.0.pre1'
 #https://github.com/plataformatec/simple_form
 gem "simple_form"
-# add deleted_at
+# add deleted_at,记录删除历史,暂时用track_history
 # gem 'acts_as_archive'
 # format log
 gem 'awesome_print',      '>= 0.2.1'

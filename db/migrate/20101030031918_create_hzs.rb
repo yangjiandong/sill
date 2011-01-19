@@ -18,16 +18,21 @@ class CreateHzs < ActiveRecord::Migration
       sql = "INSERT INTO t_hzk (hz,py,wb) VALUES #{inserts.join(", ")}"
       Hz.connection.execute sql 
     else
+      # use ActiveRecord::Extensions
+      columns = [:hz, :py, :wb]
+      values = []
+      
       file = File.open("#{RAILS_ROOT}/db/seeds/hzk.yml", 'r')
       YAML::load(file).each do |k,record|
         # ["hzk_001", {"hz"=>"啊", "py"=>"A", "wb"=>"BS"}]
+        # one by one insert ecord
         # mssql use 40s
-        Hz.create!(record)
-      end
-    end
-    #records = YAML.load_file("#{RAILS_ROOT}/db/seeds/hzk.yml")
-    #records.each{|record| Hz.create(record)}
+        #Hz.create!(record)
+        values.push "['#{record['hz']}','#{record['py']}','#{record['wb']}']"
 
+      end
+      Hz.import columns, values
+    end
   end
 
   def self.down
@@ -35,14 +40,7 @@ class CreateHzs < ActiveRecord::Migration
   end
 
   private
-  def create_class(class_name, superclass, &block)
-    klass = Class.new superclass, &block
-    Object.const_set class_name, klass
-  end
-
   class Hz < ActiveRecord::Base
     set_table_name 't_hzk'
-
   end
-
 end
