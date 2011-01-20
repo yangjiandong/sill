@@ -10,3 +10,4 @@ gitrm.bat
 ssl
 work
 log
+db/schema.rb
