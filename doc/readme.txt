@@ -1,6 +1,15 @@
 Sill - rails3
 =============
 
+2011.01.21
+-----------
+
+   1. Five ActiveRecord Tips 有空试一下
+   save/other/Shades of Gray  Five ActiveRecord Tips.htm
+
+   2. sql Transaction --有空试一下
+   save\sql.txt
+
 2011.01.19
 -----------
 

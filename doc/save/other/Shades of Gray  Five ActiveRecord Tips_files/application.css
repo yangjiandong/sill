@@ -1,0 +1,136 @@
+body {
+	font-family: Georgia, Times, serif;
+	font-size:   0.9em;
+	line-height: 1.2em;
+	
+	text-align:  center;
+}
+#page {
+	width:      800px;
+	margin:     10px auto;
+	
+	text-align: justify;
+}
+#page td {
+  vertical-align: top;
+}
+a {
+  text-decoration: none;
+  
+  color:           #BC0000;
+}
+a:hover {
+  text-decoration: underline;
+}
+a img {
+  vertical-align: text-bottom;
+  padding:        0px;
+  
+  border:         0px;
+}
+ul.links {
+  list-style:   none;
+  padding-left: 0px;
+}
+dt {
+  font-weight: bold;
+}
+form dd {
+  margin-left: 10px;
+  padding:     2px 0px 10px 0px;
+}
+.warning, .error {
+  color: #BC0000;
+}
+.notice {
+  color: #00BC00;
+}
+
+#header {
+  border-bottom: 1px solid #BBBBBB;
+}
+#footer {
+  text-align: right;
+  
+  border-top: 1px solid #BBBBBB;
+}
+
+#sidebar {
+  width: 215px;
+  
+  font-size: 0.8em;
+  
+  color: #999999;
+}
+#sidebar img {
+	margin: 4px 10px 10px 0px;
+	float:  left;
+}
+#sidebar a {
+  font-size: 1.2em;
+}
+#sidebar h2, h3 {
+  letter-spacing: 1px;
+}
+.narrow {
+  width: 150px;
+}
+#search_terms {
+  width:        180px;
+  margin-right: 5px;
+}
+
+#content {
+  padding-left: 10px;
+  
+  border-left:  1px solid #BBBBBB;
+}
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: 4px;
+	font-variant:   small-caps;
+}
+h3, h5 {
+	letter-spacing: 2px;
+}
+h5, h6 {
+	letter-spacing: 1px;
+}
+pre {
+	padding-left:  10px;
+	
+	border-top:    1px dashed #BC0000;
+	border-bottom: 1px dashed #BC0000;
+}
+code {
+	font-family: 'Courier New', monospace;
+}
+.details {
+  padding:       2px 0px;
+  color:         #999999;
+
+  border-top:    1px dashed #BBBBBB;
+  border-bottom: 1px dashed #BBBBBB;
+}
+.comment, #new_comment {
+  border-top: 1px solid #BBBBBB;
+}
+.comment .details {
+  border-top: 0px;
+}
+.comment .details .name {
+  font-weight: bold;
+}
+.comment .details .actions {
+  font-size: 0.8em;
+}
+.actions {
+  font-size:      0.6em;
+  font-variant:   normal;
+  letter-spacing: 1px;
+}
+.wide {
+  width: 520px;
+}
+.pagination {
+  color: #999999;
+}

@@ -1,3 +1,19 @@
+2011.01.21
+-----------
+
+SQL Transaction:
+
+def fetch_value
+	sql = ActiveRecord::Base.connection();
+	sql.execute "SET autocommit=0";
+	sql.begin_db_transaction
+	id, value =
+	sql.execute("SELECT id, value FROM sometable WHERE used=0 LIMIT 1 FOR UPDATE").fetch_row;
+	sql.update "UPDATE sometable SET used=1 WHERE id=#{id}";
+	sql.commit_db_transaction
+ 
+	value;
+end
 
 http://www.simpleanswer.us/answer/rails-extjs-and-sql-server
 
