@@ -7,6 +7,9 @@ Sill - rails3
    1. 大量插入数据
    save/import-export-data.txt
 
+Product.find_by_sql(["SELECT * FROM products WHERE name LIKE ?"],
+"%#{params[:name]}%")
+
 2011.01.18
 -----------
 
