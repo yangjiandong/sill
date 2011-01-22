@@ -13,6 +13,9 @@ Sill - rails3
    有中文问题,采用cloudtag.swf.cn.rar 中提供的,
    还不能正常显示,只显示了html信息.
 
+   2. 日期格式处理
+   post.created_at.strftime("%Y-%m-%d") 
+
 2011.01.21
 -----------
 
@@ -27,6 +30,9 @@ Sill - rails3
 
    1. 大量插入数据
    save/import-export-data.txt
+
+Product.find_by_sql(["SELECT * FROM products WHERE name LIKE ?"],
+"%#{params[:name]}%")
 
 2011.01.18
 -----------
