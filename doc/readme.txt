@@ -1,6 +1,18 @@
 Sill - rails3
 =============
 
+2011.01.22
+-----------
+
+   1. cloud_tag
+   https://github.com/zhangzhe/cloud_tag 
+   use:
+   posts\index.htm.erb
+   <%= tags %> 
+
+   有中文问题,采用cloudtag.swf.cn.rar 中提供的,
+   还不能正常显示,只显示了html信息.
+
 2011.01.21
 -----------
 

@@ -20,5 +20,20 @@
     end
   end %>
 </div>
+<%= h tags %>
+<embed width=200 height=240 
+flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x555555&amp;tspeed=100&amp;distr=true&amp;mode=both&amp;tagcloud=<tags>
+  <a href='www.tag1.com' style='12' color='0x333333' hicolor='0xffffff'>成本核算</a>
+  <a href='www.tag1.com' style='12' color='0x333333' hicolor='0xffffff'>音频接口</a>
+  <a href='www.tag1.com' style='12' color='0x333333' hicolor='0xffffff'>一直持续</a>
+  <a href='www.tag1.com' style='12' color='0x333333' hicolor='0xffffff'>绩效考核</a>
+  <a href='www.tag1.com' style='12' color='0x333333' hicolor='0xffffff'>ss可中午不想?</a>
+  <a href='www.tag2.com' style='12' color='0x333333' hicolor='0xffffff'>tag2</a></tags>" 
+allowscriptaccess="always" 
+wmode="transparent" 
+quality="high" 
+bgcolor="#000000" 
+name="tagcloudflash" 
+id="tagcloudflash" src="/flash/tagcloud.swf" type="application/x-shockwave-flash"/> 
 
-
+<% cloud_tag_part('hello', 'http://l') %> 

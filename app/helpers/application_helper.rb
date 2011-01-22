@@ -185,4 +185,18 @@ module ApplicationHelper
     Property.get_database_date()
   end
 
+  # cloud_tag
+  def tags
+    # cloud_tag(tag_url_hash)
+    cloud_tag({"tag1" => "www.tag1.com", "tag2" => "www.tag2.com"})
+  end
+  
+  def tag_url_hash 
+    returning r = { } do 
+      Blog.tag_counts.map(&:name).each do |t|
+        r[t] = CGI.unescape(tags_url(:q => t))
+      end
+    end
+  end
+ 
 end
