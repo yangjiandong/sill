@@ -145,5 +145,10 @@ ok    9. jrubyc
    不支持 Model.connection.execute()
 
 
+   16. 多ruby 环境支持
+
+   vim pluin command-t 需ruby编译
+
+
 --END
 

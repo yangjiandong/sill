@@ -59,5 +59,47 @@ $ git flow release start v0.1.0
 你可以像其他分支一样地创建和完成一个热修复分支，区别是它基于master分支，因此你可以在产品出现问题时快速修复，
 然后通过”finish”命令把修改合并回master和develop分支。
 
+-- 补充
+http://saberma.me/git/2010/10/25/git-flow.html
+
+使用方法
+#初始化(提问时回车就好)
+git flow init
+开发新特征
+
+git flow feature start <name> [<base>]
+git flow feature finish <name>
+#列出新特征分支
+git flow feature
+准备发布版本
+
+git flow release start <name> [<base>]
+git flow release finish <name>
+#列出发布分支
+git flow release
+< base >是位于develop分支的commit
+
+修正紧急Bug
+
+git flow hotfix start <name> [<base>]
+git flow hotfix finish <name>
+#列出修正分支
+git flow hotfix
+支援其他成员工作
+
+git flow support start <name> <base>
+#没有finish?(待实践)
+#列出支援分支
+git flow support
+< base >是位于master分支的commit
+
+结合github
+上传未完成的feature分支
+
+#git push REMOTENAME BRANCHNAME
+#一般情况下REMOTENAME即为origin, BRANCHNAME为以feature/为前缀的分支名称
+git push origin feature/orders
+注意:对于develop分支，由于所有成员的本地库中都有，所以不能上传
+
 
    --END

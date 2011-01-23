@@ -1,0 +1,24 @@
+rails关注项目及工具
+====================
+
+   1. ecommerce platform,rails3
+   
+   https://github.com/saberma/shopqi
+
+   2. vim profile
+
+   https://github.com/saberma/vimfiles
+   https://github.com/huacnlee/vimmate
+
+   3. rvm in windows
+
+   gem install pik
+   https://github.com/vertiginous/pik
+   
+   vim -- command-t --> ruby1.8
+
+   jruby --> jruby1.6
+
+  
+   --END
+

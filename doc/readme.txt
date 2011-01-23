@@ -219,6 +219,8 @@ w-common gitflow-shFlags /usr/local/bin
 
   注意,最后需将usr/local/bin 下生成的文件考到cygwin/binary
 
+  save\git-flow.txt
+
   2. vim
   set ignorecase    " ignore case when searching "
   http://nvie.com/posts/how-i-boosted-my-vim/
