@@ -31,17 +31,17 @@ ok   2. jruby task not supported by jdbcsqlite3
    ant
    --生成lib, 重新安装 rails3 ,出现其他问题
 
-    4. merb
+   4. merb
 
 
-    5. route 配置
+   5. route 配置
 
     save\Ruby on Rails Guides  Rails Routing from the Outside In.htm
 
     --还需多实践
 
 
-    6. 主键生成策略
+   6. 主键生成策略
     http://stackoverflow.com/questions/1200568/using-rails-how-can-i-set-my-primary-key-to-not-be-an-integer-typed-column
 
     uuid:
@@ -62,7 +62,7 @@ end
 
 ?? before_validation_on_create
 
-    7. 自定义表字段类型对应数据类型,
+   7. 自定义表字段类型对应数据类型,
 
     如 datetime 是否可对应成 string, created_at,updated_at
 
@@ -134,15 +134,15 @@ ok    9. jrubyc
    ...
    end
 
-   http://huacnlee.com/blog/rails-transaction-tutorial 
+   http://huacnlee.com/blog/rails-transaction-tutorial
    begin
-   Post.transaction do 
+   Post.transaction do
    ...
    end
    rescue Exception => ex
 
    end
-   不支持 Model.connection.execute()  
+   不支持 Model.connection.execute()
 
 
 --END

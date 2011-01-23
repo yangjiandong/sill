@@ -14,7 +14,7 @@ begin
   APP_CACHE = Dalli::Client.new memcache_servers, memcache_options
 rescue Exception => e
   Rails.log e.message
-  puts 'no memecached server'
+  debug_log 'no memecached server'
 end
 
 #  session_options = {   :cache => CACHE,
@@ -30,6 +30,9 @@ Sill::Application.initialize!
 
 # clear rails cache,if use filecache,it dele tmp/cache/**
 Rails.cache.clear
+
+#jammit
+#config.gem "jammit"
 
 require File.dirname(__FILE__) + '/../lib/database_version.rb'
 DatabaseVersion.automatic_setup

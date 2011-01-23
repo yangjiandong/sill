@@ -289,6 +289,8 @@ h3.home-title {
   background: none;
 }
 
+/* 参考了易道系统 eRedG4*/
+
 /* 解决IE下PNG图片透明Bug */
 .IEPNG {
   behavior: url(./htc/iepngfix.htc);
@@ -321,3 +323,14 @@ h3.home-title {
   font-family: arial,sanas-serif;
   font-size: 10px;
   padding: 0px 0px 0px 16px; }
+
+/* http://blog.joshsoftware.com/2011/01/16/pro-tip-increase-webpage-performance-using-sprite-data-uri-and-jammit/ */
+.bullets {
+   margin-left: 20px; background:
+   url('data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD/
+//+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4U
+g9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC')
+   top left no-repeat;
+}
+

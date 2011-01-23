@@ -1,20 +1,48 @@
 Sill - rails3
 =============
 
+2011.01.23
+-----------
+
+   1. 参考g4 项目,解决ie下png透明问题
+   app.css .IEPNG --> iepngfix.htc
+   --但不知道怎么用
+   <style type="text/css">
+   img, div { behavior: url(iepngfix.htc); }
+   </style>
+
+   2. Rails gem 打包css javascript 提升网站性能 jammit 简介
+   http://hlee.javaeye.com/blog/726938
+   资料来源:http://blog.joshsoftware.com/2011/01/16/pro-tip-increase-webpage-performance-using-sprite-data-uri-and-jammit/
+
+   >gem install jammit --no-ri --no-rdoc
+
+   save/other/Jammit.for.Rails.htm
+
+   --采用ext方式,倒要考虑下怎么用
+   脚步使用:
+   require 'jammit'
+   Jammit.package!
+
+   3. rawler-crawl-your-website-and-find-broken-links-with-ruby
+   找出网站链接不成功
+
+   >gem install rawler --no-ri --no-rdoc
+
 2011.01.22
 -----------
 
    1. cloud_tag
-   https://github.com/zhangzhe/cloud_tag 
+   https://github.com/zhangzhe/cloud_tag
    use:
    posts\index.htm.erb
-   <%= tags %> 
+   <%= tags %>
 
    有中文问题,采用cloudtag.swf.cn.rar 中提供的,
    还不能正常显示,只显示了html信息.
 
    2. 日期格式处理
-   post.created_at.strftime("%Y-%m-%d") 
+   post.created_at.strftime("%Y-%m-%d")
 
 2011.01.21
 -----------

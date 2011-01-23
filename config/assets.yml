@@ -1,0 +1,22 @@
+#config/assets.yml
+#use in views
+#<%= include_stylesheets :common, :workspace, :media => 'all' %>
+#<%= include_javascripts :workspace %>
+
+# embed_assets: on
+
+# rubyscripts:
+  # workspace:
+    # - public/rubyscripts/vendor/jquery.js
+    # - public/rubyscripts/lib/*.js
+    # - public/rubyscripts/views/**/*.js
+    # - app/views/workspace/*.jst
+
+# stylesheets:
+  # common:
+    # - public/stylesheets/reset.css
+    # - public/stylesheets/widgets/*.css
+  # workspace:
+    # - public/stylesheets/pages/workspace.css
+  # empty:
+    # - public/stylesheets/pages/empty.css

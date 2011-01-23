@@ -1,6 +1,9 @@
 #
 
 class ApplicationController < ActionController::Base
+  #jammit 不重启
+  #before_filter { Jammit.packager.precache_all } if Rails.env.development?
+
   # 不起作用
   #helper ApplicationHelper
   #or
