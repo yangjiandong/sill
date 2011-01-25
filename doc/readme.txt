@@ -1,6 +1,12 @@
 Sill - rails3
 =============
 
+2010.01.25
+-----------
+
+   1. 将table的数据导出为csv,用fastercsv这个gem可以快速完成这个功能。
+   PostsController -> export_csv
+
 2010.01.24
 -----------
 

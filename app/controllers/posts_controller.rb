@@ -71,4 +71,23 @@ class PostsController < ApplicationHtmlController
       format.json
     end
   end
+
+#= link_to 'Export to CSV', participants_path(:format => :csv)
+  def export_csv
+    @participants = Post.all
+
+    respond_to do |format|
+      format.csv {
+        participants_csv = FasterCSV.generate do |csv|
+        csv  ["First Name", "Last Name", "Age", "Gender", "Address", "Phone", "Email"]
+        @participants.each do |p|
+          csv  [p.first_name, p.last_name, p.age, p.gender, p.address, p.phone, p.email]
+        end
+        end
+      send_data participants_csv, :type => 'text/csv', :filename => 'participants.csv'
+      }
+    end
+  end
+  #其中用FasterCSV快速创建好csv数据，再通过send_data发送给客户端就可以了
+
 end
