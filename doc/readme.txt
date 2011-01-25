@@ -6,6 +6,7 @@ Sill - rails3
 
    1. pik config
    C:/Documents and Settings/yang.HOME-001B1F8C10/.pik
+   save/pik.txt
 
 2011.01.23
 -----------

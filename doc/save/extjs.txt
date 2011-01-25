@@ -1,6 +1,12 @@
 extjs
 ========
 
+2011.01.25
+-----------
+
+1. extj ajax 同步扩展包 http://code.google.com/p/ext-basex/ 
+   ./basex42JITbeta.zip   
+
 2011.01.17
 -----------
 
