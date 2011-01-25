@@ -1,10 +1,11 @@
 Sill - rails3
 =============
 
-2011.01.25
-----------
+2010.01.24
+-----------
 
-   1. 
+   1. pik config
+   C:/Documents and Settings/yang.HOME-001B1F8C10/.pik
 
 2011.01.23
 -----------
