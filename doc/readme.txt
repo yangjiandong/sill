@@ -5,8 +5,18 @@ Sill - rails3
 ----------
 
    1. other server
-   thin
+   thin -- only use ruby
    pik gem install thin
+
+   2. monitoring
+   god -- no use in jruby
+   http://god.rubyforge.org/ 
+   
+   vendor/plugins/mongrel_proctitle,
+   --https://github.com/rtomayko/mongrel_proctitle 
+   --https://github.com/alexstaubo/mongrel_proctitle
+   -- 好像没看到输出信息
+
 
 2010.01.25
 -----------

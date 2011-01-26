@@ -1,5 +1,7 @@
 require "sill"
 
+#require "mongrel_proctitle"
+
 # 解决导出数据到yaml中文显示问题,设为false,还是不能正常显示为中文,true,是显示为!binary
 #class String
 #  def is_binary_data?
