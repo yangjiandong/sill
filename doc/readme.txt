@@ -17,6 +17,11 @@ Sill - rails3
    --https://github.com/alexstaubo/mongrel_proctitle
    -- 好像没看到输出信息
 
+   3. other delayed_job
+
+   https://github.com/collectiveidea/delayed_job
+   save/delayed_job.txt
+
 
 2010.01.25
 -----------
