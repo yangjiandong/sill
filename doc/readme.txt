@@ -1,6 +1,13 @@
 Sill - rails3
 =============
 
+2010.01.26
+----------
+
+   1. other server
+   thin
+   pik gem install thin
+
 2010.01.25
 -----------
 
