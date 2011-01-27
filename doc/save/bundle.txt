@@ -1,0 +1,60 @@
+bunlde 的使用
+--------------
+
+当你在Gemfile文件里增加了一个新的gem，比如“hpricot”你运行：
+$> bundle check
+You changed your Gemfile after locking. Please relock using `bundle unlock`
+想修改Gemfile必须先解锁Gemfile文件：
+$> bundle unlock
+然后才能修改，修改完再锁定。
+$> bundle install
+这条命令会自动安装Gemfile里的所有gem。
+然后我们再检测：
+$>bundle check
+The Gemfile's dependencies are satisfied
+这就安全了。
+然后我们可以打包了：
+$> bundle pack
+Copying .gem files into vendor/cache
+...
+打包完以后，锁定我们的gems:
+$> bundle lock
+这下你就可以安全部署你的app了。
+
+gem的写法可以具体参照：http://github.com/carlhuda/bundler
+Bundler官网：http://gembundler.com
+
+新的环境下需删除 Gemfile.lock ,重新 bundle install
+
+
+Bundle学习笔记
+
+文章分类:Ruby编程
+Bundle目的：
+管理Rails的库
+帮助你锁定所使用的Rail版本和库的版本
+使用Bundle的好处：
+不用考虑rubygems环境
+在Gemfile文件里定义所有依赖
+检查依赖：
+bundle check
+
+打包应用：
+bundle pack
+
+解包应用：
+bundle install
+
+锁定版本：
+bundle lock
+
+命令一览:
+  bundle check        # Checks if the dependencies listed in Gemfile are satisfied by currently installed gems
+  bundle exec         # Run the command in context of the bundle
+  bundle help [TASK]  # Describe available tasks or one specific task
+  bundle init         # Generates a Gemfile into the current working directory
+  bundle install      # Install the current environment to the system
+  bundle lock         # Locks the bundle to the current set of dependencies, including all child dependencies.
+  bundle pack         # Packs all the gems to vendor/cache
+  bundle show         # Shows all gems that are part of the bundle.
+  bundle unlock       # Unlock the bundle. This allows gem versions to be changed

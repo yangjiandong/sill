@@ -1,0 +1,100 @@
+jruby on rails + jdbc
+=====================
+
+   1. jdbcsqlite3
+  development:
+  adapter: jdbcsqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+   2. derby
+  development:
+  adapter: jdbc
+  driver: org.apache.derby.jdbc.ClientDriver
+  url: jdbc:derby://localhost/deadly_development;create=true
+  username: app
+  password: app
+
+   3. mysql
+  test:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: fat_free_crm_test
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+   4. oracle
+  --tablespace
+   CREATE TABLESPACE tsp_crm DATAFILE
+    'D:\oradata\tsp_crm.DBF' SIZE 100M AUTOEXTEND ON NEXT 20M MAXSIZE UNLIMITED
+    LOGGING
+    ONLINE
+    PERMANENT
+    EXTENT MANAGEMENT LOCAL AUTOALLOCATE
+    BLOCKSIZE 8K
+    SEGMENT SPACE MANAGEMENT AUTO;
+
+  --user
+   CREATE USER crm
+      IDENTIFIED BY crm
+      DEFAULT TABLESPACE TSP_crm
+      TEMPORARY TABLESPACE TEMP
+      PROFILE DEFAULT
+      ACCOUNT UNLOCK;
+      -- 3 Roles for EKUSER
+      GRANT DBA TO crm;
+      GRANT CONNECT TO crm;
+      GRANT RESOURCE TO crm;
+      ALTER USER crm DEFAULT ROLE ALL;
+      -- 1 System Privilege for EKUSER
+      GRANT UNLIMITED TABLESPACE TO crm;
+      grant select any table to crm;
+      grant insert any table to crm;
+      grant delete any table to crm;
+      grant update any table to crm;
+
+  development:
+    adapter: jdbc
+    driver: oracle.jdbc.driver.OracleDriver
+    url:jdbc:oracle:thin:@192.168.1.148:1521:orcl
+    username: railsuser
+    password: railspasswd 
+
+   5. use jndi
+   add a META-INF directory by the rails app,
+   with the follow context.xml file:
+
+<Context path="/myapp" reloadable="true" crossContext="true">
+  <!-- Database Connection Pool -->
+    <Resource name="jdbc/myapp"
+           auth="Container"
+           type="javax.sql.DataSource"
+           factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
+           maxWait="1000"
+           removeAbandoned="true"
+           maxActive="30"
+           maxIdle="10"
+           removeAbandonedTimeout="60"
+           logAbandoned="true"
+           username="myuser"
+           password="mypass"
+           driverClassName="com.mysql.jdbc.Driver"
+           url="jdbc:mysql://127.0.0.1:3306/myapp_development?autoReconnect=true" />
+</Context>
+
+   This is the corresponding database.yml file that tells Rails where to find the connection pool data source:
+development:
+  adapter: jdbc
+  jndi: java:comp/env/jdbc/myapp
+
+production:
+  adapter: jdbc
+  jndi: java:comp/env/jdbc/myapp
+
+   --export JAVA_OPTS="-Xms128m -Xmx512m -Djruby.objectspace.enabled=false -Djruby.jit.enabled=true"
+
+
+   --END

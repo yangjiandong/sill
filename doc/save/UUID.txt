@@ -1,0 +1,44 @@
+UUID
+=====
+
+  
+1、创建表，去掉ID属性，增加UUID属性
+Ruby代码
+create_table :posts, :id => false do |t|  
+  t.string :uuid, :limit => 36, :primary => true  
+end  
+
+2、在Model中设置主键为UUID
+Ruby代码
+class Post < ActiveRecord::Base  
+  set_primary_key "uuid"  
+end  
+
+3、安装UUID的gem
+Ruby代码
+sudo gem install uuidtools  
+
+4、创建lib/uuid_helper.rb
+Ruby代码
+require 'rubygems'
+require 'uuidtools'
+   
+module UUIDHelper  
+  def before_create()  
+    self.uuid = UUID.timestamp_create().to_s  
+  end  
+end  
+
+5、使用UUIDHelper
+Ruby代码
+class Post < ActiveRecord::Base  
+  set_primary_key "uuid"  
+  include UUIDHelper  
+end  
+OK，新建一个post，就可以看到，该字段被自动填入了。
+
+PS：需要注意的是，需要留意before_create是否有冲突。
+参考文章：
+http://ariejan.net/2008/08/12/ruby-on-rails-uuid-as-your-activerecord-primary-key/
+
+   --END

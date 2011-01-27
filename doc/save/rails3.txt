@@ -1,0 +1,244 @@
+rails3
+=======
+
+route
+------
+
+   http://cn.asciicasts.com/episodes/203-routing-in-rails-3 
+
+   1. match "/about" => "info#about", :as => :about  
+   没有:as参数，这个路由就是单纯的转向”/about”, 加了:as 之后，在我们的应用里面可以使用about_path或者about_url
+
+   2. 更为复杂的可选参数，例如，我们现在有一个博客应用，我们想要在网址中，用可选的年月日来过滤一段特定时间的贴子。
+   我们可以用下面的路由达到这个效果，主义括号可以嵌套起来定义多个可选参数。
+   match "/:year(/:month(/:day))" => "info#about"  
+   在view中，我们添加一些调试信息，来检查传入的参数：
+
+/app/views/info/about.html.erb
+<h1>Info#about</h1>  
+<p>Find me in app/views/info/about.html.erb</p>  
+<%= debug params %>  
+
+   下面，如果我们传入year参数，about动作会收到我们传入的值，month和day参数也是如此
+
+   :constraints可以传入一个hash来限定匹配。以下的例子用四个数字来限定年，两个数字来限定月和日。
+   match "/:year(/:month(/:day))" => "info#about", :constraints => { :year => /\d{4}/, :month => /\d{2}/, :day => /\d{2}/ }  
+   
+   3. 例如，我们可以用user_agent参数来限制一些浏览器的访问，以Firefox为例。
+   match "/secret" => "info#about", :constraints => { :user_agent => /Firefox/ }  
+   如果我们用Safari, Chrome或者Opera访问页面，我们会看到一个匹配错误。但是Firefox可以正常浏览。
+
+   4. 我们也可以添加一些更有用处的constraint比如主机名。
+   match "/secret" => "info#about", :constraints => { :host => /localhost/ }  
+   使用这个constraint，我们可以通过http://localhost:3000/secret来浏览网页，但是用ip地址将会返回错误( http://127.0.0.1/secret )，
+   
+   如果我们有多个路由同时使用一个constraint，会造成很多代码的重复。我们可以用constraints方法把这些路由放到一个块中来降低代码重复。
+
+constraints :host => /localhost/ do  
+  match "/secret" => "info#about"  
+  match "/topsecret" => "info#about"  
+end  
+
+   5.
+
+generator
+----------
+
+   1. rails g controller info about
+
+   建立一个info控制器和about动作来展示可选参数。
+   Rails 3支持用rails g来作为rails generate的快捷方式。
+
+
+rails 3 activerecord new interface
+------------------------------------
+
+http://1985.javaeye.com/blog/639837
+
+文章分类:Ruby编程
+
+In short, passing options hash containing
+:conditions, :include, :joins, :limit, :offset, :order, :select, :readonly, :group, :having, :from, :lock to any of the ActiveRecord provided class methods, is now deprecated.
+
+Going into details, currently ActiveRecord provides the following finder methods :
+find(id_or_array_of_ids, options)
+find(:first, options)
+find(:all, options)
+first(options)
+all(options)
+update_all(updates, conditions, options)
+
+And the following calculation methods :
+count(column, options)
+average(column, options)
+minimum(column, options)
+maximum(column, options)
+sum(column, options)
+calculate(operation, column, options)
+
+Starting with Rails 3, supplying any option to the methods above will be deprecated.
+Support for supplying options will be removed from Rails 3.2. Moreover,
+find(:first) and find(:all) ( without any options ) are also being deprecated in favour of first and all.
+A tiny little exception here is that count() will still accept a :distinct option.
+The following shows a few example of the deprecated usages :
+
+User.find(:all, :limit => 1)
+User.find(:all)
+User.find(:first)
+User.first(:conditions => {:name => 'lifo'})
+User.all(:joins => :items)
+
+But the following is NOT deprecated :
+User.find(1)
+User.find(1,2,3)
+User.find_by_name('lifo')
+
+Additionally, supplying options hash to named_scope is also deprecated :
+named_scope :red, :conditions => { :colour => 'red' }
+named_scope :red, lambda {|colour| {:conditions => { :colour => colour }} }
+
+Supplying options hash to with_scope, with_exclusive_scope and default_scope has also been deprecated :
+with_scope(:find => {:conditions => {:name => 'lifo'}) { ... }
+with_exclusive_scope(:find => {:limit =>1}) { ... }
+default_scope :order => "id DESC"
+
+Dynamic scoped_by_ are also going to be deprecated :
+red_items = Item.scoped_by_colour('red')
+red_old_items = Item.scoped_by_colour_and_age('red', 2)
+
+New API
+ActiveRecord in Rails 3 will have the following new finder methods.
+where (:conditions)
+having (:conditions)
+select
+group
+order
+limit
+offset
+joins
+includes (:include)
+lock
+readonly
+from
+1 Value in the bracket ( if different ) indicates the previous equivalent finder option.
+Chainability
+All of the above methods returns a Relation. Conceptually, a relation is very similar to an anonymous named scope.
+All these methods are defined on the Relation object as well, making it possible to chain them.
+lifo = User.where(:name => 'lifo')
+new_users = User.order('users.id DESC').limit(20).includes(:items)
+
+You could also apply more finders to the existing relations :
+cars = Car.where(:colour => 'black')
+rich_ppls_cars = cars.order('cars.price DESC').limit(10)
+
+Quacks like a Model
+A relation quacks just like a model when it comes to the primary CRUD methods.
+You could call any of the following methods on a relation :
+new(attributes)
+create(attributes)
+create!(attributes)
+find(id_or_array)
+destroy(id_or_array)
+destroy_all
+delete(id_or_array)
+delete_all
+update(ids, updates)
+update_all(updates)
+exists?
+
+So the following code examples work as expected :
+red_items = Item.where(:colour => 'red')
+red_items.find(1)
+item = red_items.new
+item.colour #=> 'red'
+
+red_items.exists? #=> true
+red_items.update_all :colour => 'black'
+red_items.exists? #=> false
+
+Note that calling any of the update or delete/destroy methods would reset the relation, i.e delete the cached records used for optimizing methods like relation.size.
+
+Lazy Loading
+As it might be clear from the examples above, relations are loaded lazily – i.e you call an enumerable method on them.
+This is very similar to how associations and named_scopes already work.
+cars = Car.where(:colour => 'black') # No Query
+cars.each {|c| puts c.name } # Fires "select * from cars where ..."
+
+This is very useful along side fragment caching. So in your controller action, you could just do :
+def index
+  @recent_items = Item.limit(10).order('created_at DESC')
+end
+
+And in your view :
+<% cache('recent_items') do %>
+  <% @recent_items.each do |item| %>
+    ...
+  <% end %>
+<% end %>
+
+In the above example, @recent_items are loaded on @recent_items.each call from the view.
+As the controller doesn’t actually fire any query, fragment caching becomes more effective without requiring any special work arounds.
+Force loading – all, first & last
+For the times you don’t need lazy loading, you could just call all on the relation :
+
+cars = Car.where(:colour => 'black').all
+
+It’s important to note that all returns an Array and not a Relation.
+This is similar to how things work in Rails 2.3 with named_scopes and associations.
+Similarly, first and last will always return an ActiveRecord object ( or nil ).
+cars = Car.order('created_at ASC')
+oldest_car = cars.first
+newest_car = cars.last
+named_scope -> scopes
+
+Using the method named_scope is deprecated in Rails 3.0.
+But the only change you’ll need to make is to remove the “named_” part.
+Supplying finder options hash will be deprecated in Rails 3.1.
+named_scope have now been renamed to just scope.
+So a definition like :
+class Item
+  named_scope :red, :conditions => { :colour => 'red' }
+  named_scope :since, lambda {|time| {:conditions => ["created_at > ?", time] }}
+end
+
+Now becomes :
+class Item
+  scope :red, :conditions => { :colour => 'red' }
+  scope :since, lambda {|time| {:conditions => ["created_at > ?", time] }}
+end
+
+However, as using options hash is going to be deprecated in 3.1, you should write it using the new finder methods :
+class Item
+  scope :red, where(:colour => 'red')
+  scope :since, lambda {|time| where("created_at > ?", time) }
+end
+
+Internally, named scopes are built on top of Relation, making it very easy to mix and match them with the finder methods :
+red_items = Item.red
+available_red_items = red_items.where("quantity > ?", 0)
+old_red_items = Item.red.since(10.days.ago)
+Model.scoped
+
+If you want to build a complex relation/query, starting with a blank relation, Model.scoped is what you would use.
+cars = Car.scoped
+rich_ppls_cars = cars.order('cars.price DESC').limit(10)
+white_cars = cars.where(:colour => 'red')
+Speaking of internals, ActiveRecord::Base has the following delegations :
+delegate :find, :first, :last, :all, :destroy, :destroy_all, :exists?, :delete, :delete_all, :update, :update_all, :to => :scoped
+delegate :select, :group, :order, :limit, :joins, :where, :preload, :eager_load, :includes, :from, :lock, :readonly, :having, :to => :scoped
+delegate :count, :average, :minimum, :maximum, :sum, :calculate, :to => :scoped
+The above might give you a better insight on how ActiveRecord is doing things internally. Additionally, dynamic finder methods find_by_name, find_all_by_name_and_colour etc. are also delegated to Relation.
+with_scope and with_exclusive_scope
+with_scope and with_exclusive_scope are now implemented on top of Relation as well. Making it possible to use any relation with them :
+with_scope(where(:name => 'lifo')) do
+  ...
+end
+
+Or even use a named scope :
+with_exclusive_scope(Item.red) do
+  ...
+end
+
+That’s all. Please open a lighthouse ticket if you find a bug or have a patch for an improvement!
+UPDATE 1 : Added information about deprecating scoped_by_ dynamic methods.
+UPDATE 2 : Added information about deprecating default_scope with finder options.

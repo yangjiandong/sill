@@ -1,0 +1,119 @@
+Installation of ruote 2.1.11 under JRuby under Windows 
+------------------------------------------------------ 
+ruote works ok with JRuby 1.5.1, but not with 1.5.2 (at least, in my 
+environment), so all the HOWTO is made with JRuby 1.5.1. 
+JDK version used is 1.6 from 17 to 21, and Tomcat versions 5.5.2x and 6.0.2x 
+If you use the last (as september, 2010) version of JRuby -1.5.2- you'll face 
+errors when installing warble and webrat gems. 
+Also, this HOWTO can be easyly extrapolated to GNU/Linux systems 
+Environment setup 
+----------------- 
+Download and install JRUBY 1.5.1 from http://www.jruby.org 
+Create JRUBY_HOME environment variable pointing to the root of your JRUBY 
+installation 
+| JRUBY_HOME=c:\dev\jruby\1.5.1 
+(I think it's best to not have whitespeces in its installation) 
+Add JRUBY_HOME\bin subfolder to the PATH 
+| PATH=%PATH%:%JRUBY_HOME%\bin 
+Update JRuby system gems 
+| gem update --system 
+Install gem prerequisites 
+| gem install bundler warbler sinatra sinatra-respond_to haml json_pure 
+json-jruby rufus-json rspec 
+ruote-kit specific steps 
+------------------------ 
+Checkout ruote-kit from jmmetraux github; right now it's the most complete 
+fork of ruote kit 
+Go to ruote-kit folder and edit Gemfile: 
+Comment the reference to the 'thin' gem 
+| #gem 'thin' 
+|  # for rackup -s thin 
+Choose your JSON library commenting/uncommenting tha appropiate lines 
+| # json support 
+| # 
+| # you should choose one of the following three or add another backend 
+| supported 
+| # by Rufus::Json (http://github.com/jmettraux/rufus-json/) 
+| # 
+| gem 'json_pure'  # safest all-around choice 
+| # gem 'yajl-ruby'  # the fastest, but using c code 
+| # gem 'json'       # not bad, but using c code and sometimes broken 
+| # gem 'json-jruby' # for jruby 
+| # 
+| # needed, uses one of the above as backend 
+| 
+| #gem 'yajl-ruby', :require => 'yajl' 
+| gem 'rufus-json', '>= 0.2.5' 
+| gem 'json_pure'  # safest all-around choice 
+I use 'json_pure' because it works without problems, but 'json-jruby' should 
+also be ok. 
+Launch bundle to download and lock all the dependencies 
+| bundle install 
+It should download all the dependencies, including ruote 2.1.11 from github as 
+right now (september, 2010) it isn't available as a gem 
+Launch warble to generate a default configuration 
+| warble config 
+Edit config\warble.rb 
+|  # Application directories to be included in the webapp. 
+|  config.dirs = %w(config lib) 
+| 
+| ( ... ) 
+| 
+|  # Uncomment this if you don't want to package rails gem. 
+|  config.gems -= ["rails"] 
+|  config.gems = ["sinatra"] 
+|  config.gems << "rack" 
+| 
+| ( ... ) 
+| 
+|  # Name of the war file (without the .war) -- defaults to the basename 
+|  # of RAILS_ROOT 
+|  # config.war_name = "mywar" 
+|  config.war_name = "ROOT" 
+| 
+| ( ... ) 
+| 
+|  # Application booter to use, one of :rack, :rails, or :merb (autodetected 
+|    by default) 
+|  # config.webxml.booter = :rails 
+|  config.webxml.booter = :rack 
+Edit config.ru file to disable file locks, because locking mechanism doesn't 
+work ok under Windows OS 
+| # ruote 
+| 
+| require 'ruote/storage/fs_storage' 
+| 
+| RuoteKit.engine = Ruote::Engine.new( 
+|   Ruote::Worker.new( 
+|     Ruote::FsStorage.new( 
+|       "ruote_work_#{RuoteKit.env}", 'cloche_nolock' => true))) 
+If you want to add some participants you can do it in the register block, 
+before the 'catchall' participant 
+| RuoteKit.engine.register do 
+|   catchall 
+| end 
+Now, if you package ruote-kit with warble and try to run it under Tomcat (and 
+pressumably glassfish) you'll face wit some error related to ruote (and not 
+ruote-kit) because when Tomcat launches ruote-kit it can't access to ruote 
+sources because it isn't available as a gem (remember that bundle downloaded 
+it from github) 
+So edit again Gemfile and change the offending line 
+| # ruote 
+| 
+| gem 'ruote', '>= 2.1.11' 
+| #gem 'ruote', :git => 'git://github.com/jmettraux/ruote.git', :branch => 
+'ruote2.1' 
+| #gem 'ruote', :path => '~/w/ruote/' 
+Thanks to the 'bundle install' previous command we have a fresh version of 
+ruote downloaded and locally wired to our ruote-kit, so we can fake Gemfile 
+dependencies. 
+If we were working with ruote 2.1.11 (or later) as a gem we can perform this 
+step just before the 'bundle install' command, or manually install the ruote gem. 
+Now we can launch warble to build the WAR file 
+| warble 
+The resulting file will be called ROOT.war because ruote-kit needs to be 
+installed as a ROOT application under Tomcat, so leave empty the folder 
+%TOMCAT_HOME%\webapps\ROOT and deploy ROOT.war 
+route-kit should be available under 
+http://localhost:8080/_ruote/ 
+

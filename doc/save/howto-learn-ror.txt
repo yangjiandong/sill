@@ -1,0 +1,117 @@
+http://qichunren.javaeye.com/blog/441082
+怎么样学习Ruby和Rails?
+文章分类:Ruby编程
+
+我经常被问到这个问题：
+
+我应该从哪儿起步呢？我应该怎么做的？我怎么做才能成为一个更好的Ruby/Rails程序员?等一系列这样的问题。
+
+我希望以上的这些问题有一个简单且正确的答案。有人说“看这本书吧，你会变为一个很棒的开发人员”。不幸的是，事情并不是这么简单。我们是不同的，我们学习方式不同，而且我们大家都来自不同的背景。
+
+所以 我决定向社区提问，而不是告诉你我所认为的最好的学习方式。这里我收到了一份简短的回答：
+
+看看社区里是怎么说的：
+你是怎么样学的Ruby 和/或 Rails的？
+DHH：我激情地编程来学习Ruby。努力实现某东西，而不是编一个玩具。
+David Black：我通过镐头书、实践和阅读/回答ruby-talk上的问题来学习Ruby。
+Evan Phoenix：写代码的同时，却研读源代码。
+Yehuda Katz：我尝试挑战难事来让我自己学习。
+Laurent Sansonetti：我通过这些来学习Ruby：镐头书，阅读ruby-talk上的帖子，还有阅读MRI的源代码。
+Ninh Bui：我之前是一个Java爱好者，编写struts + J2EE企业级应用，Hongli在一个周末让我看看Ruby，我就学习了Ruby的基础，然后我通过Google来学习Rails，读书和源代码。
+Tim Connor：社区里有想法的博客也许是我最大的帮助。
+Lar Van Der Jagt：当然是Ryan Bates的rails学习视频啦。《The Rails Way》 这本书也让我了解得更深。我希望和专家一起工作。
+Arun Gupta：The Rails Guides和《应用Rails进行敏捷web开发》
+Geoffrey Grosenbach：在我阅读了一些教程后，我开始花几个小时来阅读API文档，即使不了解每一个细，这是一个很好的方式来熟悉已有的知识。
+Nate Todd：我一开始是通过一些CakePHP应用来学习MVC的，它让我学习到了最佳实践。
+Chris Wanstrath：我通过写Rails程序来和阅读框架的源代码来学习Ruby On Rails。
+
+你有什么建议？
+Bob Martens：融入社区，大家懂得比你多 ：）
+Ismael Celis：理解MVC，许多投入Rails的人都不知道Rails是怎么样的一个设计模式。
+@jeromegn：我觉得学习ROR最好的方法就是试着做一些东西。Rails文档和Ruby可以一起学。
+@johnbender：理解实例变量为什么可以用在模板中，etc。了解Ruby基础知识，这是我最起码的建议。
+@ryandotsmith：寻找github的热门项目（如radiant），从它们那里获得知识。
+Sunil Karkera：在我起步的时候理解Rails中的mvc是最重要的事情。
+Luke Burton：基础的代码很少的视频来展示一些印象深刻的东西，我觉得这是一个很好的开始。
+DHH：动手搞一个真实的项目，这是我推荐的学习包括Ruby/Rails在内的任何一门语言的建议。
+Anthony Green：接受这样一个观点：Rails有它自己的方式，你要学习它。什么帮助我最多？社区。
+Kent Fenwick：通过做一个真实的项目来学习。找一个你想做的项目，并慢慢地拆掉它。
+Trevor Turk：通过写和读代码来学习，同时你要按最教程中做出东西来。
+Ryan Bates：Rails就由多种技术构成的（如HTML, CSS, Ruby, OOP, SQL），如果你正在捣鼓Rails，关注你最弱的部分。
+Geoffrey Grosenbach：许多例子可以帮助开发者熟悉Rails的思想。Rails from Scratch series at PeepCode
+
+@eifon：在你起步之前理解MVC。
+John Yerhot：不要害怕提问，使用支持频道，irc,邮件列表,Rails Bridge等等...
+Roy Wright：使用与你所用的书中一致版本的代码。
+@brianthecoder：阅读他人的代码。
+Ninh Bui：我通过经常与大家讨论来学习，我很肯定地来推荐这个。
+Chris Wanstrath：停止向他人求建议，并开始编写一些东西出来。
+
+以上各不相同的答案，但是很有趣。接下来我收集了一些对我和我交流过的人有帮助的资源。
+
+听来没有听说过Ruby或Rails，它是什么？
+
+
+从观看Rails方面的视频 起步。Rails和用Rails开发的软件是用Ruby写的。如果你是一个新的软件开发者，我向你推荐一个好书叫Learn to program by Chris Pine 。Ruby是一门优雅直观的语言，你可以很快地学起，同时可以长期地学习其中的新的技巧。然而，不要期望你安装好了Rails之后，你就会有一个Drupal 克隆的Ruby版。Rails是一个WEB框架，也就是说，是一个工具来用帮助你快速高效地编写你自己的应用。
+
+提示：Ruby官方网站有很多信息和资源来起来。
+
+我hacke一些PHP/Perl/脚本，但是我不懂MVC或OO开发:
+这儿有一个关键来决定你怎么样学习东西。你是一个"How"或"Why"的人吗？一个"How"的人会通过展示的东西来重观它来学习。一个"Why"的人需要知识为什么事情是会是以某一种方式来完成，以便可以应用到其它的挑战上。
+
+好的消息是Raisl中使用许多的约定，如果你掌握了它们，你可以很快的搞定，并且感受到Rails给你带来的回报。这对于"how"的人来说，很好。但是"why"的人得需要有一点耐心了,开始玩玩框架在完全了解了Rails框架。
+
+"How"的人一定得看看Ryan Bates的Rails视频 和Rails Guide 。"Why"的人可以读读《Programming Ruby 》和《The Well-Grounded Rubyist, aka Ruby for Rails 2nd edition 》
+
+
+你也应该看看Rails wiki 并且贡献可能潜在的信息。
+
+开始阅读Ruby/Rails方面相关的博客文章，订阅Ruby Inside 的rss，加入到你们本地的Ruby群组。
+
+提示：开通一个博客，并且写下你学到的东西和遇到的问题。这可以帮助你和其他遇到同样问题的人们。
+
+
+
+我开始编写一个Rails应用,但是我感到我对Raisl框架和Ruby语言了解得有限。
+问这个问题很常见，不要放弃。这里有两本好书《The Ruby way 》和《The Rails way 》,《The Ruby way 》应该能满足"why"的人，而《The Rails way》能取悦"how"的人，我推荐两本书都要读读。不要犹豫提问，使用google,Twitter,博客评论，邮件列表。去找到本地的ruby爱好者和他们一起分享交流。找一个你熟悉的主题去演讲，或是在博客里写出来与大家分享。一定
+
+不要害羞或是气馁。坚持，这是值得的（你可以到外面走一会儿，然后再回来继续）
+
+一个很好的提高技术的方法就是去阅读他人的源代码。在github上去转转，看看他人是怎么样解决你遇到过的问题。你可以注
+
+意一下Ruby/Rails方面的培训，Rails Bridge 就是为那些想成为一个更好的Rails开发人员服务的，去看看呗。
+
+提示，我在查找文档和类/方法的时候，经常使用apiDOCK 。
+
+我写了一个Rails应用，我接受并理解了Rails中的约定，我感到写一个Rails应用是很快乐的。
+
+
+祝贺你，你已经很熟练的掌握了Rails。不要停止学习！你对你的程序写了测试吗？你的测试能的能测试吗？你修改好了代码
+
+后，测度还能通过吗？你使用过插件吗？你看过它的源代码吗？你知道它是怎么样工作的吗？你有没有自己写过插件呢？Ruby
+
+Gem呢？另外，你的Javascripts技术怎么样？CSS？DBA？关注你的弱项。
+
+你已经达到了这个程度，这时候我强烈建议你贡献代码了。对github上的项目提交补丁，甚至是Rails。我们会学到很多的。
+
+提示： 看看 Gregg Pollack’s Scaling Rails series
+
+ 
+
+我写了好几个应用，我还编写了一个插件/Gem呢
+很棒，现在你应该是对Ruby和Raisl非常熟悉了。你也许还想研究得更深，你可以关注元编程和写C/FFI的扩展。为什么不去看看Ruby的源代码，看它是怎么样工作的呢？
+
+这时你也可以去学一门新的语言，看其它社区是怎么样做的。看一下其它的框架，看看它的方式方法。玩玩Python ，Java ，Scala ，Clojure ，Object-C ，Ocaml ，Scheme 或者是其它你感兴趣的语言。你不必精通它们，但是你要了解这背后的理论，你对于你的Ruby和Raisl技术也有提高，能扩充你的视野。
+
+提示：在各种会议上准备一些演讲（不要局限于Ruby大会）
+
+ 
+
+我对Ruby和Rails非常了解，我甚至记得Rails和MRI中的代码
+这时，我希望你帮助Ruby1.9 ，为Ruby的其它实现贡献代码（IronRuby ，JRuby ,MacRuby ,Rubinius ），为Rails3 作贡献。 :)
+
+ 
+
+----------------分割线--------------
+
+如果你看到了这篇文章，你应该也是以上说的某个层次中的一员，留下你的建议，有用的链接和评论吧。

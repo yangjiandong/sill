@@ -1,0 +1,300 @@
+每天一剂Rails良药
+=================
+
+之Perform Calculations on Your Model Data
+------------------------------------------
+
+   ActiveRecord::Calculations模块提供了model级的方法来得到model数据的count，sum，average，maximum和minimum值 
+例如: 
+Java代码 
+Person.count("age > 21")  
+Person.average(:age)  
+Person.minimum(:age)  
+Person.maximum(:age)  
+Person.average(:age, :conditions => ["name like ?", '%T%'])  
+Donation.sum(:amount, :group => :created_at)  
+Donation.sum(:amount, :group => 'YEAR(created_at)')  
+Rating.average(:value, :group => :post).collect{|post, rating| [post.title, rating]}  
+Rating.average(:value, :group => :post)[Post.find(2)]  
+Person.find_by_name("Adam").ratings.average(:value)  
+
+
+之DRY Up Your ActiveRecord Code With Scoping
+--------------------------------------------
+
+原创作者: hideto   阅读:547次   评论:0条   更新时间:2007-05-06     收藏
+Rails真的是在搜肠刮肚挖空心思想方设法的给代码减肥瘦身，这次我们来看看with_scope方法 
+Java代码 
+class PostsController < ApplicationController  
+  before_filter :scope_posts_to_user  
+  
+  def show  
+    @posts = Post.find(:all)  
+  end  
+  
+  def create  
+    @post = Post.create(params[:post])  
+  end  
+  
+  private  
+  
+  def scope_posts_to_user  
+    Post.with_scope({  
+      :find => {:conditions => ['user_id = ?', @user.id]},  
+      :create => {:user =. @user}  
+    }) { yield }  
+  end  
+
+上面的yield块也可以用来find或create Post 
+with_scope方法还可以嵌套scope，详见http://api.rubyonrails.com/classes/ActiveRecord/Base.html#M001024
+
+
+之Keeping Track of Who Did What
+-------------------------------
+
+原创作者: hideto   阅读:219次   评论:0条   更新时间:2007-05-23     收藏
+今天我们看看怎样在数据库记录用户操作 
+db/migrate/002_add_audit_trails_table.rb 
+Java代码 
+class AddAuditTrailsTable < ActiveRecord::Migration  
+  def self.up  
+    create_table :audit_trails do |t|  
+      t.column :record_id, :integer  
+      t.column :record_type, :string  
+      t.column :event, :string  
+      t.column :user_id, :integer  
+      t.column :created_at, :datetime  
+    end  
+  end  
+  
+  def self.down  
+    drop_table :audit_trails  
+  end  
+end  
+
+
+app/models/audit_swpeeper.rb 
+Java代码 
+class AuditSweeper < ActionController::Caching::Sweeper  
+  observe Person  
+  def after_destroy(record)  
+    log(record, "DESTROY")  
+  end  
+  
+  def after_update(record)  
+    log(record, "UPDATE")  
+  end  
+  
+  def after_create(record)  
+    log(record, "CREATE")  
+  end  
+  
+  def log(record, event, user = controller.session[:user])  
+    AuditTrail.create(:record_id => record.id,  
+                      :record_type => record.type.name,  
+                      :event => event,  
+                      :user_id => user)  
+  end  
+end  
+
+然后我们需要告诉PeopleController在操作Person对象时用audit_sweeper来记录操作 
+app/controllers/people_controller.rb 
+Java代码 
+cache_sweeper :audit_sweeper  
+
+由于auditing机制依赖与Rails的缓存代码，所以确保config/environments/development.rb里将config.action_controller.perform_caching设置为true 
+
+
+之tzinfo_timezone
+------------------
+
+处理时区插件 gem install tzinfo
+
+或者关闭Rails的时区（Timezone）支持
+无需考虑时区。
+我们只要在environment.rb里，去掉对config.time_zone的支持，rails就不会帮助我们转化时区了。做企业应用很有用。
+
+
+使用with_scope
+--------------
+
+原创作者: hideto   阅读:275次   评论:0条   更新时间:2007-07-26     收藏
+这次来介绍with_scope方法的使用。 
+
+继续前面的例子，我们希望只取得complete为false的前20条数据，我们可以给find_incomplete方法添加一个Hash参数，然后使用with_scope将 
+额外的参数附加到我们的查询方法里: 
+Java代码 
+class Task < ActiveRecord::Base  
+  belongs_to :project  
+  
+  def self.find_incomplete(options = {})  
+    with_scope :find => options do  
+      find_all_by_complete(false, : order => 'created_at DESC')  
+    end      
+  end  
+end  
+  
+class TasksController < ApplicationController  
+  def index  
+    @tasks = Task.find_incomplete :limit => 20  
+  end  
+end  
+  
+class ProjectsController < ApplicationController  
+  def show  
+    @project = Project.find(params[:id])  
+    @tasks = @project.tasks.find_incomplete :limit => 20  
+  end  
+end  
+
+这样我们就可以在TasksController和ProjectsController里使用:limit来限定取前20条数据了 
+
+不过这样使用with_scope有一个缺点，就是我们不能在调用find_incomplete时指定: order条件来覆盖该方法定义时默认的: order条件 
+能不能改进一下我们的find_incomplete方法来解决这个问题呢? 
+很简单，我们可以将额外的参数merge进来: 
+Java代码 
+class Task < ActiveRecord::Base  
+  belongs_to :project  
+  
+  def self.find_incomplete(options = {})  
+    find_all_by_complete(false, {: order => 'created_at DESC'}.merge(options))  
+  end  
+end  
+
+或者使用ActiveSupport对Hash的扩展方法reverse_merge: 
+Java代码 
+class Task < ActiveRecord::Base  
+  belongs_to :project  
+  
+  def self.find_incomplete(options = {})  
+    find_all_by_complete(false, options.reverse_merge(: order => 'created_at DESC'))  
+  end  
+end  
+
+
+通过关联做查询
+---------------
+
+原创作者: hideto   阅读:350次   评论:0条   更新时间:2007-07-26     收藏
+Rails宝典之第三式: 通过关联做查询 
+
+我们来看一个has_many关联的例子: 
+Java代码 
+class Project < ActiveRecord::Base  
+  has_many :tasks  
+end  
+  
+class Task < ActiveRecord::Base  
+  belongs_to :project  
+end  
+  
+class ProjectsController < ApplicationController  
+  def show  
+    @project = Project.find(params[:id])  
+    @tasks = Task.find_all_by_project_id_and_complete(@project.id, false)  
+  end  
+end  
+
+上面的Project类和Task类是一对多的关系，ProjctsController的show方法根据:id参数查询得到@project对象 
+这时，我们可以使用find_all_by_project_id_and_complete动态方法来查询belongs_to @project对象的@tasks 
+但是有更简洁的方法: 
+Java代码 
+class ProjectsController < ApplicationController  
+  def show  
+    @project = Project.find(params[:id])  
+    @tasks = @project.tasks.find_all_by_complete(false)  
+  end  
+end  
+
+
+虚拟属性
+--------
+
+原创作者: hideto   阅读:212次   评论:0条   更新时间:2007-07-31     收藏
+看一个场景，用户注册时需要填写First Name，Last Name，Password: 
+
+这样，我们输入Full Name而不是分别输入first_name和last_name，我们需要修改User类: 
+Java代码 
+class User < ActiveRecord::Base  
+  def full_name  
+    [first_name, last_name].join(' ')  
+  end  
+  
+  def full_name=(name)  
+    split = name.split(' ', 2)  
+    self.first_name = split.first  
+    self.last_name = split.last  
+  end  
+end  
+
+通过虚拟一个full_name属性来简化工作，当然，这需要确保用户输入的full_name中有空格: 
+Java代码 
+def validate  
+  validate.errors.add(:full_name, 'must have a space') unless full_name.include? ' '  
+end  
+
+
+在日志里过滤敏感数据
+---------------------
+
+这是个安全问题，当我们在系统注册页面输入密码等敏感数据时，我们可以看到，密码以明文的形式显示在日志文件里: 
+...
+ [color=red]SQL[/color] (0.000238) INSERT INTO users ('name', 'password') VALUES('Ryan', 'abc123')  
+...
+
+我们看到Parameters一行密码是明文显示的，这样当然不安全。 
+
+解决方案也十分简单: 
+Java代码 
+class ApplicationController < ActionController::Base  
+  filter_parameter_logging "password"  
+end  
+
+这样在Parameters那行就会显示"password_confirmation" => "[FILTERED]"，"password" => "[FILTERED]" 
+filter_parameter_logging的方法定义位于action_pack/lib/action_controller/base.rb。 
+
+但是我们也看到SQL一行也是明文密码，我们的filter不会过滤SQL语句，怎么办? 
+
+解决方案是，部署production环境时，日志不会再打印SQL语句，这样就避免了此问题。
+
+
+Logger
+------
+
+原创作者: hideto   阅读:311次   评论:0条   更新时间:2007-08-02     收藏
+Rails在controller里自带了logger，我们可以用来做debug: 
+Java代码 
+def show  
+  @cart = current_cart  
+  logger.debug "Hello world! #{@cart.to_yaml}"  
+  # debug, info, warn, error, fatal  
+end  
+
+
+我们可以在environment.rb里配置Logger的消息格式: 
+Java代码 
+class Logger  
+  def format_message(level, time, progname, msg)  
+    "#{time.to_s(:db)} #{level} -- #{msg}\n"  
+  end  
+end  
+
+
+我们还可以在environments/production.rb里配置log_level 
+Java代码 
+config.log_level = :debug  
+
+
+使用rake log:clear可以清空旧日志 
+
+在.irbrc里也可以设置Logger: 
+Java代码 
+if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')  
+  require 'logger'  
+  Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))  
+end  
+
+这样在script/console里的Model操作就会直接in place显示在console里
+
+
+   --END

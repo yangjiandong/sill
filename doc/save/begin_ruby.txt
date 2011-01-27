@@ -1,0 +1,146 @@
+http://www.cnblogs.com/wanana/archive/2010/02/05/1664104.html
+
+最近学ror。写篇小备忘，记录一个java程序员看ruby代码的时候最晕的部分：
+
+1.方法的调用  
+
+ruby调用方法时，参数列表可以不用括号包裹(我一开始见到这种形式认为是变量定义...)。ruby是动态语言，定义变量的时候不需要(也不能)指定类型。
+        方法名 (空格) 参数1,参数2...
+    
+2.代码块(Blocks)、 do...end、yield、|x|
+    代码块(Blocks)是指一块代码，用大括号({})或者do...end来标明起始和结束，代码块只能跟在方法调用后边。
+
+    yield语句：在方法内部使用yield语句来占位，当方法执行到yield时，实际执行的是调用方法时跟在后边的的代码块。
+
+    |x|：变量用一对'|'包裹，在代码块中使用，用于接受yield传递的参数。yield后跟的参数会传递给代码块中用| |标志的变量。
+
+    常用法Iterator 。当初Blocks就是为了迭代而设置的
+    调用方法:
+
+view source
+print?
+1	[1,2,3,4,5].each { |i| puts i }
+
+  方法定义：
+view source
+print?
+1	# within class Array...
+2	   def each
+3	     for each element
+4	       yield(element)
+5	     end
+6	   end
+
+3. 严格的命名约定(约定 而不是规范。强制执行)
+    ruby中由多个单词组成的符号，单词间用下划线分割(c风格)。方法名和变量名都是小写开头。变量的开头字符很多时候直接决定了变量类型。
+    局部变量以小写字母或下划线开始。
+            @开头：实例变量。$开头：全局变量。全局变量可以在程序的任何地方加以引用。全局变量无需变量声明。引用尚未初始化的全局变量时，其值为nil。
+    ‘@@’开头：类变量。例如‘@@number’。和全局变量，实例变量不同，类变量在使用前必须初始化。
+    常量以大写字母开始。
+
+4. unless: 除非
+if的相反形式。相当于原if条件的else部分。
+unless a>1 相当于 if a<=1 或者 if not a>1
+
+5. hash、方法的hash参数
+    创建hash表的语法
+view source
+print?
+1	h = { "first" => "Amy", "second" => "Mike", "third" => "Tom" }
+
+    在方法中使用hash参数，可以不按照参数列表的顺序进行参数传递。可以通过传递key=>value形式的参数来同时指定参数名和参数值。
+
+view source
+print?
+1	class SongList
+2	     def createSearch(name, params)
+3	       # ...
+4	     end
+5	   end
+
+    调用方式：
+view source
+print?
+1	aList.createSearch("short jazz songs", {
+2	                   'genre'            => "jazz",
+3	                   'durationLessThan' => 270
+4	                   } )
+                   
+    此方法中，第一个参数表示要搜索的名字，第二个参数是一个hash，存放所有要传的参数。但是这样的写法太"clunky"(沉闷?)了，在ruby 中，可以把包裹hash参数的大括号去掉。参数列表中所有hash形式的参数，会被收集成为一个hash参数进行传递。
+view source
+print?
+1	aList.createSearch("short jazz songs",
+2	                   'genre'            => "jazz",
+3	                   'durationLessThan' => 270
+4	                   )
+
+
+6. symbol(冒号开头变量)
+Symbol 表示“名字”，比如字符串的名字，标识符的名字。用':'(冒号)开头。在ruby中，每个 String对象都是不同的，即便他们包含了相同的字符串内容；而对于 Symbol 对象，一个名字（字符串内容）唯一确定一个 Symbol 对象。
+    字符串 "abc"
+    symbol :abc
+symbol简单来说就是一个唯一的字符串，只要冒号后面的字符相同，就是同一个symbol。
+每个symbol都有个字符串的名字(可以使用to_s方法得到)。而每个String可以请求它的相应symbol(通过to_sym方法)。String和Symbol是紧密相联的，但它们不是同一个东西，他们分别是String类和Symbol类的对象。
+
+如果一个字符串具有名字的含义，比如表单的字段名;或者这个名字会被大量的重复使用，比如hash中的key，那么就应该使用symbol，而不是String。
+
+symbol 可以大大提高速度。Symbol的内部表示是一个整数，用来做Hash表中检索字符串的关键字，而Ruby语言执行时解析器、运算器需要大量的类名字、方法名字的检索，这可以大大加快解析和执行时字符串查找的速度。想想，如果没有Symbol，如果需要用方法名称作为参数时，我们必须给一个字符串用来表示方法的名称，解释器处理时首先要作字符串解析，然后才能找到出相应的方法，而如果使用Symbol会大大加快这一速度。在使用中，Symbol往往表示一个名字，例如一个变量foo的值为1，那么 :foo可以理解为变量名，如果直接引用foo，会得到1，但如果是 :foo就指变量名本身。
+Symbol对象是唯一的。每次你在代码中使用:foo,Ruby保证系统中只有一个名字为foo的Symbol对象,所以所有对:foo的引用都将引用同一个对象。
+
+
+7. < 和 <<
+    <是继承
+    <<表示某个对象的特殊类。用法如下：
+view source
+print?
+1	obj2 = SingletonTest.new
+2	    class << obj2
+3	        def meth1
+4	            puts "This is obj2's meth1"
+5	        end
+6	        #……
+7	    end
+
+8. 方法中最后一个表达式的值，就是方法的返回值。也可以使用return语句。
+ 你也可以使用return语句，这样方法的返回值就是return语句的参数。Ruby语言习惯省略return语句，能少写的尽量少写，这也是Ruby的哲学。
+
+
+9. Defined?
+    Defined?用来判断表达式是否定义。若表达式尚未定义，则返回nil，若已经定义，则返回一个字符串描述该表达式的种类。
+view source
+print?
+1	defined? num = 0 #=> "assignment"
+2	defined? 100 #=> "expression"
+3	defined? 100.times #=> "method"
+
+10.%w
+    %w用于生成字d 串数组，可以少写大量的引号和逗号   
+view source
+print?
+1	%w{ cat sheep bear } #=> ['cat','sheep','bear']<br>
+
+
+
+11.问号、叹号、等号结尾
+    ! 叹号结尾说明此方法很危险,有副作用 传入参数会被修改
+    ? 问号结尾说明这是一个查询方法, 通常是返回布尔值的方法
+    = 等号结尾说明此方法用于赋值
+
+
+12.区间
+
+ 
+
+　　Ruby区间存在于任何地方，如：1到12月。Ruby用区间实现了3个不同的特性：序列，条件，间隔。
+
+　　".."：两个点号创建一个闭区间a..b——[a,b]，"..."：而三个点号创建一个右开区间(即右边界不取值）a...b——[a,b)
+　　　　exp:0..anArray.length-1 等同于 0...anArray.length
+
+　　to_a 把Ruby区间转换成列表
+
+ 
+
+13. <=> 太空船操作符
+
+　　太空船spaceship操作符<=>,比较两个值，并根据第一个值是否小于，等于或大于第二个值，分别返回-1,0或+1
+

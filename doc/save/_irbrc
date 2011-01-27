@@ -1,0 +1,65 @@
+# http://www.javaeye.com/topic/28781
+# Compiled by Cookoo
+# Reference:
+#   http://drnicwilliams.com/2006/10/12/my-irbrc-for-consoleirb
+#   http://pablotron.org/software/wirble/ 
+
+require 'rubygems'
+require 'map_by_method'
+require 'what_methods'
+require 'wirble'
+require 'irb/completion'
+
+IRB.conf[:AUTO_INDENT]=true
+
+class Regexp
+  def show(a)
+    a =~ self ? "#{$`}<<#{$&}>>#{$'}" : "no match"
+  end
+end
+
+#Wirble.init(:skip_prompt => true, :skip_history => true)
+Wirble.init
+Wirble.colorize unless Config::CONFIG['host_os'] == 'mswin32'
+
+# http://hooopo.javaeye.com/blog/503787
+
+require 'pp'
+require 'hirb'
+
+def enable_hirb
+  Hirb::View.enable
+end
+
+def disable_hirb
+  Hirb::View.disable
+end
+
+def log_on
+ IRB.conf[:IRB_RC] = Proc.new do
+    logger = Logger.new(STDOUT)
+    ActiveRecord::Base.logger = logger
+    ActiveResource::Base.logger = logger
+  end
+end
+
+def ppp model  
+  if model.is_a? Array  
+    model.each do |m|  
+      ppp m  
+    end  
+  else  
+    pp model.attributes if model.is_a? ActiveRecord::Base  
+  end  
+end
+
+if ENV['RAILS_ENV']  
+  enable_hirb
+  log_on
+  
+  def tail
+    RAILS_DEFAULT_LOGGER.instance_eval{puts @last_log_message}
+  end 
+end
+
+# http://www.snippetstash.com/public/127

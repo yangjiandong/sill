@@ -1,0 +1,127 @@
+用Apache和Mongrel搭建jruby on rails服务器平台。
+ 
+为什么要Apache
+ 
+主要是用apache作反向代理 ，个人觉得主要有两点。（什么是反向代理？与forward proxy相比，反向代理是处理in-bound的request，不需要客户端进行任何配置，reverse proxy主要用于cache和load balancer。而forward proxy的存在，大都是因为internal client因为某些原因不能或不应访问外部资源。）
+ 
+1. 让apache处理静态文件。
+2. 利用apache的mod_proxy_balancer作负载均衡。
+ 
+手把手
+ 
+不再赘述mongrel的安装以及apache的安装等。
+
+1. 启动多个mongrel server。
+ 
+一般最佳实践是使用mongrel_jcluster(jruby -S gem install mongrel_jcluster) ，但可惜的是Ola Bini老兄的更新总是不及时：mongrel_jcluster does not work in JRuby 1.1。
+ 
+好吧，写个脚本吧。但在jruby下又有另外一个问题：jruby daemon gem problem .
+ 
+没错，就启动它成为一个linux后台守护进程吧。
+ 
+我写了这样一个简单的脚本。
+ 
+Sh代码 
+mongrel_rails start -p 3000 -e development &  
+mongrel_rails start -p 3001 -e development &  
+ 
+ 2. apache配置
+ 
+apache需要的模块有：mod_proxy，mod_proxy_connect，mod_proxy_balancer以及一些被依赖的module。
+ 
+Sh代码 
+ubuntu@ubuntu-laptop:/etc/apache2$ ls mods-enabled/  
+alias.conf       authz_default.load    autoindex.conf  dir.conf   mime.load            proxy.conf          setenvif.conf  
+alias.load       authz_groupfile.load  autoindex.load  dir.load   negotiation.conf     proxy_connect.load  setenvif.load  
+auth_basic.load  authz_host.load       cgid.conf       env.load   negotiation.load     proxy_http.load     status.conf  
+authn_file.load  authz_user.load       cgid.load       mime.conf  proxy_balancer.load  proxy.load          status.load  
+ 
+编辑proxy.conf，去掉deny all。
+ 
+Sh代码 
+<Proxy *>  
+                AddDefaultCharset off  
+                Order deny,allow  
+                # Deny from all  
+                Allow from all  
+</Proxy>  
+ 
+添加一个VirtualHost，在sites-available下添加一个文件叫myapp，然后在sites-enabled下建立一个symbolic link到这个文件。
+ 
+Sh代码 
+ProxyRequests off  ＃ 关闭forward proxy  
+  
+<VirtualHost *:80>  
+      DocumentRoot "/path/to/rails_root/public"         
+       
+      ServerName myapp.com  
+      ServerAlias www.myapp.com  
+         
+       <Directory />  
+                Options FollowSymLinks  
+                AllowOverride None  
+        </Directory>  
+       
+      ProxyPass /images !  
+      ProxyPass /stylesheets !  
+      ProxyPass /javascripts !     # donot proxy static files to cluster.   
+  
+      ProxyPass / http://localhost:3000/   # proxy request to one mongrel server  
+      ProxyPassReverse / http://localhost:3000/  
+      ProxyPreserveHost on  
+           
+      ErrorLog /var/log/apache2/myapp_error.log  
+  
+      # Possible values include: debug, info, notice, warn, error, crit,  
+      # alert, emerg.  
+      LogLevel warn  
+  
+      CustomLog /var/log/apache2/myapp_access.log combined  
+  
+</VirtualHost>  
+ 
+增加load balancer。 
+ 
+Sh代码 
+ProxyRequests off  
+<Proxy balancer://myapp_cluster>  
+      BalancerMember http://127.0.0.1:3000  
+      BalancerMember http://127.0.0.1:3001  
+</Proxy>  
+  
+<VirtualHost *:80>  
+      DocumentRoot "/path/to/rails_root/public"         
+        
+      ServerName myapp.com  
+      ServerAlias www.myapp.com  
+  
+    <Directory />  
+        Options FollowSymLinks  
+        AllowOverride None  
+    </Directory>  
+  
+      ProxyPass /images !  
+      ProxyPass /stylesheets !  
+      ProxyPass /javascripts !   
+      ProxyPass / balancer://myapp_cluster/     # proxy request to mongrel cluster, don't forget to add the last '/'  
+      ProxyPassReverse / balancer://myapp_cluster/  
+      ProxyPreserveHost on  
+          
+      ErrorLog /var/log/apache2/myapp_error.log  
+  
+    # Possible values include: debug, info, notice, warn, error, crit,  
+    # alert, emerg.  
+    LogLevel warn  
+  
+    CustomLog /var/log/apache2/myapp_access.log combined  
+  
+</VirtualHost>  
+ 
+最后，在/etc/hosts加上：
+ 
+ 
+Sh代码 
+127.0.0.1       www.myapp.com  
+ 
+重启apache，ok啦:)
+

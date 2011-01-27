@@ -1,0 +1,179 @@
+rake 对数据库操作深度示例说明
+------------------------------
+http://hlee.javaeye.com/blog/380928
+
+文章分类:Ruby编程
+结合自己开发，随手做个备份
+
+一、加载数据
+
+当用rake db:migrate RAILS_ENV=production的时候，自动执行类似
+Ruby代码
+
+   1. rake db:fixture:load#通过fixture加载数据   
+
+也可以类似
+Ruby代码
+
+   1. FIXTURES=config_params RAILS_ENV=production /usr/bin/rake db:YAML:restore  
+
+在rake db:migrate的文件中，对应
+
+Ruby代码
+
+   1. class AddRoleDescription < ActiveRecord::Migration  
+   2.   def self.up  
+   3.     add_column "roles", "description", :string  
+   4.   
+   5.     require 'rake'  
+   6.     rake = Rake::Application.new  
+   7.     ENV['FIXTURES'] = "roles,static_permissions,roles_static_permissions"  
+   8.     Rake::Task["db:YAML:delete"].invoke#删除数据  
+   9.     Rake::Task["db:YAML:restore"].invoke#重新加载  
+  10.   
+  11.     user = User.new({:email => 'admin'})  
+  12.     user.password = 'password'  
+  13.     user.password_confirmation = 'password'  
+  14.     if user.save  
+  15.       puts "Created USER #{user.email}"  
+  16.     else  
+  17.       puts "Error creating user.  #{user.errors.inspect}"  
+  18.     end  
+  19.     user.roles << Role.find(:all)  
+  20.     user.save  
+  21.   end  
+  22.   
+  23.   def self.down  
+  24.     remove_column "roles", "description"  
+  25.     user = User.find_by_email('admin')  
+  26.     user.destroy  
+  27.   end  
+  28. end  
+
+二、增加一个字段并且全都赋值
+
+Ruby代码
+
+   1. def self.up  
+   2.   add_column :analyzers, :region_id, :integer,:default => 1  
+   3.   Analyzer.find(:all).each { |a|  
+   4.     a.region_id=1  
+   5.     a.save  
+   6.   }  
+   7. end  
+   8.   
+   9. def self.down  
+  10.   remove_column :analyzers, :region_id  
+  11. end  
+
+其中
+
+Ruby代码
+
+   1. change_column("datalogs", "start_freq", :integer )#将不会删除这个字段的数据  
+
+三、增加一个新的表，并给表增加一条记录
+
+    这个需求，经常是因为在rake db:migrate后，因为增加一个新的表，而这个表有在一些其他功能用到，没有记录就会报错。
+
+Ruby代码
+
+   1. class CreateFavUrls < ActiveRecord::Migration  
+   2.   def self.up  
+   3.     create_table :fav_urls do |t|  
+   4.       t.string :name  
+   5.       t.string :url  
+   6.       t.string :description  
+   7.     end  
+   8.     default_fav_url=FavUrl.new()  
+   9.     default_fav_url.name="google"  
+  10.     default_fav_url.url="www.google.com"  
+  11.     default_fav_url.description="search engine"  
+  12.     default_fav_url.id=1;  
+  13.     default_fav_url.save()  
+  14.   end  
+  15.   
+  16.   def self.down  
+  17.     FavUrl.delete_all  
+  18.     drop_table :fav_urls  
+  19.   end  
+  20. end  
+
+Ruby代码
+
+   1. class CreateRegions < ActiveRecord::Migration  
+   2.   def self.up  
+   3.     create_table :regions do |t|  
+   4.       t.string :name,      :default => "South East USA"  
+   5.       t.string :ip,        :default => "10.0.0.7"  
+   6.     end  
+   7.     default_region=Region.new()  
+   8.     default_region.name="DEFAULT"  
+   9.     default_region.ip="127.0.0.1"  
+  10.     default_region.id=1;  
+  11.     default_region.save()  
+  12.   end  
+  13.   
+  14.   def self.down  
+  15.     Region.delete_all  
+  16.     drop_table :regions  
+  17.   end  
+  18. end  
+
+四，增加索引
+Ruby代码
+
+   1. class AddUniqueRegion < ActiveRecord::Migration  
+   2.   def self.up  
+   3.     change_column("regions", "name", :string,:null => false, :default => "South East USA" )  
+   4.     change_column("regions", "ip", :string, :null => false, :default => "10.3.2.7")  
+   5.     add_index(:regions,[:name],:unique=>true)  
+   6.     add_index(:regions,[:ip],:unique=>true)  
+   7.   end  
+   8.   
+   9.   def self.down  
+  10.     change_column("regions","name", :string, :default => "South East USA")  
+  11.     change_column("regions","ip",:string, :default => "10.3.2.7")  
+  12.     remove_index(:regions,:column=>:name)  
+  13.     remove_index(:regions,:column=>:ip)  
+  14.   end  
+  15. end  
+
+Ruby代码
+
+   1. create_table "limits", :force => true do |t|  
+   2.   t.column "measure_id", :integer, :default => 0  
+   3.   t.column "channel_id", :integer, :default => 0  
+   4.   t.column "site_id",    :integer, :default => 0  
+   5.   t.column "max_val",    :float  
+   6.   t.column "min_val",    :float  
+   7. end  
+   8.   
+   9. add_index "limits", ["site_id", "measure_id", "channel_id"], :name => "limit_data_idx"  
+  10.   
+  11. create_table "measurements", :force => true do |t|  
+  12.   t.column "measure_id", :integer  
+  13.   t.column "site_id",    :integer  
+  14.   t.column "channel_id", :integer  
+  15.   t.column "value",      :float  
+  16.   t.column "dt",         :datetime  
+  17. end  
+
+五，创建视图
+
+Ruby代码
+
+   1. class AddMeasurementView < ActiveRecord::Migration  
+   2.   def self.up  
+   3.     execute "create or replace view measurement_view as   
+   4.     select measures.measure_name as measure, sites.name as site, channels.channel_name as channel,dt,value   
+   5.     from ((  
+   6.       measurements left join channels on channels.id=measurements.channel_id)   
+   7.       left join measures on measures.id=measurements.measure_id)   
+   8.       left join sites on sites.id=measurements.site_id"  
+   9.   end  
+  10.   
+  11.   def self.down  
+  12.     execute "drop view measurement_view"  
+  13.   end  
+  14. end  

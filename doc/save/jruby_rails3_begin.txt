@@ -1,0 +1,66 @@
+http://javaevangelist.blogspot.com/2010/09/jruby-and-rails-3.html
+
+rails 3.0 has been released. I know a number of you are excited about all of the possibilities. Along with the release of Rails is a new point release of JRuby.  So the big question is how do you use them together.
+
+The default Rails environment uses SQLite as the database. Let me show you how to get started.
+
+Riding on JRuby on Rails
+
+Start by downloading JRuby, and install it.
+Once it is installed you will want to install jruby-openssl.
+jruby -S gem install jruby-openssl
+Next lets install the SQLite database gems.
+jruby -S gem install jdbc-sqlite3 activerecord-jdbc-adapter \
+activerecord-jdbcsqlite3-adapter
+Once we have installed the gems for SQLite, we can install Rails.
+jruby -S gem install rails mongrel warbler
+Now that Rails is installed, we can create our example application. This will create our application.
+jruby -S rails new blog
+Next we replace the following line in the Gemfile
+
+gem 'sqlite3-ruby', :require => 'sqlite3'
+
+with the following:
+
+if defined?(JRUBY_VERSION)
+gem 'jdbc-sqlite3'
+gem 'activerecord-jdbc-adapter'
+gem 'activerecord-jdbcsqlite3-adapter'
+gem 'jruby-openssl'
+gem 'jruby-rack'
+gem 'warbler'
+else
+gem 'sqlite3-ruby', :require => 'sqlite3'
+end
+
+This allows us to run the application in JRuby, or Ruby.
+Next we need to modify the config/database.yml file.
+
+# SQLite version 3.x
+# gem install sqlite3-ruby (not necessary on OS X Leopard)
+development:
+adapter: jdbcsqlite3
+database: db/development.sqlite3
+pool: 5
+timeout: 5000
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+adapter: jdbcsqlite3
+database: db/test.sqlite3
+pool: 5
+timeout: 5000
+
+production:
+adapter: jdbcsqlite3
+database: db/production.sqlite3
+pool: 5
+timeout: 5000
+
+Next we need to migrate the database.
+jruby -S rake db:migrate
+Finally we can start our new Rails 3 application.
+jruby -S rails server
+That's it. You are riding on Rails in 9 steps.

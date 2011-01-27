@@ -1,0 +1,738 @@
+ror tip
+==========
+
+2010.11.16
+----------
+
+   1. sql
+
+def fetch_value
+	sql = ActiveRecord::Base.connection();
+	sql.execute "SET autocommit=0";
+	sql.begin_db_transaction 
+	id, value =
+	sql.execute("SELECT id, value FROM sometable WHERE used=0 LIMIT 1 FOR UPDATE").fetch_row;
+	sql.update "UPDATE sometable SET used=1 WHERE id=#{id}";
+	sql.commit_db_transaction 
+ 
+	value;
+end
+
+   2. delete all table
+
+def destroy_data
+  puts "==  Data: Destroying all data ".ljust(79, "=")
+  sql = ActiveRecord::Base.connection()
+ 
+  sql.execute "SET autocommit=0"
+  sql.begin_db_transaction
+ 
+  if sql.adapter_name == "MySQL"
+    sql.execute("/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */")
+    sql.execute("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */")
+  end
+ 
+  tables = sql.tables - ["schema_migrations"]
+ 
+  tables.each do |table|
+    puts "-- Deleting all for #{table}."
+    # So far, disabling and enabling keys was not needed.
+    #sql.execute("/*!40000 ALTER TABLE `#{table}` DISABLE KEYS */") if sql.adapter_name == "MySQL"
+    record_count = sql.delete("DELETE FROM `#{table}`")
+    #sql.execute("/*!40000 ALTER TABLE `#{table}` ENABLE KEYS */") if sql.adapter_name == "MySQL"
+    puts "   -> done: #{record_count} reconds"
+  end
+ 
+  if sql.adapter_name == "MySQL"
+    sql.execute("/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */")
+    sql.execute("/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */")
+  end
+ 
+  sql.commit_db_transaction
+ 
+  puts "==  Data: Destroying all data (done) ".ljust(79, "=") + "\n\n"
+end
+
+   3. mssql sp
+
+def execute_procedure(proc_name, *variables)
+  vars = variables.map{ |v| quote(v) }.join(', ')
+  sql = "EXEC #{proc_name} #{vars}".strip
+  select(sql,'Execute Procedure',true).inject([]) do |results,row|
+    results << row.with_indifferent_access
+  end
+end
+   
+
+2010.11.08
+----------
+
+   1. Find all by created_at in past 7 days per each day?
+
+range = "created_at #{(5.days.ago.utc...Time.now.utc).to_s(:db)}"
+Category.all(:conditions => range)
+
+2010.10.28
+----------
+
+   1. sanitize
+   http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html
+   This sanitize helper will html encode all tags and strip all attributes that aren’t specifically allowed.
+
+2010.10.23
+-----------
+
+1. 查询倒数第二条记录
+http://hlee.javaeye.com/blog/395957
+
+有时候会用到查询倒数第二条记录
+
+Ruby代码
+
+   1. last=HolderChangeHistory.find_by_sql
+   2. (["               SELECT * FROM holder_change_histories
+   3.                   where treasure_id = ?
+   4.                   order by id desc
+   5.                   limit   1,1  ",
+   6.                   @hch.treasure_id])
+
+Sql代码
+
+   1. select   *
+   2.               from   tablename   a
+   3.               where   (
+   4.                   select   count(*)
+   5.                        from   tablename   b
+   6.                        where   a.id<b.id)=1
+
+Sql代码
+
+   1. select   *
+   2.                 from   tb1
+   3.                 order   by   tb1.id   desc
+   4.                 limit   1,1;
+
+
+2. 当你只想要model不想要数据库时
+http://hlee.javaeye.com/blog/401109
+有这样的一个插件，你或许会用到
+ActiveRecord::Base Without Table
+
+一切使用都和正常的使用一样，只是没有真正的建立数据库表
+
+Ruby代码
+
+   1. class Contact < ActiveRecord::BaseWithoutTable
+   2.   column :name, :string
+   3.   column :email_address, :string
+   4.   column :message, :text
+   5.
+   6.   validates_presence_of :name, :email_address, :string
+   7. end
+
+   插件地址:http://agilewebdevelopment.com/plugins/activerecord_base_without_table
+   在Rails3中有了ActiveModel了
+
+
+3. Rails ActiveRecorde has_many foreign_key 使用
+http://hlee.javaeye.com/blog/401122
+
+
+4.Rails 数据库操作
+http://hlee.javaeye.com/blog/402793
+数据库元被影射成对象
+(object-relational mapping (ORM)层)
+Ruby代码
+
+   1. table<=>class
+   2. row<=>object
+   3. column<=>object attribute
+
+class和table的命名对应关系实例：
+Ruby代码
+
+   1. Order<=>orders
+   2. TaxAgency<=>tax_agencies
+   3. Person<=>people
+
+Ruby代码
+
+   1. #复数形式关闭方法config/environment.rb：
+   2. ActiveRecord::Base.pluralize_table_names = false
+   3. #自定义表格名称方法：
+   4. class Sheep < ActiveRecord::Base
+   5. set_table_name "sheep"
+   6. end
+
+Ruyb数据类型和SQL数据类型对应关系表：
+Ruby代码
+
+   1. int,integer<=>Fixnum
+   2. float,double,decimal,numeric<=>Float
+   3. interval,date<=>Date
+   4. datetime,time<=>Time
+   5. char,varchar,string,clob,blob,text<=>String
+   6. boolean<=>see text...
+
+访问属性（数据库列）：
+Ruby代码
+
+   1. account[:balance] #=> 返回当前值
+   2. account[:balance] = 0.0 #=> 指定数值
+
+Ruby代码
+
+   1. #修正数据库列的取值范围的方法：
+   2. class Account < ActiveRecord::Base
+   3. def balance=(value)
+   4.    raise BalanceTooLow if value < MINIMUM_LEVEL
+   5.    self[:balance] = value
+   6. end
+   7. end
+
+访问属性（数据库列）更方便的方法：
+account.balance #=> 返回当前值
+account.balance = 0.0 #=> 指定数值
+
+以上方式得到的数据库数据将是ruby按自身的数据类型格式化好的，如果要得到原始数据，可用以下形式代码：
+account.balance_before_type_cast #=> "123.4", 字符串
+account.release_date_before_type_cast #=> "20050301"
+
+是非属性
+在ruby中只有false或nil才被判断为false
+通常用以下代码判断:
+Ruby代码
+
+   1. user = Users.find_by_name("Dave")
+   2. if user.superuser?
+   3. grant_privileges
+   4. end
+
+superuser?将以下结果判断为false:
+1.数字0
+2.字符"0", "f", "false", 或""(空字符）
+3.nil
+4.常量false
+
+自定义判断原则的方法：
+Ruby代码
+
+   1. class User < ActiveRecord::Base
+   2. def superuser?
+   3.    self.superuser == 'J'
+   4. end
+   5. # . . .
+   6. end
+
+数据库主键(Primary Keys)
+Ruby on Rails默认以id为主键
+
+自定义主键的方法:
+class BadBook < ActiveRecord::Base
+set_primary_key "isbn"
+end
+
+数据创建,读取,更新和删除(CRUD:Create, Read, Update, Delete)
+
+创建新数据
+
+实例:
+Ruby代码
+
+   1. an_order = Order.new
+   2. an_order.name ="Dave Thomas"
+   3. an_order.email = "dave@pragprog.com"
+   4. an_order.address = "123 Main St"
+   5. an_order.pay_type = "check"
+   6. an_order.save #在save()之前所有数据只存在内存中
+
+用以下方式可以减少产生一个an_order变量:
+Ruby代码
+
+   1. Order.new do |o|
+   2. o.name = "Dave Thomas"
+   3. # . . .
+   4. o.save
+   5. end
+
+当数据来自HTML表单时,可以考虑用以下方式:
+Ruby代码
+
+   1. an_order = Order.new(
+   2. :name =>"Dave Thomas",
+   3. :email =>"dave@pragprog.com",
+   4. :address => "123 Main St",
+   5. :pay_type =>"check")
+   6. an_order.save
+
+使用create()代换new()可直接保存到数据库,省去an_order.save:
+Ruby代码
+
+   1. an_order = Order.create(
+   2. :name => "Dave Thomas",
+   3. :email =>"dave@pragprog.com",
+   4. :address =>"123 Main St",
+   5. :pay_type => "check")
+
+可以使用hash同时保存多组数据:
+Ruby代码
+
+   1. orders = Order.create(
+   2.    [ { :name =>"Dave Thomas",
+   3.      :email => "dave@pragprog.com",
+   4.      :address =>"123 Main St",
+   5.      :pay_type =>"check"
+   6.     },
+   7.     { :name =>"Andy Hunt",
+   8.      :email =>"andy@pragprog.com",
+   9.      :address =>"456 Gentle Drive",
+  10.      :pay_type => "po"
+  11.     } ] )
+
+
+
+new()或create()也可以直接接参数:
+order = Order.create(params)
+
+读取数据
+Ruby代码
+
+   1. an_order = Order.find(27) # 直接找出id = 27的数据
+   2. # 从一个表单读取product id列表,然后计算这些商品的总价:
+   3. product_list = params[:product_ids]
+   4. total = 0.0
+   5. Product.find(product_list).each {|prd| total += prd.total}
+
+Ruby代码
+
+   1. 带条件的读取:
+   2. pos = Order.find(:all,
+   3. :conditions => "name = 'dave' and pay_type = 'po'")
+
+不安全的表单参数传递读取数据库:
+Ruby代码
+
+   1. name = params[:name]
+   2. # 此方法有被SQL注入方式入侵的风险!!!
+   3. pos = Order.find(:all,
+   4. :conditions =>"name = '#{name}' and pay_type = 'po'")
+   5. #注意上面单双引号的使用及变量的传递方法
+
+更安全的方法:
+Ruby代码
+
+   1. name = params[:name]
+   2. pos = Order.find(:all,
+   3. :conditions => ["name = ? and pay_type = 'po'", name])
+
+你也可以这样:
+Ruby代码
+
+   1. name = params[:name]
+   2. pay_type = params[:pay_type]
+   3. pos = Order.find(:all,
+   4. :conditions => ["name = :name and pay_type = :pay_type",
+   5. {:pay_type => pay_type, :name => name}])
+
+终极简化版:
+Ruby代码
+
+   1. pos = Order.find(:all,
+   2. :conditions => ["name = :name and pay_type = :pay_type", params])
+
+pos = Order.find(:all,
+:conditions => ["name = :name and pay_type = :pay_type", params])
+
+排序和查找第3(?)至13(?)列的方法:
+Ruby代码
+
+   1. orders = Order.find(:all,
+   2. :conditions =>"name = 'Dave'",
+   3. :order =>"pay_type, shipped_at DESC",
+   4. :limit => 10
+   5. :offset => 2)
+
+联合数据表的查找方法(一般用不上):
+Ruby代码
+
+   1. LineItem.find(:all,
+   2. :conditions => "pr.title = 'Programming Ruby'",
+   3. :joins =>"as li inner join products as pr on li.product_id = pr.id")
+
+查找有序一列的方法:
+Ruby代码
+
+   1. order = Order.find( :first,
+   2. :conditions =>"name = 'Dave Thomas'",
+   3. :order => "id DESC")
+
+直接使用sql语句的查询方法:
+Ruby代码
+
+   1. items = LineItem.find_by_sql("select *, quantity*unit_price as total_price,products.title as title from line_items, products where line_items.product_id = products.id ")
+   2. li = items[0]
+   3. puts "#{li.title}: #{li.quantity}x#{li.unit_price} => #{li.total_price}"
+   4. #你可以使用"as".
+
+在这里你也可以传递参数:
+Ruby代码
+
+   1. Order.find_by_sql(["select * from orders where amount > ?",
+   2. params[:amount]])
+
+计算行数
+Ruby代码
+
+   1. c1 = Order.count
+   2. c2 = Order.count(["name = ?", "Dave Thomas"])
+   3. c3 = LineItem.count_by_sql("select count(*) from line_items, orders   where line_items.order_id = orders.id and orders.name = 'Dave Thomas' ")
+   4. puts "Dave在#{c2}个定单里一共定了#{c3} 件商品 (目前定单总数:#{c1})"
+
+动态查询
+Ruby代码
+
+   1. order = Order.find_by_name("Dave Thomas")#只查一列
+   2. orders = Order.find_all_by_name("Dave Thomas")
+   3. order = Order.find_all_by_email(params['email'])
+
+可同时查多个条件,如:
+Ruby代码
+
+   1. user = User.find_by_name_and_password(name, pw)
+
+重载数据库
+Ruby代码
+
+   1. stock = Market.find_by_ticker("RUBY")
+   2. loop do
+   3. puts "Price = #{stock.price}"
+   4. sleep 60
+   5. stock.reload
+   6. end
+
+更新数据
+使用save()
+Ruby代码
+
+   1. order = Order.find(123)
+   2. order.name = "Fred"
+   3. order.save
+   4.
+   5. orders = Order.find_by_sql("select id, name, pay_type from orders where id=123")
+   6. first = orders[0]
+   7. first.name ="Wilma"
+   8. first.save
+
+使用update_attribute()
+Ruby代码
+
+   1. order = Order.find(123)
+   2. order.update_attribute(:name,"Barney")
+   3. order = Order.find(321)
+   4. order.update_attributes(:name => "Barney",
+   5. :email =>"barney@bedrock.com")
+
+使用更快捷的update()
+Ruby代码
+
+   1. order = Order.update(12, :name => "Barney", :email => "barney@bedrock.com")
+
+使用update_all()
+Ruby代码
+
+   1. result = Product.update_all("price = 1.1*price", "title like '%ruby%'")
+
+Ruby代码
+
+   1. save()和save!()
+   2. save()
+   3. if order.save
+   4. # 成功
+   5. else
+   6. # 保存失败则...
+   7. end
+
+Ruby代码
+
+   1. save!()
+   2. begin
+   3. order.save!
+   4. rescue RecordInvalid => error
+   5. # 保存失败RecordInvalid exception
+   6. end
+
+数据锁(防止数据保存撞车)
+加段:lock_version int default 0,
+
+
+删除数据
+Ruby代码
+
+   1. delete()删除
+   2. Order.delete(123)
+   3. User.delete([2,3,4,5])
+   4. Product.delete_all(["price > ?", @expensive_price])
+
+destroy()冻结(在model层面)
+Ruby代码
+
+   1. order = Order.find_by_name("Dave")
+   2. order.destroy
+   3. # ... order将被冻结
+
+
+5. Rails 数据库表之间关系
+http://hlee.javaeye.com/blog/402796
+
+一对一关系实例: one-to-one
+Ruby代码
+
+   1. class Order < ActiveRecord::Base
+   2. has_one :paid_order,
+   3.      :class_name =>"Order",
+   4.      :foreign_key => "order_id",
+   5.      :conditions => "paid_on is not null"
+
+在表格上加order_id (表格名单数_id)
+Ruby代码
+
+   1. class Invoice < ActiveRecord::Base
+   2. belongs_to :order
+
+可选参数:class_name, :foreign_key,  rder, :conditions
+Ruby代码
+
+   1. :dependent => true #删除主表行时同时删除子行
+   2. 自定义的order用法:
+   3. class Customer < ActiveRecord::Base
+   4. has_many :orders
+   5. has_one :most_recent_order,
+   6.      :class_name => 'Order',
+   7.      :order => 'created_at DESC'
+   8. end
+
+主.从 将被保存
+Ruby代码
+
+   1. an_invoice = Invoice.new(...)
+   2. order.invoice = an_invoice # invoice被保存
+
+从.主 将要手动保存
+
+新增加的方法:
+Ruby代码
+
+   1. product(force_reload=false)
+   2. product=(obj)
+   3. build_product(attributes={})
+   4. create_product(attributes={})
+
+一对多关系(one-to-many)
+Ruby代码
+
+   1. class Order < ActiveRecord::Base
+   2. has_many :line_items
+
+可选参数除了上面的,还有:exclusively_dependent, :finder_sql,:counter_sql
+:exclusively_dependent 在子行没有其它表格瓜葛的情况下使用, 加快处理速度.
+:finder_sql的使用实例:
+Ruby代码
+
+   1. class Order < ActiveRecord::Base
+   2. has_many :rails_line_items,
+   3.       :class_name => "LineItem",
+   4.       :finder_sql => "select l. * from line_items l, products p " +
+   5.       " where l.product_id = p.id " +
+   6.       " and p.title like '%rails%'"
+   7. end
+
+order的用法:
+Ruby代码
+
+   1. class Order < ActiveRecord::Base
+   2. has_many :line_items,
+   3.    :order =>"quantity, unit_price DESC"
+   4. end
+
+主.从 将被保存
+Ruby代码
+
+   1. an_invoice = Invoice.new(...)
+   2. order.invoices <<an_invoice # invoice
+   3.
+   4. class LineItem < ActiveRecord::Base
+   5. belongs_to :order
+   6. . . .
+
+has_many后可以引用集合:
+Ruby代码
+
+   1. order = Order.find(123)
+   2. total = 0.0
+   3. order.line_items.each do |li|
+   4. total += li.quantity * li.unit_price
+   5. end
+
+新增加的方法:
+Ruby代码
+
+   1. orders(force_reload=false)
+   2. orders <<order
+   3. orders.push(order1, ...)
+   4. orders.delete(order1, ...)
+   5. orders.clear
+   6. orders.find(options...)
+   7. orders.build(attributes={})
+   8. orders.create(attributes={})
+
+多对多关系(many-to-many):
+Ruby代码
+
+   1. class Product < ActiveRecord::Base
+   2. has_and_belongs_to_many :categories
+   3. #. . .
+   4. class Category < ActiveRecord::Base
+   5. has_and_belongs_to_many :products
+   6. #. . .
+
+要创建一个中间表格:
+categories_products
+两表格名字复数形式相联, 排字母前后排序
+
+表格内连关联键
+略
+
+预载子表
+用:include将子表内容加入内存,提高查询速度, 但损耗内存:
+Ruby代码
+
+   1. for post in Post.find(:all, :include => [:author, :comments])
+   2. puts "Post: #{post.title}"
+   3. puts "Written by: #{post.author.name}"
+   4. puts "Last comment on: #{post.comments.first.created_on}"
+   5. end
+
+自动计算子表行数
+belongs_to加参数:
+Ruby代码
+
+   1. counter_cache => true
+
+数据库加 子表格名(复数)_count 段, 并加 :default=>0参数.
+然后用 .size可以读取子表行数.
+刷新数据读法:
+Ruby代码
+
+   1. product.line_items(:refresh).size
+
+
+6. 如何让Rails跑在遗留的Oracle数据库上
+http://hlee.javaeye.com/blog/406431
+
+复合主键: sudo gem install composite_primary_keys
+
+
+7. Rails 对多个字段分组
+Active Record 的功能性查询例如：Model.count Model.avg都不支持多个字段的分组操作。
+
+实际上使用all和map和though会比较容易实现同样效果如下：
+
+Ruby代码
+
+   1. Item.all(
+   2.   :select => 'COUNT(*) AS count, age, gender',
+   3.   :group => 'age, gender'
+   4. ).map {|i| [i.age, i.gender, i.count.to_i] }
+
+
+8. Gruff: Rails 经典图表生成库简介
+http://hlee.javaeye.com/blog/438594
+
+
+9. 可以拖放的排序列表
+http://hlee.javaeye.com/blog/441932
+
+
+10. 检查符合条件数据是否存在 exists？
+http://hlee.javaeye.com/blog/446025
+
+很多时候，会用到这样的检查，配合collection的empty?和返回结果的blank?
+
+exists?有些时候很方便
+Returns true if a record exists in the table that matches the id or conditions given, or false otherwise. The argument can take five forms:
+
+    * Integer - Finds the record with this primary key.
+    * String - Finds the record with a primary key corresponding to this string (such as ‘5‘).
+    * Array - Finds the record that matches these find-style conditions (such as [‘color = ?’, ‘red’]).
+    * Hash - Finds the record that matches these find-style conditions (such as {:color => ‘red’}).
+    * No args - Returns false if the table is empty, true otherwise.
+
+For more information about specifying conditions as a Hash or Array, see the Conditions section in the introduction to ActiveRecord::Base.
+
+Note: You can‘t pass in a condition as a string (like name = ‘Jamie‘), since it would be sanitized and then queried against the primary key column, like id = ‘name = \’Jamie\’‘.
+Examples
+
+Ruby代码
+
+   1. Person.exists?(5)
+   2. Person.exists?('5')
+   3. Person.exists?(:name => "David")
+   4. Person.exists?(['name LIKE ?', "%#{query}%"])
+   5. Person.exists?
+
+
+11. 如何 修改RAILS的默认错误提示 和 Rails validation error message 相关的合集
+http://hlee.javaeye.com/blog/514323
+
+
+12. rake 任务导出数据到fixture
+http://hlee.javaeye.com/blog/546396
+
+生成fixture
+Ruby代码
+
+   1. desc 'Create YAML test fixtures from data in an existing database.
+   2. Defaults to development database.  Set RAILS_ENV to override.'
+   3.
+   4. task :extract_fixtures => :environment do
+   5.   sql  = "SELECT * FROM %s"
+   6.   skip_tables = ["schema_info"]
+   7.   ActiveRecord::Base.establish_connection
+   8.   (ActiveRecord::Base.connection.tables - skip_tables).each do |table_name|
+   9.     i = "000"
+  10.     File.open("#{RAILS_ROOT}/test/fixtures/#{table_name}.yml", 'w') do |file|
+  11.       data = ActiveRecord::Base.connection.select_all(sql % table_name)
+  12.       file.write data.inject({}) { |hash, record|
+  13.         hash["#{table_name}_#{i.succ!}"] = record
+  14.         hash
+  15.       }.to_yaml
+  16.     end
+  17.   end
+  18. end
+
+13. Ruby的memcache-client
+不推荐Rails自带memcache-client
+要在Rails中使用libmemcached作为cache store，可以安装LibmemcacheStore 的Rails插件，然后指定以下配置，API符合Cache Store标准
+
+Ruby代码
+
+   1. config.cache_store = :libmemcached_store
+
+config.cache_store = :libmemcached_store
+
+14. irb
+
+jruby -S gem install wirble map_by_method what_methods hirb
+_irbrc,该文件放置位置随意，建议在linux下放到home下。
+然后在linux和win32下设置环境变量IRBRC，指向该文件的路径（包括文件名本身）。
+同时win32下还需设置一个HOME环境变量，建议指向c:\Documents and Settings\your_account
+IRBRC:d:\jruby-1.5.5\irbrc\_irbrc:
+HOME:d:\home
+
+use:
+a. jruby script/console
+>>ppp Product.all
+b. tab 补
+c. 3.14.what? 3  #什么方法返回3?
+
+   --END

@@ -1,20 +1,52 @@
+RSpec
+========
+
+2011.01.27
+-----------
+
 http://relishapp.com/rspec/rspec-rails
-
 Configure
-
 Add rspec-rails to the :test and :development groups in the Gemfile:
-
 group :test, :development do
   gem "rspec-rails", "~> 2.0.1"
 end
-It needs to be in the :development group to expose generators and rake tasks without having to type RAILS_ENV=test.
-
+It needs to be in the :development group to expose generators and rake tasks wi
 config/application.rb add:
 config.generators do |g|
   g.test_framework :rspec
 end
-
 Now you can run:
-
 script/rails generate rspec:install
 
+2010.10.28
+-----------
+
+   1. jruby -S gem install rspec-rails --no-rdoc --no-ri
+
+This version of rspec-rails only works with versions of rails >= 3.0.0
+
+To configure your app to use rspec-rails, add a declaration to your Gemfile.
+If you are using Bundler's grouping feature in your Gemfile, be sure to include
+rspec-rails in the :development group as well as the :test group so that you
+can access its generators and rake tasks.
+
+  group :development, :test do
+    gem "rspec-rails", ">= 2.0.1"
+  end
+
+Be sure to run the following command in each of your Rails apps if you're
+upgrading:
+
+  script/rails generate rspec:install
+
+Even if you've run it before, this ensures that you have the latest updates
+to spec/spec_helper.rb and any other support files.
+
+Beta versions of rspec-rails-2 installed files that are no longer being used,
+so please remove these files if you have them:
+
+  lib/tasks/rspec.rake
+  config/initializers/rspec_generator.rb
+
+Lastly, be sure to look at Upgrade.markdown to see what might have changed
+since the last release.
