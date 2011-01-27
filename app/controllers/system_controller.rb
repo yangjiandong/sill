@@ -40,16 +40,17 @@ class SystemController < ApplicationController
   end
 
   def get_data_sql
-    all=[]
-    sql = "select * from t_users"
-    results = User.connection.execute(sql)
-    results.each do |foo|
-      all.push "(#{foo['login']}, #{foo['name']})"
-    end
+    # all=[]
+    sql = "select * from t_categories"
+    # results = User.connection.execute(sql)
+    # results.each do |foo|
+      # all.push "(#{foo['login']}, #{foo['name']})"
+    # end
+    @t = User.connection.execute(sql)
 
     render :json => {
-        :rows => all,
-        :results => all.count
+        :rows => @t,
+        :results => @t.count
         }, :layout => false
   
   end
