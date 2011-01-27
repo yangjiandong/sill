@@ -19,6 +19,12 @@ rails关注项目及工具
 
    jruby --> jruby1.6
 
-  
+    4. livereload，https://github.com/mockko/livereload 
+    
+    -- no supply jruyb?
+
+    开发时修改文件(haml,js,sass，特别是css)后经常需要刷新一下浏览器，看看效果怎么样。现在好了，有了livereload，文件一保存浏览器自动刷新，支持safari和chrome,真是开发必备利器
+
+
    --END
 

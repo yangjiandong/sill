@@ -40,12 +40,15 @@ class SystemController < ApplicationController
   end
 
   def get_data_sql
-    # all=[]
-    sql = "select * from t_categories"
-    # results = User.connection.execute(sql)
-    # results.each do |foo|
-      # all.push "(#{foo['login']}, #{foo['name']})"
+    # ActiveRecord::Base.connection.execute("SELECT * FROM users")
+    # ActiveRecord::Base.connection.execute("select * from customers").fetch_row
+    # results = ActiveRecord::Base.connection.execute("select * from customers")
+
+    # while row = results.fetch_row do
+      # # process row here
     # end
+
+    sql = "select * from t_categories"
     @t = User.connection.execute(sql)
 
     render :json => {
