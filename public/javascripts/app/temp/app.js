@@ -6,20 +6,18 @@ var sysConfig;
 Docs = {};
 
 Ext.app.Utils.getSysConfig = function() {
-  var respText;
-
-  Ext.Ajax.request({
-    url: 'system/sysConfig'
-    ,scope:this
-    ,callback: function(o,s,r) {
-      respText  = Ext.decode(r.responseText);
-    }
-  });
-  if (respText.success){
-    return respText.data;
-  }else{
-    return null;
-  }
+  ress = {copyright: 'for test'},
+       Ext.Ajax.request({
+         url: 'system/sysConfig'
+         ,scope:this
+         ,async : false,
+       method : 'GET',
+       success : function(r,o) {
+         var ss  = Ext.decode(r.responseText);
+         ress = ss.data;
+       }
+       });
+  return ress;
 }
 
 //var titleBar = new Ext.Panel({

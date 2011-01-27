@@ -26,7 +26,7 @@ class SystemController < ApplicationController
         :time => Property.get_database_time(),
         :version => "1.0",
         :buildId => "xxxx",
-        :copyright => "2008",
+        :copyright => "一定要同步啊?",
         :productName => "ror - 应用程序"
         };
 

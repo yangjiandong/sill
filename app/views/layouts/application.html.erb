@@ -76,9 +76,9 @@
 <% end %>
 <script type="text/javascript">document.getElementById('loading-msg').innerHTML = '正在装载组件...';</script>
 <% if ENV['RAILS_ENV'] == 'production'%>
-  <%= javascript_include_tag "ext/ext-all", "ext/ext-lang-zh_CN" %>
+  <%= javascript_include_tag "ext/ext-all", "ext/ext-lang-zh_CN", "ext.util/ext-debug"  %>
 <% else %>
-  <%= javascript_include_tag "ext/ext-all-debug", "ext/ext-lang-zh_CN"  %>
+  <%= javascript_include_tag "ext/ext-all-debug", "ext/ext-lang-zh_CN", "ext.util/ext-basex-debug"  %>
 <% end %>
 <script type="text/javascript">document.getElementById('loading-msg').innerHTML = '正在初始化...';</script>
 

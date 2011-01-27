@@ -1,6 +1,12 @@
 Sill - rails3
 =============
 
+2010.01.27
+----------
+
+   1. 加入basex.js,解决Ext.Ajax.Request 不同步问题
+   app/temp/app.js
+
 2010.01.26
 ----------
 
@@ -10,10 +16,10 @@ Sill - rails3
 
    2. monitoring
    god -- no use in jruby
-   http://god.rubyforge.org/ 
-   
+   http://god.rubyforge.org/
+
    vendor/plugins/mongrel_proctitle,
-   --https://github.com/rtomayko/mongrel_proctitle 
+   --https://github.com/rtomayko/mongrel_proctitle
    --https://github.com/alexstaubo/mongrel_proctitle
    -- 好像没看到输出信息
 
