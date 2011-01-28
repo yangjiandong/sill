@@ -49,11 +49,26 @@ class SystemController < ApplicationController
     # end
 
     sql = "select * from t_categories"
-    @t = User.connection.execute(sql)
+    # @t = User.connection.execute(sql)
+    @t = User.find_by_sql(sql)
 
     render :json => {
         :rows => @t,
         :results => @t.count
+        }, :layout => false
+  
+  end
+
+  def get_data_sp
+    start = (params[:start] || 'aa')
+ 
+    sql = "exec sp_test '#{start}'"
+    # t = User.connection.execute(sql)
+    t = User.find_by_sql(sql)
+
+    render :json => {
+        :rows => t,
+        :results => t.count
         }, :layout => false
   
   end

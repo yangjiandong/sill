@@ -1,6 +1,54 @@
 oracle
 ========
 
+2011.01.28
+-----------
+
+1. 采用 oracle-enhanced,执行sql时后台信息:
+    sql = "select * from t_categories"
+    # 以下语句居然报错
+    # @t = User.connection.execute(sql)
+    @t = User.find_by_sql(sql)
+
+Started GET "/system/get_data_sql" for 127.0.0.1 at Fri Jan 28 10:11:58 +0800 2011
+  Processing by SystemController#get_data_sql as 
+  Primary Key (28.0ms)   select cc.column_name
+ from all_constraints c, all_cons_columns cc
+ where c.owner = 'CRM'
+ and c.table_name = 'T_GROUPS_USERS'
+ and c.constraint_type = 'P'
+ and cc.owner = c.owner
+ and cc.constraint_name = c.constraint_name
+  User Load (16.0ms)  select * from t_categories
+  Primary Key (16.0ms)   select cc.column_name
+ from all_constraints c, all_cons_columns cc
+ where c.owner = 'CRM'
+ and c.table_name = 'T_USERS'
+ and c.constraint_type = 'P'
+ and cc.owner = c.owner
+ and cc.constraint_name = c.constraint_name
+  Primary Key Trigger (1.0ms)   SELECT trigger_name
+ FROM all_triggers
+ WHERE owner = 'CRM'
+ AND trigger_name = 'T_USERS_PKT'
+ AND table_owner = 'CRM'
+ AND table_name = 'T_USERS'
+ AND status = 'ENABLED'
+
+  User Columns (12.0ms)   select column_name as name, data_type as sql_type, data_default, nullable,
+ decode(data_type, 'NUMBER', data_precision,
+ 'FLOAT', data_precision,
+ 'VARCHAR2', decode(char_used, 'C', char_length, data_length),
+ 'CHAR', decode(char_used, 'C', char_length, data_length),
+ null) as limit,
+ decode(data_type, 'NUMBER', data_scale, null) as scale
+ from all_tab_columns
+ where owner = 'CRM'
+ and table_name = 'T_USERS'
+
+old
+----
+ 
 1. http://forums.pragprog.com/forums/125/topics/7047
 
 example:

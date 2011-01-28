@@ -1,3 +1,21 @@
+2011.01.28
+----------
+
+   1. 执行存储过程
+
+    sql = "exec sp_test '#{start}'"
+    # t = User.connection.execute(sql)
+    t = User.find_by_sql(sql)
+
+    User.connection.execute(sql)
+    但能执行sql,就是不能执行存储过程
+ActiveRecord::JDBCError: The executeUpdate method must not return a result set.: exec sp_test 'sdfada'
+Completed   in 148ms
+
+ActiveRecord::StatementInvalid (ActiveRecord::JDBCError: The executeUpdate method must not return a result set.: exec sp_test 'sdfada'):
+  app/controllers/system_controller.rb:65:in `get_data_sp'
+   
+
 2011.01.27
 -----------
 
