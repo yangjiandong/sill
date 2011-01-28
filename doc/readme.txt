@@ -9,6 +9,14 @@ Sill - rails3
    rails g scaffold addons/posts title:string 
    自动产生addons目录,models下还产生addons.rb,自动指定表前缀
 
+   2. 采用多数据源
+   model/base.rb,post.rb
+   rake db:migrate 没成功.
+   query does not return ResultSet
+   ..
+D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:51:in `setup'
+D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:63:in `automatic_setup'
+
 2010.01.27
 ----------
 
