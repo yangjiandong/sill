@@ -1,0 +1,2 @@
+module Addons::PostsHelper
+end

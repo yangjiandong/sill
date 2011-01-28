@@ -6,6 +6,9 @@ Sill - rails3
 
    1. save/UUID.txt
 
+   rails g scaffold addons/posts title:string 
+   自动产生addons目录,models下还产生addons.rb,自动指定表前缀
+
 2010.01.27
 ----------
 

@@ -1,0 +1,14 @@
+<%= content_for :sitemap do %>
+<span class="current">查看</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <%= link_to '修改', edit_addons_post_path(@post) %> |
+  <%= link_to '返回', addons_posts_path %>
+</div>
+<div id="addons_post">
+    <p>
+    <b>Title:</b>
+    <%= @post.title %>
+  </p>
+  </div>

@@ -6,6 +6,7 @@ require "need_authorization"
 require "need_authentication"
 #require "slf4j_logger"
 require "debug_log"
+require "uuid_helper"
 
 #
 #require "enum_attr"

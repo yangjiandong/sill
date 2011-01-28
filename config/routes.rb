@@ -1,4 +1,7 @@
 Sill::Application.routes.draw do
+  namespace :addons do resources :posts end
+  match 'addons.posts.indexjson' => 'addons/posts#index_json'
+
   resources :posts
 
   match 'home' => 'system#index', :as => :home

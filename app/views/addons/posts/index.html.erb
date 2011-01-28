@@ -1,0 +1,22 @@
+<%= content_for :sitemap do %>
+<span class="current">列表</span>
+<% end %>
+<%= render 'base' %>
+<div class="tools">
+  <a href="<%= addons_posts_path %>" class="button">查看所有</a>
+  <a href="<%= new_addons_post_path %>" class="button">新建</a>
+</div>
+
+<div id="addons_posts">
+  <%= grid(@posts, :show_filters => :always) do |g|
+    g.column :column_name => '', :attribute_name => 'id', :no_filter => true
+    g.column :column_name => 'title', :attribute_name => 'title'
+    g.column :column_name => '创建时间', :attribute_name => 'created_at'
+    g.column :column_name => '操作' do |c|
+      raw "#{link_to '修改', edit_addons_post_path(c.id)}
+      #{link_to '删除', addons_post_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
+    end
+  end %>
+</div>
+
+
