@@ -11,6 +11,14 @@ Sill - rails3
    https://github.com/tchandy/octopus 
    -- process master slave,只解决了主从数据库问题.
 
+   2. rails oracle 字符集问题
+   http://www.javaeye.com/topic/120164
+   保证客户端字符集改成和输入(rails程序)字符集一致的字符集,不要管oracle服务端的字符集
+
+   3. CSSMenu
+   http://www.mycssmenu.com/
+   save/other/1.html,a.css
+
 2011.01.28
 ----------
 
