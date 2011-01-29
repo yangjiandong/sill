@@ -1,6 +1,15 @@
 RUBY TIP
 ============
 
+2011.01.28
+----------
+
+   1. Center, left justify and right justify string 
+s = "Some text."
+s.center(15)                    # => "  Some text.   "
+s.ljust(15)                     # => "Some text.     "
+s.rjust(15)                     # => "     Some text."
+   
 2010.11.08
 ----------
 

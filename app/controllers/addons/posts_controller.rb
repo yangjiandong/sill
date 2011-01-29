@@ -14,14 +14,20 @@ class Addons::PostsController < ApplicationController
   end
 
   def index
-    @posts = initialize_grid(Post, 
-      :order => 'id',
-      :order_direction => 'desc')
+    @datas = Addons::Other.find_by_sql('select * from sill2..t_categories')
+    render :json => {
+        :rows => @datas,
+        :results => @datas.count
+        }, :layout => false
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json
-    end
+    # @posts = initialize_grid(Post, 
+      # :order => 'id',
+      # :order_direction => 'desc')
+
+    # respond_to do |format|
+      # format.html # index.html.erb
+      # format.json
+    # end
   end
 
   def show

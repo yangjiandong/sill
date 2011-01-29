@@ -6,5 +6,5 @@ class Addons::Base < ActiveRecord::Base
   # Open a connection to the appropriate database depending
   # on what RAILS_ENV is set to.
   #establish_connection("account_#{RAILS_ENV}")
-  establish_connection("other")
+  establish_connection :other
 end

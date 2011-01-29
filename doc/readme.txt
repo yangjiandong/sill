@@ -1,7 +1,17 @@
 Sill - rails3
 =============
 
-2010.01.28
+2011.01.29
+----------
+
+   1. muti database conn
+   save/muti-database.txt
+   http://www.stjhimy.com/posts/3-using-activerecord-base-methods-to-create-multiple-database-connections-in-ruby-on-rails 
+   
+   https://github.com/tchandy/octopus 
+   -- process master slave,只解决了主从数据库问题.
+
+2011.01.28
 ----------
 
    1. save/UUID.txt
@@ -17,13 +27,21 @@ Sill - rails3
 D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:51:in `setup'
 D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:63:in `automatic_setup'
 
-2010.01.27
+   -- 只用于访问数据库(use sql)
+   model/addons/base.rb,other.rb,预先手工建立表addons_others
+   controller use : 
+     controllers/addons/posts_controller.rb
+       Addons::Other.find_by_sql(..)
+
+   curl http://localhost:3000/addons/post
+
+2011.01.27
 ----------
 
    1. 加入basex.js,解决Ext.Ajax.Request 不同步问题
    app/temp/app.js
 
-2010.01.26
+2011.01.26
 ----------
 
    1. other server
@@ -45,13 +63,13 @@ D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:63:in `a
    save/delayed_job.txt
 
 
-2010.01.25
+2011.01.25
 -----------
 
    1. 将table的数据导出为csv,用fastercsv这个gem可以快速完成这个功能。
    PostsController -> export_csv
 
-2010.01.24
+2011.01.24
 -----------
 
    1. pik config
