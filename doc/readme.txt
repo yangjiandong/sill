@@ -15,6 +15,11 @@ Sill - rails3
 
    2. heatmap
    http://blog.corunet.com/the-definitive-heatmap/
+   --好像是静态分析
+
+   另一个:
+   http://orbanbotond.blogspot.com/2009/12/click-heat-map-plugin-for-ruby-on-rails.html
+   --需从头构建项目
 
 2011.01.30
 -----------
