@@ -16,8 +16,6 @@ class ApplicationController < ActionController::Base
   # 不需要每次去验证
   # ,:check_database_version
 
-  before_filter :getmenus
-
   # TODO 需删除
   def self.root_context
     #ActionController::Base.relative_url_root || ''
@@ -76,17 +74,7 @@ class ApplicationController < ActionController::Base
       return access_denied
     end
   end
-
-  def getmenus
-    @my_menu_items =[
-      {:key => :main, :name => 'Main', :url => '/', :items => [
-        {:key => :sub1, :name => 'User', :url => 'usrs'},
-        {:key => :sub2, :name => 'Group', :url => 'Groups'}
-    ]}
-    ]
-
-  end
-
+  
   private
 
   # memcached

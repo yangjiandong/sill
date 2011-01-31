@@ -189,8 +189,13 @@ module ApplicationHelper
   def tags
     # cloud_tag(tag_url_hash)
     cloud_tag({"tag1" => "www.tag1.com", "tag2" => "www.tag2.com"})
+    #%{<p style="color: rgb(118, 118, 118); font-size: 8pt;">&copy;}
   end
-  
+
+  def html_tag_demo
+    %(<p style="color: rgb(118, 118, 118); font-size: 8pt;">&copy;)
+  end
+ 
   def tag_url_hash 
     returning r = { } do 
       Blog.tag_counts.map(&:name).each do |t|

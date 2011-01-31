@@ -1,6 +1,21 @@
 Sill - rails3
 =============
 
+2011.01.31
+-----------
+
+   1. speed up jruby rails
+   http://blog.engelke.com/2009/05/04/railsconf-2009-tutorial-jruby-on-rails/
+   You can speed up Mongrel under jRuby by removing the mutex it no longer needs. 
+   You have to edit Mongrel’s source to do this.  
+   Look for the block starting “@guard.synchronize” and comment it out. 
+   You have to also set “config.threadsafe!” in your application’s appropriate environment file to have this help
+   (or change it globally for Rails under jRuby by editing lib/initializer.rb there).
+   --没看出效果
+
+   2. heatmap
+   http://blog.corunet.com/the-definitive-heatmap/
+
 2011.01.30
 -----------
 
@@ -148,6 +163,9 @@ D:/workspace/jruby/workspace/sill.git/config/../lib/database_version.rb:63:in `a
 
    有中文问题,采用cloudtag.swf.cn.rar 中提供的,
    还不能正常显示,只显示了html信息.
+
+   --一般格式的tags
+   https://github.com/Bantik/heatmap
 
    2. 日期格式处理
    post.created_at.strftime("%Y-%m-%d")
