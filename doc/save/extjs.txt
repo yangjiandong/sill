@@ -1,6 +1,105 @@
 extjs
 ========
 
+2011.02.07
+-----------
+
+1. layout
+p165
+
+7_form_panel.php,
+formPanel:
+loadMovieForm:
+movieForm.getForm().loadRecord(rec);
+//直接装载可编辑记录,
+
+required label
+http://wtcindia.wordpress.com/2009/10/20/adding-a-red-asterisk-to-the-required-form-fields/
+chapter7/o.js
+7_form_panel.php
+
+tree 章节现在看了也会忘得,还不如多练习
+
+p210 Windows and Dialogs
+--可在html中采用extjs,不一定都采用extjs
+
+--sencha 首页图标效果
+Chapter9/index.html
+
+chart
+--第十章chart功能,简单浏览
+--采用了flash,效果还行
+
+p258 第十一章,效果
+
+p298 扩展extjs
+
+2011.02.06
+-----------
+
+1. textfield search
+listeners: specialkey
+p107
+
+2. toolbars in panels
+tbar: above the panel's body
+bbar: below the panel's body
+fbar: placed into the panel's footr element.
+
+3. combining two columns
+--方便计算列
+function title_tagline..
+
+p126
+
+4. advaanced grid formatting
+p137
+--这个例子比较全面,有窗口提示功能等等,Chapter5/9_advanced_grid_manipulation.php
+--感觉模板很有用,tpl
+
+5. editor grid
+--单击编辑
+clicksToEdit:1
+
+p150
+
+2011.02.05
+-----------
+
+1. about toolbar alignment,dividers,and spacers
+p101
+shortcuts for coding faster.
+->
+- or separator
+''
+p106
+
+2011.02.04
+-----------
+
+1. p99
+
+2011.02.03
+-----------
+
+1. form.submit 参数说明
+p87
+
+menu
+p93
+
+2011.02.01
+-----------
+
+1. p74
+--自定义验证
+Ext.form.VTypes.nameVal
+               .nameMask
+               .nameText
+
+..
+vtype:'name'
+
 2011.01.30
 -----------
 
